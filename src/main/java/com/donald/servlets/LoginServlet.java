@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.donald.pojos.Employee;
 import com.donald.services.EmployeeServiceImpl;
+import com.donald.util.LoggingUtil;
 
 public class LoginServlet extends HttpServlet {
 	
@@ -31,11 +32,12 @@ public class LoginServlet extends HttpServlet {
 			//send response if failed login
 			resp.setStatus(401);
 			resp.getWriter().write("Failed Login");
-			System.out.println("failed login");
+			LoggingUtil.debug("Failed Login");
+
 		} else {
 			// successful login
 			resp.getWriter().write("Successful Login!");
-			System.out.println("success login");
+			LoggingUtil.debug("Succesful Login");
 		}
 	}
 
