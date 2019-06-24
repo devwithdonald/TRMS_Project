@@ -9,7 +9,7 @@ public class EmployeeServiceImpl implements EmployeeServiceInt {
 	// just using for testing front to java
 	//private List<Employee> employeeDAO;
 	
-	private EmployeeDAOImpl edi = new EmployeeDAOImpl();
+	private static EmployeeDAOImpl edi = new EmployeeDAOImpl();
 
 	//will need to change as well - with DAO
 	public Employee loginEmployee(String username, String password) {

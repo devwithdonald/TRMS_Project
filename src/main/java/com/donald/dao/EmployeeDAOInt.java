@@ -7,6 +7,8 @@ import com.donald.pojos.Employee;
 public interface EmployeeDAOInt {
 	
 	public List<Employee> getAllEmployees();
+	
+	
 
 	
 }

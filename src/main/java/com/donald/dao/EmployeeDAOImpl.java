@@ -15,17 +15,21 @@ import com.donald.util.LoggingUtil;
 public class EmployeeDAOImpl implements EmployeeDAOInt {
 
 	// connection
-	private Connection conn = ConnectionFactory.getConnection();
+	private static Connection conn = ConnectionFactory.getConnection();
 
 	@Override
 	public List<Employee> getAllEmployees() {
 		LoggingUtil.trace("In getAllEmployees() method");
 		
 		
+		
 		List<Employee> employeeList = new ArrayList<>();
 		Employee employee = null;
 		
-		String sql = "select * from employee;";
+		//join to get employee type!
+		String sql = "select emp.*, emp_type.employee_type " + 
+				"from employee emp " + 
+				"inner join employee_type emp_type on emp.employee_type_id = emp_type.employee_type_id;";
 		
 		PreparedStatement pstmt;
 		
@@ -36,8 +40,10 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 			while (rs.next()) {
 				//if the employee in the row is an associate
 				// 1 -> associate ID in database
-				if (rs.getInt("employee_type_Id") == 1) {
-					employee = new Associate(rs.getInt("employee_Id"), rs.getString("username"), rs.getString("password"), rs.getString("employeeType"));
+				if (rs.getInt("employee_type_id") == 1) {
+					employee = new Associate(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+				} else if (rs.getInt("employee_type_id") == 2) {
+					employee = new Supervisor(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
 				}
 				
 				employeeList.add(employee);
