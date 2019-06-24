@@ -1,0 +1,33 @@
+2019-06-24 18:32:52 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:32:52 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:33:44 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:33:44 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:33:57 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:33:57 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:44:26 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:44:26 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:44:26 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:44:59 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:44:59 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:44:59 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:18 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:45:18 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:18 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:41 ERROR root:26 - Failed to make DB connection
+2019-06-24 18:45:41 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:41 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:53 DEBUG root:14 - successfully connected to DB
+2019-06-24 18:45:53 TRACE root:10 - In getAllEmployees() method
+2019-06-24 18:45:53 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:01:40 DEBUG root:14 - successfully connected to DB
+2019-06-24 19:01:40 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:01:40 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:01:40 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:01:40 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:01:40 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:02:04 DEBUG root:14 - successfully connected to DB
+2019-06-24 19:02:04 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:02:04 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
+2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
