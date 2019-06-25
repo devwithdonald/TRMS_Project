@@ -22,7 +22,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		reimbursementRequest = new ReimbursementRequest(date, location, description, cost, eventType, 0);
 
 		// call the DAO!
-		int successCode = rdi.insertReimbursement(reimbursementRequest);
+		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
 
 		// if DAO returns 0 then make reimbursement null, else return the request
 		// else the id
