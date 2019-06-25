@@ -4,9 +4,9 @@ public class ReimbursementAward extends Reimbursement{
 	
 	private int awardAmount;
 
-	public ReimbursementAward(int id, String type, String dateOfEvent, String locationOfEvent, String description,
+	public ReimbursementAward(String dateOfEvent, String locationOfEvent, String description,
 			int cost, String eventType, int awardAmount) {
-		super(id, type, dateOfEvent, locationOfEvent, description, cost, eventType);
+		super(dateOfEvent, locationOfEvent, description, cost, eventType);
 		this.awardAmount = awardAmount;
 	}
 
@@ -17,6 +17,13 @@ public class ReimbursementAward extends Reimbursement{
 	public void setAwardAmount(int awardAmount) {
 		this.awardAmount = awardAmount;
 	}
+
+	@Override
+	public String toString() {
+		return "ReimbursementAward [awardAmount=" + awardAmount + "]";
+	}
+	
+	
 	
 	
 	

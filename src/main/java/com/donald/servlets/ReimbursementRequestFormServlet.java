@@ -29,13 +29,15 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 		String location = req.getParameter("location");
 		String description = req.getParameter("description");
 		int cost = Integer.parseInt(req.getParameter("cost"));
-		String event = req.getParameter("event");
+		String eventType = req.getParameter("eventType");
 		
 		
 
 		
-		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time, location, description, cost, event);
+		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time, location, description, cost, eventType);
 	
 		//if null is sent back send back error
+		
+		//else return them a confirmation? (NOT ID)
 	}
 }

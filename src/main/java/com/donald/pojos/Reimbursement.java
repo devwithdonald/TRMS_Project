@@ -6,18 +6,15 @@ public abstract class Reimbursement {
 	
 	
 	private int id; 
-	private String type;
+	private String eventType;
 	private String dateOfEvent;
 	private String locationOfEvent;
 	private String description;
 	private int Cost;
-	private String eventType;
 	
-	public Reimbursement(int id, String type, String dateOfEvent, String locationOfEvent, String description, int cost,
+	public Reimbursement(String dateOfEvent, String locationOfEvent, String description, int cost,
 			String eventType) {
 		super();
-		this.id = id;
-		this.type = type;
 		this.dateOfEvent = dateOfEvent;
 		this.locationOfEvent = locationOfEvent;
 		this.description = description;
@@ -30,12 +27,6 @@ public abstract class Reimbursement {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public String getDateOfEvent() {
 		return dateOfEvent;
@@ -70,10 +61,11 @@ public abstract class Reimbursement {
 
 	@Override
 	public String toString() {
-		return "Reimbursment [id=" + id + ", type=" + type + ", dateOfEvent=" + dateOfEvent + ", locationOfEvent="
-				+ locationOfEvent + ", description=" + description + ", Cost=" + Cost + ", eventType=" + eventType
-				+ "]";
+		return "Reimbursement [id=" + id + ", eventType=" + eventType + ", dateOfEvent=" + dateOfEvent
+				+ ", locationOfEvent=" + locationOfEvent + ", description=" + description + ", Cost=" + Cost + "]";
 	}
+
+
 	
 	
 	
