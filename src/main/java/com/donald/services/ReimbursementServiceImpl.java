@@ -11,15 +11,15 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	ReimbursementDAOImpl rdi = new ReimbursementDAOImpl();
 
 	@Override
-	public Reimbursement insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
+	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
 			String location, String description, int cost, String eventType) {
 		LoggingUtil.trace("insertReimbursementRequest()");
 		// TODO Auto-generated method stub
 
-		Reimbursement reimbursementRequest = null;
+		ReimbursementRequest reimbursementRequest = null;
 
 		// make new Reimbursement
-		reimbursementRequest = new ReimbursementRequest(date, location, description, cost, eventType, 0);
+		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0);
 
 		// call the DAO!
 		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);

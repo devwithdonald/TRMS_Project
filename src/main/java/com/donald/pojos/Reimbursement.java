@@ -9,19 +9,34 @@ public abstract class Reimbursement {
 	private String eventType;
 	private String dateOfEvent;
 	private String locationOfEvent;
+	private String timeOfEvent;
 	private String description;
 	private int Cost;
 	
-	public Reimbursement(String dateOfEvent, String locationOfEvent, String description, int cost,
-			String eventType) {
+
+	
+	public Reimbursement(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
+			String description, int cost) {
 		super();
+		this.eventType = eventType;
 		this.dateOfEvent = dateOfEvent;
 		this.locationOfEvent = locationOfEvent;
+		this.timeOfEvent = timeOfEvent;
 		this.description = description;
 		Cost = cost;
-		this.eventType = eventType;
 	}
 	
+	
+	public String getTimeOfEvent() {
+		return timeOfEvent;
+	}
+
+
+	public void setTimeOfEvent(String timeOfEvent) {
+		this.timeOfEvent = timeOfEvent;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -58,12 +73,14 @@ public abstract class Reimbursement {
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Reimbursement [id=" + id + ", eventType=" + eventType + ", dateOfEvent=" + dateOfEvent
-				+ ", locationOfEvent=" + locationOfEvent + ", description=" + description + ", Cost=" + Cost + "]";
+				+ ", locationOfEvent=" + locationOfEvent + ", timeOfEvent=" + timeOfEvent + ", description="
+				+ description + ", Cost=" + Cost + "]";
 	}
+
 
 
 	

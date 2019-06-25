@@ -17,8 +17,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 	public int insertReimbursement(Employee loggedInEmployee, Reimbursement reimbursementRequest) {
 		LoggingUtil.debug("insertRebursement()");
 		
-		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, description)\r\n" + 
-				"	values (?,?,?,?,?,?,?);";
+		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)\r\n" + 
+				"	values (?,?,?,?,?,to_date(?, 'YYYY-DD-MM'),to_timestamp(?, 'HH:MI:SS'),?);";
 		
 		PreparedStatement pstmt;
 		int numberOfRows = 0;
@@ -39,7 +39,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 			pstmt.setInt(4, reimbursementRequest.getCost());
 			pstmt.setString(5, reimbursementRequest.getLocationOfEvent());
 			pstmt.setString(6, reimbursementRequest.getDateOfEvent()); //dunno if will work!
-			pstmt.setString(7, reimbursementRequest.getDescription());
+			pstmt.setString(7, reimbursementRequest.getTimeOfEvent());
+			pstmt.setString(8, reimbursementRequest.getDescription());
 			
 			numberOfRows = pstmt.executeUpdate();
 			

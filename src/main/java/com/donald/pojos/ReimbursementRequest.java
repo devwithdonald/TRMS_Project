@@ -4,9 +4,11 @@ public class ReimbursementRequest extends Reimbursement{
 
 	private int status; // level of approval
 
-	public ReimbursementRequest(String dateOfEvent, String locationOfEvent, String description,
-			int cost, String eventType, int status) {
-		super(dateOfEvent, locationOfEvent, description, cost, eventType);
+
+
+	public ReimbursementRequest(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
+			String description, int cost, int status) {
+		super(eventType, dateOfEvent, locationOfEvent, timeOfEvent, description, cost);
 		this.status = status;
 	}
 

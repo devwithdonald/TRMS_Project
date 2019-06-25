@@ -4,9 +4,11 @@ public class ReimbursementAward extends Reimbursement{
 	
 	private int awardAmount;
 
-	public ReimbursementAward(String dateOfEvent, String locationOfEvent, String description,
-			int cost, String eventType, int awardAmount) {
-		super(dateOfEvent, locationOfEvent, description, cost, eventType);
+
+
+	public ReimbursementAward(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
+			String description, int cost, int awardAmount) {
+		super(eventType, dateOfEvent, locationOfEvent, timeOfEvent, description, cost);
 		this.awardAmount = awardAmount;
 	}
 
