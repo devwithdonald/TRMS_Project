@@ -34,4 +34,33 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	}
 
+	@Override
+	public int getEventTypeId(String eventType) {
+		
+		int id = 0;
+		
+		switch(eventType) {
+		case "University Course":
+			id = 1;
+			break;
+		case "Seminar":
+			id = 2;
+			break;
+		case "Certification Preparation Classes":
+			id = 3;
+			break;
+		case "Certification":
+			id = 4;
+			break;
+		case "Technical Training":
+			id = 5;
+			break;
+		case "Other":
+			id = 6;
+			break;
+		}
+		
+		return id;
+	}
+
 }

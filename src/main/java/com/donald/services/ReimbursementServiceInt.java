@@ -7,4 +7,5 @@ public interface ReimbursementServiceInt {
 
 	public Reimbursement insertReimbursementRequest(Employee loggedInEmployee, String date, String time, String location, String description, int cost, String event);
 
+	public int getEventTypeId(String eventType); 
 }

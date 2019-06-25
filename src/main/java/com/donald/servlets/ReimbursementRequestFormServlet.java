@@ -41,9 +41,6 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 		int cost = Integer.parseInt(req.getParameter("cost"));
 		String eventType = req.getParameter("eventType");
 		
-		LoggingUtil.debug(date);
-		LoggingUtil.debug(time);
-
 		
 		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time, location, description, cost, eventType);
 	
@@ -52,7 +49,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 		if (reimbursementRequest == null) {
 			//send response if failed login
 			
-			//resp.setStatus(500);
+			resp.setStatus(500);
 			resp.getWriter().write("Failed to insert reimbursement request");
 			LoggingUtil.debug("Failed to insert reimbursement request");
 		} else {

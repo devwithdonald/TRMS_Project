@@ -6,19 +6,21 @@ import java.sql.SQLException;
 
 import com.donald.pojos.Employee;
 import com.donald.pojos.Reimbursement;
+import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.ConnectionFactory;
 import com.donald.util.LoggingUtil;
 
 public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 	
 	private static Connection conn = ConnectionFactory.getConnection();
+	private static ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 
 	@Override
 	public int insertReimbursement(Employee loggedInEmployee, Reimbursement reimbursementRequest) {
 		LoggingUtil.debug("insertRebursement()");
 		
 		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)\r\n" + 
-				"	values (?,?,?,?,?,to_date(?, 'YYYY-DD-MM'),to_timestamp(?, 'HH:MI:SS'),?);";
+				"	values (?,?,?,?,?,to_date(?, 'YYYY-MM-DD'),to_timestamp(?, 'HH24:MI:SS'),?);";
 		
 		PreparedStatement pstmt;
 		int numberOfRows = 0;
@@ -30,9 +32,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 			
 			//TODO NEEDS TO BE OUTSIDE METHOD WITH ?SWITCH CASE? STATEMENT
 			//would be in EmployeeService i think?
-			if (reimbursementRequest.getEventType().equals("Certification")) {
-				pstmt.setInt(2,1); // 1 is Certification
-			}
+			
+			pstmt.setInt(2, rsi.getEventTypeId(reimbursementRequest.getEventType()));
 			
 			pstmt.setInt(3,1); //always starts UNLESS direct supervisor approval then can go to benco.. will need to figure this logic later? // with new called insert statement()
 			
