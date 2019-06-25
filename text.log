@@ -31,3 +31,6 @@
 2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
 2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
 2019-06-24 19:02:05 TRACE root:10 - In getAllEmployees() method
+2019-06-25 13:06:27 ERROR root:26 - Failed to make DB connection
+2019-06-25 13:07:34 ERROR root:26 - Failed to make DB connection
+2019-06-25 13:24:00 DEBUG root:14 - successfully connected to DB

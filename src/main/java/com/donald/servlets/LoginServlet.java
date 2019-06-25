@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.donald.pojos.Employee;
 import com.donald.services.EmployeeServiceImpl;
@@ -38,9 +39,14 @@ public class LoginServlet extends HttpServlet {
 			// successful login
 			// will need to call methods that send the employee to their correct page
 			// depending on who they are!
-			resp.getWriter().write("Successful Login!");
-			
+			//resp.getWriter().write("Successful Login!");
 			LoggingUtil.debug("Succesful Login");
+			HttpSession sess = req.getSession(true);
+			sess.setAttribute("employee", employee);
+			
+			resp.sendRedirect("reimbursement_request_form.html");
+			
+			
 		}
 	}
 

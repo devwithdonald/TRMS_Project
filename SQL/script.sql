@@ -51,18 +51,20 @@ create table request (
 	cost integer not null,
 	location text not null,
 	date_of_event date not null,
+	time_of_event time not null,
 	description text not null, 
 	denied boolean default false
 );
 
-insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, description)
-	values (1,1,1,100,'heart', '12/12/2011', 'cool event');
+insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)
+	values (1,1,1,100,'heart', '12/12/2011', '8:30','cool event');
 
 insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, description)
 	values (?,?,?,?,?,?,?);
 
 
 -- insert default items
+!-- employee types
 insert into employee_type(employee_type)
 	values ('associate');
 
@@ -74,9 +76,30 @@ insert into employee_type(employee_type)
 
 insert into employee_type(employee_type)
 	values ('benefits coordinator');
+--!
+
+!--need these
+insert into reimbursement_type(event_type, payback_percentage, grading_format)
+	values ('University Course', 80, 'grade');
+
+insert into reimbursement_type(event_type, payback_percentage, grading_format)
+	values ('Seminar', 60, 'grade');
+
+insert into reimbursement_type(event_type, payback_percentage, grading_format)
+	values ('Certification Preparation Classes', 75, 'grade');
 
 insert into reimbursement_type(event_type, payback_percentage, grading_format)
 	values ('Certification', 100, 'grade');
+
+insert into reimbursement_type(event_type, payback_percentage, grading_format)
+	values ('Technical Training', 90, 'grade');
+
+insert into reimbursement_type(event_type, payback_percentage, grading_format)
+	values ('Other', 30, 'grade');
+--!
+
+
+
 
 insert into approval_reference(description)
 	values ('needs supervisor approval');
@@ -96,3 +119,6 @@ insert into employee(employee_type_id, username, password)
 
 insert into employee(employee_type_id, username, password)
 	values (4, 'benco', '321');
+
+
+

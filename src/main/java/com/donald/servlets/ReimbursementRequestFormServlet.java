@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
@@ -31,8 +32,9 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 		
 		//FAKE THIS FOR NOW
 		//Employee loggedInEmployee = 
-		Employee loggedInEmployee = new Associate(1,"jack","hill","Associate");
-				
+		//Employee loggedInEmployee = new Associate(1,"jack","hill","Associate");
+		HttpSession sess = req.getSession();
+		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
 
 		String date = req.getParameter("date");
 		String time = req.getParameter("time");
@@ -48,7 +50,6 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 		//if null is sent back send back error
 		if (reimbursementRequest == null) {
 			//send response if failed login
-			
 			resp.setStatus(500);
 			resp.getWriter().write("Failed to insert reimbursement request");
 			LoggingUtil.debug("Failed to insert reimbursement request");

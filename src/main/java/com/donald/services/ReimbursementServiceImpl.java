@@ -14,8 +14,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
 			String location, String description, int cost, String eventType) {
 		LoggingUtil.trace("insertReimbursementRequest()");
-		// TODO Auto-generated method stub
-
+		
 		ReimbursementRequest reimbursementRequest = null;
 
 		// make new Reimbursement
