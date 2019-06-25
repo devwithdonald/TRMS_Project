@@ -27,12 +27,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		LoggingUtil.trace("in doPost(); for ReimbursementRequestFormServlet");
 		
-		//TODO need to get employee thats logged in!!!!!
 		
-		
-		//FAKE THIS FOR NOW
-		//Employee loggedInEmployee = 
-		//Employee loggedInEmployee = new Associate(1,"jack","hill","Associate");
 		HttpSession sess = req.getSession();
 		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
 

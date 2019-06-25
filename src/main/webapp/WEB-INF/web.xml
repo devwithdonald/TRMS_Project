@@ -23,5 +23,16 @@
   	<servlet-name>reimbursementRequestFormServlet</servlet-name>
   	<url-pattern>/HTML/reimbursement_request_form</url-pattern>
   </servlet-mapping>
+  
+    <!-- LOG OUT SERVLET -->
+  <servlet>
+  	<servlet-name>logoutServlet</servlet-name>
+  	<servlet-class>com.donald.servlets.LogoutServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>logoutServlet</servlet-name>
+  	<url-pattern>/HTML/logout</url-pattern>
+  </servlet-mapping>
 
 </web-app>

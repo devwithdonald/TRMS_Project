@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession sess = req.getSession(true);
 			sess.setAttribute("employee", employee);
 			
+			//TODO WILL NEED TO WRITE LOGIC TO SEND CORRECT EMPLOYEE TO CORRECT PAGE
 			resp.sendRedirect("reimbursement_request_form.html");
 			
 			
