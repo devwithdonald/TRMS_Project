@@ -36,7 +36,10 @@ public class LoginServlet extends HttpServlet {
 
 		} else {
 			// successful login
+			// will need to call methods that send the employee to their correct page
+			// depending on who they are!
 			resp.getWriter().write("Successful Login!");
+			
 			LoggingUtil.debug("Succesful Login");
 		}
 	}

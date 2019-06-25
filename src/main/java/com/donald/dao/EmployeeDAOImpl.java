@@ -22,8 +22,6 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 	public List<Employee> getAllEmployees() {
 		LoggingUtil.trace("In getAllEmployees() method");
 		
-		
-		
 		List<Employee> employeeList = new ArrayList<>();
 		Employee employee = null;
 		
