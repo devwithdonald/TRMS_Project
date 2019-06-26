@@ -69,13 +69,19 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		String link;
 		
 		if(loggedInEmployee instanceof Associate) {
-			link = "reimbursement_request_form.html";
+			link = "reimbursement_request_form";
 		} else {
-			link = "request_form_non_associate.html";
+			link = "request_form_non_associate";
 		}
 		
 		
 		return link;
+	}
+
+	@Override
+	public String viewPendingReimbursements(Employee loggedInEmployee) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

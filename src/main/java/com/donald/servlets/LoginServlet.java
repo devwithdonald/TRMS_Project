@@ -19,14 +19,28 @@ public class LoginServlet extends HttpServlet {
 	private EmployeeServiceImpl esi = new EmployeeServiceImpl();
 	private ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	
+	Employee loggedInEmployee;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//check if logged in
-		resp.sendRedirect("login.html");	
+		//TODO FIX BUT STAY HERE 
+		
+		HttpSession sess = req.getSession(false);
+		
+		if(sess != null && sess.getAttribute("employee") != null) {
+			//user is logged in send to home page
+			loggedInEmployee = (Employee) sess.getAttribute("employee");
+			LoggingUtil.warn(loggedInEmployee.getUsername() + " tried to access the login page while logged in. Redirected succesfully.");
+			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));
+		} else {
+			resp.sendRedirect("login.html");
+		}
+			
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
@@ -45,8 +59,9 @@ public class LoginServlet extends HttpServlet {
 			// will need to call methods that send the employee to their correct page
 			// depending on who they are!
 			//resp.getWriter().write("Successful Login!");
-			LoggingUtil.debug("Succesful Login");
+			LoggingUtil.debug(loggedInEmployee.getUsername() + " is logged in");
 			HttpSession sess = req.getSession(true);
+			
 			sess.setAttribute("employee", loggedInEmployee);
 	
 			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));

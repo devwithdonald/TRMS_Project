@@ -15,16 +15,31 @@ import com.donald.util.LoggingUtil;
 
 public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet{
 	
-	//need Reimbursement service right here
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 
+	@Override
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		LoggingUtil.trace("Redirect: reimbursement request -> .html");
-		resp.sendRedirect("request_form_non_associate.html");
+
+		
+		
+		HttpSession sess = req.getSession(false);
+		if (sess == null || sess.getAttribute("employee") == null) {
+			req.getRequestDispatcher("login").forward(req, resp);
+			// need to return so the rest of the method doesn't run
+			LoggingUtil.warn("Reimbursement Request Form - non associate -> Tried to reach access by non logged in user. Successfully redirected.");
+			return;
+		} else {
+			//send to appropriate site
+			sess = req.getSession();
+			Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
+			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+		}
+
 	}
 	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		LoggingUtil.trace("in doPost(); for ReimbursementRequestFormServlet");
+		LoggingUtil.trace("in doPost(); for ReimbursementRequestFormServlet - NON ASSOCIATE");
 		
 		
 		HttpSession sess = req.getSession();

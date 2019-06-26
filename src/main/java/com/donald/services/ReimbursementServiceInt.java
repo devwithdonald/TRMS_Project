@@ -10,4 +10,6 @@ public interface ReimbursementServiceInt {
 	public int getEventTypeId(String eventType); 
 	
 	public String sendCorrectRedirectLink(Employee loggedInEmployee);
+	
+	public String viewPendingReimbursements(Employee loggedInEmployee);
 }

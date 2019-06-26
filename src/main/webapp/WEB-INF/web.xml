@@ -47,5 +47,16 @@
   	<servlet-name>logoutServlet</servlet-name>
   	<url-pattern>/HTML/logout</url-pattern>
   </servlet-mapping>
+  
+  <!-- View Requests Servlet -->
+   <servlet>
+  	<servlet-name>viewRequestsServlet</servlet-name>
+  	<servlet-class>com.donald.servlets.ViewRequestsServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>viewRequestsServlet</servlet-name>
+  	<url-pattern>/HTML/view_requests</url-pattern>
+  </servlet-mapping>
 
 </web-app>
