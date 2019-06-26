@@ -8,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
 
-public class ReimbursementRequestFormServlet extends HttpServlet{
+public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet{
 	
 	//need Reimbursement service right here
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		LoggingUtil.trace("Redirect: reimbursement request -> .html");
-		resp.sendRedirect("reimbursement_request_form.html");
+		resp.sendRedirect("request_form_non_associate.html");
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

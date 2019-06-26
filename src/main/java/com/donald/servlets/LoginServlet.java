@@ -22,8 +22,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//check if logged in
-		resp.sendRedirect("login.html");
-		
+		resp.sendRedirect("login.html");	
 	}
 	
 	@Override

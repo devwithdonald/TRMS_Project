@@ -24,19 +24,21 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Apply</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Update</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Requests</a>
-        </li>
         <li class="nav-item active">
+          <a class="nav-link" href="request_form_non_associate.html">Apply</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Update</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="view_requests.html">Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Grade Approval</a>
+          </li>
+        <li class="nav-item">
           <!-- servlet here? -->
           <a class="nav-link" href="logout">Log Out<span class="sr-only">(current)</span></a>
         </li>
@@ -44,7 +46,7 @@
   </nav>
 
   <!-- reimbursement form -->
-  <form action="reimbursement_request_form" method="post">
+  <form action="request_form_non_associate" method="post">
     <h1>Reimbursement Form</h1>
     <div class="form-group">
       <label for="exampleFormControlInput1">Date of event</label>

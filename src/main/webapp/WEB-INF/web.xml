@@ -2,6 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>TRMS_Project</display-name>
   
+  <!--  DONT NEED /HTML/LOGIN FOR THE WEB ADDRESSS NAMESS -->
+  
   <!-- LOGIN SERVLET -->
   <servlet>
   	<servlet-name>loginServlet</servlet-name>
@@ -22,6 +24,17 @@
   <servlet-mapping>
   	<servlet-name>reimbursementRequestFormServlet</servlet-name>
   	<url-pattern>/HTML/reimbursement_request_form</url-pattern>
+  </servlet-mapping>
+  
+    <!-- NON-ASSOCIATE REIMBURSEMENT REQUEST FORM SERVLET -->
+  <servlet>
+  	<servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
+  	<servlet-class>com.donald.servlets.ReimbursementRequestFromNonAssociateServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
+  	<url-pattern>/HTML/request_form_non_associate</url-pattern>
   </servlet-mapping>
   
     <!-- LOG OUT SERVLET -->
