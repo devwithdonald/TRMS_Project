@@ -1,6 +1,7 @@
 package com.donald.services;
 
 import com.donald.dao.ReimbursementDAOImpl;
+import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
 import com.donald.pojos.Reimbursement;
 import com.donald.pojos.ReimbursementRequest;
@@ -60,6 +61,21 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		}
 		
 		return id;
+	}
+
+	@Override
+	public String sendCorrectRedirectLink(Employee loggedInEmployee) {
+		
+		String link;
+		
+		if(loggedInEmployee instanceof Associate) {
+			link = "reimbursement_request_form.html";
+		} else {
+			link = "request_form_non_associate.html";
+		}
+		
+		
+		return link;
 	}
 
 }

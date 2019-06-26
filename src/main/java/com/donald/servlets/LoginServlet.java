@@ -2,6 +2,7 @@ package com.donald.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +11,19 @@ import javax.servlet.http.HttpSession;
 
 import com.donald.pojos.Employee;
 import com.donald.services.EmployeeServiceImpl;
+import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
 
 public class LoginServlet extends HttpServlet {
 	
 	private EmployeeServiceImpl esi = new EmployeeServiceImpl();
+	private ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//check if logged in
 		resp.sendRedirect("login.html");
+		
 	}
 	
 	@Override
@@ -27,13 +32,14 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("password");
 		
 		//login the employee
-		Employee employee = esi.loginEmployee(username, password);
+		Employee loggedInEmployee = esi.loginEmployee(username, password);
 		
-		if (employee == null) {
+		if (loggedInEmployee == null) {
 			//send response if failed login
 			resp.setStatus(401);
-			resp.getWriter().write("Failed Login");
 			LoggingUtil.debug("Failed Login");
+			RequestDispatcher rd = req.getRequestDispatcher("failed_login.html");  
+		    rd.include(req, resp);  
 
 		} else {
 			// successful login
@@ -42,12 +48,10 @@ public class LoginServlet extends HttpServlet {
 			//resp.getWriter().write("Successful Login!");
 			LoggingUtil.debug("Succesful Login");
 			HttpSession sess = req.getSession(true);
-			sess.setAttribute("employee", employee);
-			
-			//TODO WILL NEED TO WRITE LOGIC TO SEND CORRECT EMPLOYEE TO CORRECT PAGE
-			resp.sendRedirect("reimbursement_request_form.html");
-			
-			
+			sess.setAttribute("employee", loggedInEmployee);
+	
+			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));
+
 		}
 	}
 
