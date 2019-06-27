@@ -21,7 +21,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		LoggingUtil.trace("in doGet(); for ReimbursementRequestFormServlet");
 		HttpSession sess = req.getSession(false);
 		if (sess == null || sess.getAttribute("employee") == null) {
 			req.getRequestDispatcher("login").forward(req, resp);
