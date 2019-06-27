@@ -3,13 +3,33 @@ package com.donald.pojos;
 public class ReimbursementRequest extends Reimbursement{
 
 	private int status; // level of approval
-
-
-
+	private String gradingFormat;
+	private String passingGrade;
+	
 	public ReimbursementRequest(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
-			String description, int cost, int status) {
+			String description, int cost, int status, String gradingFormat, String passingGrade) {
 		super(eventType, dateOfEvent, locationOfEvent, timeOfEvent, description, cost);
 		this.status = status;
+		this.gradingFormat = gradingFormat;
+		this.passingGrade = passingGrade;
+	}
+
+
+
+	public String getGradingFormat() {
+		return gradingFormat;
+	}
+
+	public void setGradingFormat(String gradingFormat) {
+		this.gradingFormat = gradingFormat;
+	}
+
+	public String getPassingGrade() {
+		return passingGrade;
+	}
+
+	public void setPassingGrade(String passingGrade) {
+		this.passingGrade = passingGrade;
 	}
 
 	public int getStatus() {

@@ -13,13 +13,13 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
-			String location, String description, int cost, String eventType) {
+			String location, String description, int cost, String eventType, String gradingFormat, String passingGrade) {
 		LoggingUtil.trace("insertReimbursementRequest()");
 		
 		ReimbursementRequest reimbursementRequest = null;
 
 		// make new Reimbursement
-		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0);
+		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0, gradingFormat, passingGrade);
 
 		// call the DAO!
 		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);

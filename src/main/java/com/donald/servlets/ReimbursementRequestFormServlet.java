@@ -50,10 +50,11 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		int cost = Integer.parseInt(req.getParameter("cost"));
 		String eventType = req.getParameter("eventType");
 		// new
-		String gradingFormat = req.getParameter("");
-
+		String gradingFormat = req.getParameter("gradingFormat");
+		String passingGrade = req.getParameter("passingGrade");
+		
 		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time,
-				location, description, cost, eventType);
+				location, description, cost, eventType, gradingFormat, passingGrade);
 
 		// if null is sent back send back error
 		if (reimbursementRequest == null) {

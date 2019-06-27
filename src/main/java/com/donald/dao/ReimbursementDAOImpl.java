@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.donald.pojos.Employee;
-import com.donald.pojos.Reimbursement;
+import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.ConnectionFactory;
 import com.donald.util.LoggingUtil;
@@ -16,16 +16,20 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 	private static ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 
 	@Override
-	public int insertReimbursement(Employee loggedInEmployee, Reimbursement reimbursementRequest) {
+	public int insertReimbursement(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest) {
 		LoggingUtil.debug("insertRebursement()");
 		
-		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)\r\n" + 
-				"	values (?,?,?,?,?,to_date(?, 'YYYY-MM-DD'),to_timestamp(?, 'HH24:MI:SS'),?);";
+		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description, grading_format, passing_grade)\r\n" + 
+				"	values (?,?,?,?,?,to_date(?, 'YYYY-MM-DD'),to_timestamp(?, 'HH24:MI:SS'),?,?,?);";
 		
 		PreparedStatement pstmt;
 		int numberOfRows = 0;
 		
 		try {
+			
+			//downcast?
+			 
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
 			//need logic for reimbursementTypeId
@@ -42,6 +46,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 			pstmt.setString(6, reimbursementRequest.getDateOfEvent()); //dunno if will work!
 			pstmt.setString(7, reimbursementRequest.getTimeOfEvent());
 			pstmt.setString(8, reimbursementRequest.getDescription());
+			pstmt.setString(9, reimbursementRequest.getGradingFormat());
+			pstmt.setString(10, reimbursementRequest.getPassingGrade());
 			
 			numberOfRows = pstmt.executeUpdate();
 			
