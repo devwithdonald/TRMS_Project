@@ -11,5 +11,5 @@ public interface ReimbursementDAOInt {
 	
 	public List<ReimbursementRequest> viewReimbursementRequestForEmployee(Employee loggedInEmployee);
 
-	public String getEmployeeNameById(int id);
+	public String getEmployeeUsernameById(int id);
 }
