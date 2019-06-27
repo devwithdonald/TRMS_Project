@@ -1,4 +1,6 @@
-function returnMessage(){
+function returnMessage(event){
+	
+	event.preventDefault();
 	
 	let dateOfEvent = document.getElementById("date").value;
 	let timeOfEvent = document.getElementById("time").value;

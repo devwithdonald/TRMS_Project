@@ -69,23 +69,6 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		
 		
 		
-		
-
-//		String date = req.getParameter("date");
-//		String time = req.getParameter("time");
-//		String location = req.getParameter("location");
-//		String description = req.getParameter("description");
-//		int cost = Integer.parseInt(req.getParameter("cost"));
-//		String eventType = req.getParameter("eventType");
-//		// new
-//		String gradingFormat = req.getParameter("gradingFormat");
-//		String passingGrade = req.getParameter("passingGrade");
-		
-//		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time,
-//				location, description, cost, eventType, gradingFormat, passingGrade);
-
-		
-		
 		// if null is sent back send back error
 		if (reimbursementRequest == null) {
 			// send response if failed login
@@ -94,8 +77,8 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 
 			LoggingUtil.debug("Failed to insert reimbursement request");
 		} else {
-			resp.getWriter().write("Reimbursement request succesful!");
-			LoggingUtil.debug("Reimbursement request succesful");
+			resp.getWriter().write("Reimbursement request successful!");
+			LoggingUtil.debug("Reimbursement request successful");
 		}
 	}
 }

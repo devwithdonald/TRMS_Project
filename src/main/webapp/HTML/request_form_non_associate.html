@@ -46,31 +46,31 @@
   </nav>
 
   <!-- reimbursement form -->
-  <form action="request_form_non_associate" method="post">
+  <form id="reimbursementForm">
     <h1>Reimbursement Form</h1>
     <div class="form-group">
       <label for="exampleFormControlInput1">Date of event</label>
-      <input type="date" name="date" class="form-control" id="exampleFormControlInput1" max="9999-12-31">
+      <input type="date" name="date" class="form-control" id="date" max="9999-12-31" required="required">
     </div>
 
     <div class="form-group">
       <label for="exampleFormControlInput2">Time of event</label>
-      <input type="time" name="time" class="form-control" id="exampleFormControlInput2">
+      <input type="time" name="time" class="form-control" id="time" required="required">
     </div>
 
     <div class="form-group">
       <label for="exampleFormControlInput3">Location of event</label>
-      <input type="text" name="location" class="form-control" id="exampleFormControlInput3" placeholder="Location">
+      <input type="text" name="location" class="form-control" id="location" placeholder="Location" required="required">
     </div>
 
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Description</label>
-      <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+      <textarea name="description" class="form-control" id="description" rows="2" required="required"></textarea>
     </div>
 
     <div class="form-group">
       <label for="exampleFormControlInput5">Cost of event</label>
-      <input type="number" name="cost" min="0" class="form-control" id="exampleFormControlInput5" placeholder="Cost">
+      <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost" required="required">
     </div>
 
     <div class="form-group">
@@ -100,9 +100,8 @@
       <input type="text" name="passingGrade" class="form-control" id="passingGradeInput" placeholder="Passing Grade - If Presentation Leave Blank">
     </div>
 
-
+  
     <button type="submit" class="btn btn-primary">Submit</button>
-
 
   </form>
 
@@ -117,6 +116,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <script src="../JavaScript/reimbursementForm.js"></script>
 </body>
 
 </html>
