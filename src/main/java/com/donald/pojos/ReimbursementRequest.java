@@ -6,6 +6,14 @@ public class ReimbursementRequest extends Reimbursement{
 	private String gradingFormat;
 	private String passingGrade;
 	
+	
+	
+	public ReimbursementRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public ReimbursementRequest(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
 			String description, int cost, int status, String gradingFormat, String passingGrade) {
 		super(eventType, dateOfEvent, locationOfEvent, timeOfEvent, description, cost);

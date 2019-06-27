@@ -11,10 +11,18 @@ public abstract class Reimbursement {
 	private String locationOfEvent;
 	private String timeOfEvent;
 	private String description;
-	private int Cost;
+	private int cost;
+	
+	
 	
 
 	
+	public Reimbursement() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Reimbursement(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
 			String description, int cost) {
 		super();
@@ -23,7 +31,7 @@ public abstract class Reimbursement {
 		this.locationOfEvent = locationOfEvent;
 		this.timeOfEvent = timeOfEvent;
 		this.description = description;
-		Cost = cost;
+		this.cost = cost;
 	}
 	
 	
@@ -62,10 +70,10 @@ public abstract class Reimbursement {
 		this.description = description;
 	}
 	public int getCost() {
-		return Cost;
+		return cost;
 	}
 	public void setCost(int cost) {
-		Cost = cost;
+		this.cost = cost;
 	}
 	public String getEventType() {
 		return eventType;
@@ -78,7 +86,7 @@ public abstract class Reimbursement {
 	public String toString() {
 		return "Reimbursement [id=" + id + ", eventType=" + eventType + ", dateOfEvent=" + dateOfEvent
 				+ ", locationOfEvent=" + locationOfEvent + ", timeOfEvent=" + timeOfEvent + ", description="
-				+ description + ", Cost=" + Cost + "]";
+				+ description + ", Cost=" + cost + "]";
 	}
 
 

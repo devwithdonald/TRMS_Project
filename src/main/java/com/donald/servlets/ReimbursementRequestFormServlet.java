@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReimbursementRequestFormServlet extends HttpServlet {
 
@@ -40,27 +40,58 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoggingUtil.trace("in doPost(); for ReimbursementRequestFormServlet");
 
-		HttpSession sess = req.getSession();
-		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
-
-		String date = req.getParameter("date");
-		String time = req.getParameter("time");
-		String location = req.getParameter("location");
-		String description = req.getParameter("description");
-		int cost = Integer.parseInt(req.getParameter("cost"));
-		String eventType = req.getParameter("eventType");
-		// new
-		String gradingFormat = req.getParameter("gradingFormat");
-		String passingGrade = req.getParameter("passingGrade");
 		
-		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time,
-				location, description, cost, eventType, gradingFormat, passingGrade);
+		
+		//login verification
+		HttpSession sess = req.getSession(false);
+		if (sess == null || sess.getAttribute("employee") == null) {
+			//changing!!!
+			//req.getRequestDispatcher("login").forward(req, resp);
+			resp.sendRedirect("login");
+			// need to return so the rest of the method doesn't run
+			LoggingUtil.warn("Reimbursement Request Form -> Tried to reach access by non logged in user. Successfully redirected.");
+			return;
+		} 
+		
+		//get employee
+		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
+		
+		
+		
+		String body = req.getReader().readLine();
+		LoggingUtil.debug("sent contents -> " + body);
+		ObjectMapper om = new ObjectMapper();
+		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
+		
+		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, rr.getDateOfEvent(), rr.getTimeOfEvent(),
+				rr.getLocationOfEvent(), rr.getDescription(), rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
+		
+		
+		
+		
+		
 
+//		String date = req.getParameter("date");
+//		String time = req.getParameter("time");
+//		String location = req.getParameter("location");
+//		String description = req.getParameter("description");
+//		int cost = Integer.parseInt(req.getParameter("cost"));
+//		String eventType = req.getParameter("eventType");
+//		// new
+//		String gradingFormat = req.getParameter("gradingFormat");
+//		String passingGrade = req.getParameter("passingGrade");
+		
+//		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, date, time,
+//				location, description, cost, eventType, gradingFormat, passingGrade);
+
+		
+		
 		// if null is sent back send back error
 		if (reimbursementRequest == null) {
 			// send response if failed login
 			resp.setStatus(500);
 			resp.getWriter().write("Failed to insert reimbursement request");
+
 			LoggingUtil.debug("Failed to insert reimbursement request");
 		} else {
 			resp.getWriter().write("Reimbursement request succesful!");
