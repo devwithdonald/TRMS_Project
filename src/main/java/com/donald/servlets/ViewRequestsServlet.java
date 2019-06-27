@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
+import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
 
@@ -20,6 +21,7 @@ public class ViewRequestsServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		Employee loggedInEmployee;
 		HttpSession sess = req.getSession(false);
 		if (sess == null || sess.getAttribute("employee") == null) {
 			req.getRequestDispatcher("login").forward(req, resp);
@@ -29,7 +31,7 @@ public class ViewRequestsServlet extends HttpServlet{
 		} else {
 			//send to appropriate site
 			sess = req.getSession();
-			Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
+			loggedInEmployee = (Employee) sess.getAttribute("employee");
 			//need to send if associate
 			if (loggedInEmployee instanceof Associate) {
 				resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));
@@ -38,6 +40,13 @@ public class ViewRequestsServlet extends HttpServlet{
 			}
 			
 		}
+		
+		
+		//getting reimbursements
+		
+		ReimbursementRequest reimbursementRequest = rsi.viewPendingReimbursementRequests(loggedInEmployee)
+		
+		
 		
 		
 

@@ -12,11 +12,9 @@ public abstract class Reimbursement {
 	private String timeOfEvent;
 	private String description;
 	private int cost;
-	
-	
+	private String userName;
 	
 
-	
 	public Reimbursement() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -34,6 +32,15 @@ public abstract class Reimbursement {
 		this.cost = cost;
 	}
 	
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	
 	public String getTimeOfEvent() {
 		return timeOfEvent;

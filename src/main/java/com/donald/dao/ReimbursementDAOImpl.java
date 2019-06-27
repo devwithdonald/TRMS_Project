@@ -3,6 +3,7 @@ package com.donald.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
@@ -58,5 +59,18 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt{
 		}
 		
 		return numberOfRows;
+	}
+
+	@Override
+	public List<ReimbursementRequest> viewReimbursementRequestForEmployee(Employee loggedInEmployee) {
+			
+		//get employee name for request????
+
+		return null;
+	}
+	
+	public String getEmployeeNameById(int id) {
+		LoggingUtil.debug("getEmployeeNameById()");
+		select * fro
 	}
 }

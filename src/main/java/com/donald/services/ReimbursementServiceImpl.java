@@ -3,7 +3,6 @@ package com.donald.services;
 import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
-import com.donald.pojos.Reimbursement;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.util.LoggingUtil;
 
@@ -79,8 +78,9 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 
 	@Override
-	public String viewPendingReimbursements(Employee loggedInEmployee) {
-		// TODO Auto-generated method stub
+	public ReimbursementRequest viewPendingReimbursementRequests(Employee loggedInEmployee) {
+
+		//call the DAO
 		return null;
 	}
 
