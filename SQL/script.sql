@@ -64,6 +64,10 @@ insert into request(employee_id, reimbursement_type_id, approval_reference_id, c
 insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, description)
 	values (?,?,?,?,?,?,?);
 
+update request
+set employee_id = 5
+where employee_id = 1;
+
 
 -- insert default items
 !-- employee types
@@ -123,6 +127,7 @@ insert into employee(employee_type_id, username, password, reports_to)
 	values (4, 'benco', '321', 3);
 
 select * from employee;
+select * from request where employee_id = 5;
 
 -- head to supervisor
 select m.employee_id
@@ -175,4 +180,5 @@ where m.employee_id = 3) and denied = false and approval_reference_id = 1;
 
 select * from employee where employee_id = 4;
 select * from reimbursement_type where reimbursement_type_id = 4;
+
 

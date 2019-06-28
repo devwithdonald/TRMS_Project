@@ -20,7 +20,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public int insertReimbursement(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest) {
-		LoggingUtil.debug("insertRebursement()");
+		LoggingUtil.debug("insertReimbursement() DAO");
 
 		String sql = "insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description, grading_format, passing_grade)\r\n"
 				+ "	values (?,?,?,?,?,to_date(?, 'YYYY-MM-DD'),to_timestamp(?, 'HH24:MI:SS'),?,?,?);";
