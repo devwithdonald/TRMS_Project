@@ -1,6 +1,7 @@
 package com.donald.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ViewRequestsServlet extends HttpServlet{
 	
@@ -35,17 +37,20 @@ public class ViewRequestsServlet extends HttpServlet{
 			//need to send if associate
 			if (loggedInEmployee instanceof Associate) {
 				resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));
-			} else {
-				resp.sendRedirect("view_requests.html");
-			}
-			
+				return;
+			} 
 		}
 		
+		//might be wrong?
+		resp.sendRedirect("view_requests.html");
 		
 		//getting reimbursements
+		//TODO may need to do switch case statements depending on whos asking!
+		List<ReimbursementRequest> reimbursementRequestList = rsi.viewPendingReimbursementRequests(loggedInEmployee);
 		
-		ReimbursementRequest reimbursementRequest = rsi.viewPendingReimbursementRequests(loggedInEmployee)
-		
+		ObjectMapper om = new ObjectMapper();
+		String reimbursementListString = om.writeValueAsString(reimbursementRequestList);
+		resp.getWriter().write(reimbursementListString);
 		
 		
 		

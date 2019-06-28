@@ -73,7 +73,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 				"from employee e\r\n" + 
 				"inner join employee m \r\n" + 
 				"on m.employee_id = e.reports_to\r\n" + 
-				"where m.employee_id = ?) and denied = false;";
+				"where m.employee_id = ?) and denied = false and approval_reference_id = 1;";
 		
 		PreparedStatement pstmt;
 		
@@ -87,6 +87,15 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 				reimbursementRequest.setUserName(getEmployeeUsernameById(rs.getInt("employee_id")));
 				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
 				reimbursementRequest.setCost(rs.getInt("cost"));
+				reimbursementRequest.setLocationOfEvent(rs.getString("location"));
+				reimbursementRequest.setDateOfEvent(rs.getString("date_of_event"));
+				reimbursementRequest.setTimeOfEvent(rs.getString("time_of_event"));
+				reimbursementRequest.setDescription(rs.getString("description"));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
+				
+				reimbursementRequestList.add(reimbursementRequest);
+				
 			}
 
 		} catch (SQLException e) {
@@ -94,7 +103,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		}
 		
 
-		return ;
+		return reimbursementRequestList;
 	}
 
 	public String getEmployeeUsernameById(int employee_id) {

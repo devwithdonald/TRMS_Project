@@ -1,5 +1,7 @@
 package com.donald.services;
 
+import java.util.List;
+
 import com.donald.pojos.Employee;
 import com.donald.pojos.Reimbursement;
 import com.donald.pojos.ReimbursementRequest;
@@ -12,5 +14,5 @@ public interface ReimbursementServiceInt {
 	
 	public String sendCorrectRedirectLink(Employee loggedInEmployee);
 	
-	public ReimbursementRequest viewPendingReimbursementRequests(Employee loggedInEmployee);
+	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee);
 }

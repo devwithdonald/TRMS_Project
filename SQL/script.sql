@@ -28,14 +28,14 @@ create table employee (
 	employee_id serial primary key,
 	employee_type_id integer references employee_type (employee_type_id) not null,
 	username text unique not null,
-	password text not null
+	password text not null,
+	reports_to integer references employee (employee_id)
 );
 
 create table reimbursement_type(
 	reimbursement_type_id serial primary key,
 	event_type text unique not null,
-	payback_percentage integer not null,
-	grading_format text not null
+	payback_percentage integer not null
 )
 
 create table approval_reference (
@@ -53,7 +53,9 @@ create table request (
 	date_of_event date not null,
 	time_of_event time not null,
 	description text not null, 
-	denied boolean default false
+	denied boolean default false,
+	grading_format text not null,
+	passing_grade text not null
 );
 
 insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)
@@ -79,23 +81,23 @@ insert into employee_type(employee_type)
 --!
 
 !--need these
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('University Course', 80, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('University Course', 80);
 
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('Seminar', 60, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('Seminar', 60);
 
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('Certification Preparation Classes', 75, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('Certification Preparation Classes', 75);
 
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('Certification', 100, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('Certification', 100);
 
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('Technical Training', 90, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('Technical Training', 90);
 
-insert into reimbursement_type(event_type, payback_percentage, grading_format)
-	values ('Other', 30, 'grade');
+insert into reimbursement_type(event_type, payback_percentage)
+	values ('Other', 30);
 --!
 
 
@@ -106,19 +108,71 @@ insert into approval_reference(description)
 
 
 
+select * from employee;
 
+insert into employee(employee_type_id, username, password, reports_to)
+	values (1, 'test', '123', 3);
 
-insert into employee(employee_type_id, username, password)
-	values (1, 'test', '123');
-
-insert into employee(employee_type_id, username, password)
-	values (2, 'supervisor', '456');
+insert into employee(employee_type_id, username, password, reports_to)
+	values (2, 'supervisor', '456', 2);
 
 insert into employee(employee_type_id, username, password)
 	values (3, 'department head', '789');
 
-insert into employee(employee_type_id, username, password)
-	values (4, 'benco', '321');
+insert into employee(employee_type_id, username, password, reports_to)
+	values (4, 'benco', '321', 3);
+
+select * from employee;
+
+-- head to supervisor
+select m.employee_id
+from employee m
+inner join employee h
+on h.employee_id = m.reports_to
+where h.employee_id = 2;
+
+-- supervisor to associate
+select e.employee_id, m.employee_id
+from employee e
+inner join employee m 
+on m.employee_id = e.reports_to
+where m.employee_id = 3;
+
+--head to employee
+select e.employee_id
+from employee e
+inner join employee m 
+on m.employee_id = e.reports_to
+where m.employee_id = (select m.employee_id
+from employee m
+inner join employee h
+on h.employee_id = m.reports_to
+where h.employee_id = 2)
 
 
+
+
+--request for employee for head!
+select * from request where employee_id in (select e.employee_id
+from employee e
+inner join employee m 
+on m.employee_id = e.reports_to
+where m.employee_id in (select m.employee_id
+from employee m
+inner join employee h
+on h.employee_id = m.reports_to
+where h.employee_id = 2)) and denied = false and approval_reference_id = 2;
+
+
+select * from request where employee_id = 5 and denied = false;
+
+-- requests for employee as supervisor
+select * from request where employee_id in (select e.employee_id
+from employee e
+inner join employee m 
+on m.employee_id = e.reports_to
+where m.employee_id = 3) and denied = false and approval_reference_id = 1;
+
+select * from employee where employee_id = 4;
+select * from reimbursement_type where reimbursement_type_id = 4;
 

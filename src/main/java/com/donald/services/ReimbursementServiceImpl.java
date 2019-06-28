@@ -1,5 +1,7 @@
 package com.donald.services;
 
+import java.util.List;
+
 import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Associate;
 import com.donald.pojos.Employee;
@@ -78,10 +80,13 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 
 	@Override
-	public ReimbursementRequest viewPendingReimbursementRequests(Employee loggedInEmployee) {
-
+	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee) {
+		
+		//logic? on which to call????? depending on employee logged in?
 		//call the DAO
-		return null;
+		List<ReimbursementRequest> reimbursementRequestList = rdi.viewReimbursementRequestForEmployee(loggedInEmployee);
+		
+		return reimbursementRequestList;
 	}
 
 }
