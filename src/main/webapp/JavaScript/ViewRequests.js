@@ -24,6 +24,13 @@ function appendToTable(requestArr){
         <tr>
             <td>${requestArr[i].id}</td>
             <td>${requestArr[i].userName}</td>
+            <td>${requestArr[i].eventType}</td>
+            <td>${requestArr[i].cost}</td>
+            <td>${requestArr[i].locationOfEvent}</td>
+            <td>${requestArr[i].dateOfEvent}</td>
+            <td>${requestArr[i].description}</td>
+            <td>${requestArr[i].gradingFormat}</td>
+            <td>${requestArr[i].passingGrade}</td>            
         </tr>
         `;
     }
