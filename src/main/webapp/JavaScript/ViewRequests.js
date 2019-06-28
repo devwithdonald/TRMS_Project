@@ -4,6 +4,8 @@ function getRequests(){
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 & xhr.status === 200){
             let requestArr = JSON.parse(xhr.responseText);
+            console.log(requestArr);
+            console.log('hello');
             appendToTable(requestArr);     
         }
     }
@@ -15,13 +17,13 @@ function getRequests(){
 
 // TODO fix
 function appendToTable(requestArr){
-    const tableBody = document.getElementById("main-table-body");
+    const tableBody = document.getElementById('requests-view-table-body');
 
     for (let i = 0; i < requestArr.length; i++){
         tableBody.innerHTML += `
         <tr>
             <td>${requestArr[i].id}</td>
-            <td>${requestArr[i].username}</td>
+            <td>${requestArr[i].userName}</td>
         </tr>
         `;
     }

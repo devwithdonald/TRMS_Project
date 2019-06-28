@@ -65,7 +65,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public List<ReimbursementRequest> viewReimbursementRequestForEmployee(Employee loggedInEmployee) {
-		LoggingUtil.debug("viewReimbursementRequestForEmployee()");
+		LoggingUtil.debug("viewReimbursementRequestForEmployee() DAO");
 		
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 					
@@ -79,6 +79,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -107,7 +108,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	public String getEmployeeUsernameById(int employee_id) {
-		LoggingUtil.debug("getEmployeeUsernameById()");
+		LoggingUtil.debug("getEmployeeUsernameById() DAO");
 		
 		String employeeUsername = null; 
 
@@ -135,7 +136,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public String getReimbursementTypeById(int reimbursement_type_id) {
-		LoggingUtil.debug("getReimbursementTypeById()");
+		LoggingUtil.debug("getReimbursementTypeById() DAO");
 		
 		String reimbursementType = null; 
 		String sql = "select * from reimbursement_type where reimbursement_type_id = ?;";

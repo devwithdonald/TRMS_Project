@@ -22,7 +22,7 @@ public class ViewRequestsServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		LoggingUtil.debug("In ViewRequests doGet() SERVLET");
 		Employee loggedInEmployee;
 		HttpSession sess = req.getSession(false);
 		if (sess == null || sess.getAttribute("employee") == null) {
@@ -42,7 +42,7 @@ public class ViewRequestsServlet extends HttpServlet{
 		}
 		
 		//might be wrong?
-		resp.sendRedirect("view_requests.html");
+		
 		
 		//getting reimbursements
 		//TODO may need to do switch case statements depending on whos asking!
@@ -50,9 +50,10 @@ public class ViewRequestsServlet extends HttpServlet{
 		
 		ObjectMapper om = new ObjectMapper();
 		String reimbursementListString = om.writeValueAsString(reimbursementRequestList);
+		LoggingUtil.info("Pulled requests JSON as String-> " + reimbursementListString);
 		resp.getWriter().write(reimbursementListString);
 		
-		
+		//resp.sendRedirect("view_requests.html");
 		
 
 	}
@@ -62,6 +63,7 @@ public class ViewRequestsServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//populate the table!
+		LoggingUtil.debug("In ViewRequests doPOST() SERVLET");
 	}
 	
 	

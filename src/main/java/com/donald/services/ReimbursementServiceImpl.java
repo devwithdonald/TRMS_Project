@@ -81,7 +81,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee) {
-		
+		LoggingUtil.debug("viewPendingReimbursementRequests SERVICE");
 		//logic? on which to call????? depending on employee logged in?
 		//call the DAO
 		List<ReimbursementRequest> reimbursementRequestList = rdi.viewReimbursementRequestForEmployee(loggedInEmployee);
