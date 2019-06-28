@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.donald.pojos.Employee;
@@ -64,16 +65,42 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public List<ReimbursementRequest> viewReimbursementRequestForEmployee(Employee loggedInEmployee) {
+		LoggingUtil.debug("viewReimbursementRequestForEmployee()");
+		
+		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
+					
+		String sql = "select * from request where employee_id in (select e.employee_id\r\n" + 
+				"from employee e\r\n" + 
+				"inner join employee m \r\n" + 
+				"on m.employee_id = e.reports_to\r\n" + 
+				"where m.employee_id = ?) and denied = false;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
 
-		// get employee name for request????
+			while (rs.next()) {
+				ReimbursementRequest reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setUserName(getEmployeeUsernameById(rs.getInt("employee_id")));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setCost(rs.getInt("cost"));
+			}
 
-		return null;
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		
+
+		return ;
 	}
 
 	public String getEmployeeUsernameById(int employee_id) {
-		LoggingUtil.debug("getEmployeeNameById()");
+		LoggingUtil.debug("getEmployeeUsernameById()");
 		
-		String employeeUsername; 
+		String employeeUsername = null; 
 
 		String sql = "select * from employee where employee_id = ?;";
 
@@ -95,5 +122,32 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		}
 
 		return employeeUsername;
+	}
+
+	@Override
+	public String getReimbursementTypeById(int reimbursement_type_id) {
+		LoggingUtil.debug("getReimbursementTypeById()");
+		
+		String reimbursementType = null; 
+		String sql = "select * from reimbursement_type where reimbursement_type_id = ?;";
+		
+		PreparedStatement pstmt;
+
+		try {
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reimbursement_type_id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				reimbursementType = rs.getString("event_type");
+			}
+			
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return reimbursementType;
 	}
 }
