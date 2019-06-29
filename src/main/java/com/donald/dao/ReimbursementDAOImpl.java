@@ -346,6 +346,41 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return numberOfRows;
 	}
 
+	@Override
+	public List<ReimbursementRequest> viewGradedRequests() {
+		LoggingUtil.debug("viewGradedRequests() DAO");
+
+		List<ReimbursementRequest> gradedRequestList = new ArrayList<>();
+
+		String sql = "select * from request\r\n" + 
+				"where approval_reference_id = 5 and denied = false;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReimbursementRequest reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setUserName(getEmployeeUsernameById(rs.getInt("employee_id")));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
+				reimbursementRequest.setGradeReceived(rs.getString("grade_received"));
+
+				gradedRequestList.add(reimbursementRequest);
+
+			}
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return gradedRequestList;
+	}
+
 
 
 }

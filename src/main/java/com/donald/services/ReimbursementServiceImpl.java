@@ -225,4 +225,16 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	}
 
+	@Override
+	public List<ReimbursementRequest> viewGradedRequests(Employee loggedInEmployee) {
+		List<ReimbursementRequest> gradedRequestList = null;
+		
+		//if employee is benco then they should see the benco requests, else other peoples for presentation
+		if (loggedInEmployee instanceof BenefitsCoordinator) {
+			gradedRequestList = rdi.viewGradedRequests();
+		}
+		
+		return gradedRequestList;
+	}
+
 }

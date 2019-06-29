@@ -51,4 +51,14 @@
     <servlet-name>UpdateRequestsServlet</servlet-name>
     <url-pattern>/HTML/update_request</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>gradeRequestsApprovalServlet</display-name>
+    <servlet-name>gradeRequestsApprovalServlet</servlet-name>
+    <servlet-class>com.donald.servlets.gradeRequestsApprovalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gradeRequestsApprovalServlet</servlet-name>
+    <url-pattern>/HTML/grade_approval</url-pattern>
+  </servlet-mapping>
 </web-app>

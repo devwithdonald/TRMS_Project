@@ -28,5 +28,7 @@ public interface ReimbursementDAOInt {
 	
 	public int updateGradeRequest(int requestId, String grade);
 	
+	public List<ReimbursementRequest> viewGradedRequests();
+	
 	
 }

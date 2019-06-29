@@ -31,4 +31,6 @@ public interface ReimbursementServiceInt {
 	public String updateReimbursementGrade(int requestId, String gradingFormat, String grade, Employee loggedInEmployee);
 	
 	public boolean updateGradeIdVerification(Employee loggedInEmployee, int requestId);
+	
+	public List<ReimbursementRequest> viewGradedRequests(Employee loggedInEmployee);
 }

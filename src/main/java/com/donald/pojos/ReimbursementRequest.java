@@ -5,9 +5,13 @@ public class ReimbursementRequest extends Reimbursement{
 	private int status; // level of approval
 	private String gradingFormat;
 	private String passingGrade;
+	private String gradeReceived;
 	
 	
 	
+
+
+
 	public ReimbursementRequest() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,6 +50,15 @@ public class ReimbursementRequest extends Reimbursement{
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	public String getGradeReceived() {
+		return gradeReceived;
+	}
+
+
+	public void setGradeReceived(String gradeReceived) {
+		this.gradeReceived = gradeReceived;
 	}
 
 	@Override
