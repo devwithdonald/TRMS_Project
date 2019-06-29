@@ -111,15 +111,11 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 
-		String sql = "select * from request where employee_id in (select e.employee_id\r\n" + 
-				"from employee e\r\n" + 
-				"inner join employee m \r\n" + 
-				"on m.employee_id = e.reports_to\r\n" + 
-				"where m.employee_id in (select m.employee_id\r\n" + 
-				"from employee m\r\n" + 
-				"inner join employee h\r\n" + 
-				"on h.employee_id = m.reports_to\r\n" + 
-				"where h.employee_id = ?)) and denied = false and approval_reference_id = 2;";
+		String sql = "select * from request where employee_id in (select e.employee_id\r\n" + "from employee e\r\n"
+				+ "inner join employee m \r\n" + "on m.employee_id = e.reports_to\r\n"
+				+ "where m.employee_id in (select m.employee_id\r\n" + "from employee m\r\n"
+				+ "inner join employee h\r\n" + "on h.employee_id = m.reports_to\r\n"
+				+ "where h.employee_id = ?)) and denied = false and approval_reference_id = 2;";
 
 		PreparedStatement pstmt;
 
@@ -151,15 +147,14 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		return reimbursementRequestList;
 	}
-	
+
 	@Override
 	public List<ReimbursementRequest> viewReimbursementRequestsBenCo() {
 		LoggingUtil.debug("viewReimbursementRequestsDeptHead() DAO");
 
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 
-		String sql = "select * from request\r\n" + 
-				"where approval_reference_id = 3 and denied = false;";
+		String sql = "select * from request\r\n" + "where approval_reference_id = 3 and denied = false;";
 
 		PreparedStatement pstmt;
 
@@ -289,6 +284,40 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	}
 
+	@Override
+	public List<ReimbursementRequest> viewPersonalReimbursementRequests(Employee loggedInEmployee) {
+		LoggingUtil.debug("viewPersonalReimbursementRequests() DAO");
+
+		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
+
+		String sql = "select * from request\r\n" + "where employee_id = ? and approval_reference_id = 4;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReimbursementRequest reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setDateOfEvent(rs.getString("date_of_event"));
+				reimbursementRequest.setDescription(rs.getString("description"));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
+
+				reimbursementRequestList.add(reimbursementRequest);
+
+			}
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return reimbursementRequestList;
 	
+	}
 
 }

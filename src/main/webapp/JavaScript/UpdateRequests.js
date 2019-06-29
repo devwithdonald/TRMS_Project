@@ -8,7 +8,7 @@ function getRequests(){
         }
     }
 
-    xhr.open("GET", "UpdateRequestsServlet", true);
+    xhr.open("GET", "update_request", true);
 
     xhr.send();
 }

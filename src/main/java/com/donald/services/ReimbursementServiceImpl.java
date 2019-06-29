@@ -175,4 +175,12 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	}
 
+	@Override
+	public List<ReimbursementRequest> viewPersonalPendingReimbursementRequests(Employee loggedInEmployee) {
+		//call the DAO!
+		List<ReimbursementRequest> reimbursementRequestList = rdi.viewPersonalReimbursementRequests(loggedInEmployee);
+		
+		return reimbursementRequestList;
+	}
+
 }

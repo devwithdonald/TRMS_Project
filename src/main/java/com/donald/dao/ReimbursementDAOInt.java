@@ -23,4 +23,6 @@ public interface ReimbursementDAOInt {
 	public int updateAcceptRequest(int request_id);
 	
 	public int updateDenyRequest(int request_id);
+	
+	public List<ReimbursementRequest> viewPersonalReimbursementRequests(Employee loggedInEmployee);
 }

@@ -26,5 +26,7 @@ public interface ReimbursementServiceInt {
 	
 	public boolean reimbursementIdVerification(Employee loggedInEmployee, int requestId);
 	
+	public List<ReimbursementRequest> viewPersonalPendingReimbursementRequests(Employee loggedInEmployee);
+	
 	//need method to request additional info
 }
