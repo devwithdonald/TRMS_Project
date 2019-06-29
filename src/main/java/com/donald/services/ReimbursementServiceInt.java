@@ -14,7 +14,9 @@ public interface ReimbursementServiceInt {
 	
 	public String sendCorrectRedirectLink(Employee loggedInEmployee);
 	
+	//supervisor and change parameter (supervisor id???) just append to list?
 	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee);
+	
 	
 	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo);
 	

@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Associate;
+import com.donald.pojos.DepartmentHead;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
+import com.donald.pojos.Supervisor;
 import com.donald.util.LoggingUtil;
 
 public class ReimbursementServiceImpl implements ReimbursementServiceInt {
@@ -83,8 +85,14 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee) {
 		LoggingUtil.debug("viewPendingReimbursementRequests SERVICE");
 		//logic? on which to call????? depending on employee logged in?
+		List<ReimbursementRequest> reimbursementRequestList = null;
 		//call the DAO
-		List<ReimbursementRequest> reimbursementRequestList = rdi.viewReimbursementRequestForEmployee(loggedInEmployee);
+		if (loggedInEmployee instanceof DepartmentHead) {
+			reimbursementRequestList = rdi.viewReimbursementRequestsDeptHead(loggedInEmployee);
+		} else if (loggedInEmployee instanceof Supervisor) {
+			reimbursementRequestList = rdi.viewReimbursementRequestForEmployee(loggedInEmployee);
+		}
+		
 		
 		return reimbursementRequestList;
 	}

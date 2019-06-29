@@ -10,7 +10,7 @@ import java.util.List;
 import com.donald.pojos.Associate;
 import com.donald.pojos.BenefitsCoordinator;
 import com.donald.pojos.Employee;
-import com.donald.pojos.Manager;
+import com.donald.pojos.DepartmentHead;
 import com.donald.pojos.Supervisor;
 import com.donald.util.ConnectionFactory;
 import com.donald.util.LoggingUtil;
@@ -48,7 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 				} else if (rs.getInt("employee_type_id") == 2) {
 					employee = new Supervisor(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
 				} else if (rs.getInt("employee_type_id") == 3) {
-					employee = new Manager(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+					employee = new DepartmentHead(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
 				} else if (rs.getInt("employee_type_id") == 4) {
 					employee = new BenefitsCoordinator(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
 				}

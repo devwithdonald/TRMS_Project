@@ -9,7 +9,10 @@ public interface ReimbursementDAOInt {
 
 	public int insertReimbursement(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest);
 	
+	//supervisor and change parameter (supervisor id???) just append to list?
 	public List<ReimbursementRequest> viewReimbursementRequestForEmployee(Employee loggedInEmployee);
+	
+	public List<ReimbursementRequest> viewReimbursementRequestsDeptHead(Employee loggedInEmployee);
 
 	public String getEmployeeUsernameById(int employee_id);
 	
