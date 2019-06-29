@@ -77,7 +77,7 @@ public class gradeRequestsApprovalServlet extends HttpServlet {
 		
 
 		//calling service method 
-		String message = rsi.finalGradeDecsion(requestId, decision, loggedInEmployee);
+		String message = rsi.finalGradeDecision(requestId, decision, loggedInEmployee);
 		//return success message!
 		response.getWriter().write(message);
 	}

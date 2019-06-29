@@ -38,4 +38,6 @@ public interface ReimbursementDAOInt {
 	
 	public int getReimbursementPaybackPercentageByReimbursementType(String ReimbursementRequestType);
 	
+	public int insertReimbursementAward(int employeeId, int reimbursementTypeId, int awardAmount);
+	
 }

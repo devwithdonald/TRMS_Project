@@ -472,6 +472,36 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return paybackPercentage;
 	}
 
+	@Override
+	public int insertReimbursementAward(int employeeId, int reimbursementTypeId, int awardAmount) {
+		LoggingUtil.debug("insertReimbursementAward() DAO");
+
+		String sql = "insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)\r\n" + 
+				"	values(?,?,?);";
+
+		PreparedStatement pstmt;
+		
+		int numberOfRows = 0;
+
+		try {
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, employeeId);
+			pstmt.setInt(2, reimbursementTypeId);
+			pstmt.setInt(3, awardAmount);
+
+
+			numberOfRows = pstmt.executeUpdate();
+
+			LoggingUtil.debug(numberOfRows + " number of rows affected - insertReimbursement()");
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return numberOfRows;
+	}
+
 
 
 

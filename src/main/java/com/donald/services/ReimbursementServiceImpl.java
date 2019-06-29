@@ -245,7 +245,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		boolean verifiedRequestId = false;
 		
 		int numberOfRows = 0;
-		Boolean success = false;
+		//Boolean success = false;
 		String message = null;
 		
 		// employee instance is checked in view method
@@ -257,29 +257,30 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 			if (decision.equals("Accept")) {
 				// might need to do other stuff here?
 				// success boolean will need to change!!!!!
-				//(requestid, denied = false, awardgiven = true) 
+				//(requestId, denied = false, awardgiven = true) 
 				
-				//need to calculate award give
-				int awardAmount = calculateAward(requestId);
-				
+							
 				// if two rows affected???? good?
 				numberOfRows = rdi.updateFinalGrade(requestId, false, true);
-				//TODO call the awarded reimbursements service method to call the DAO, need to do calculations!!!! table
 				
+				//getting employee who is getting award
+				ReimbursementRequest employeeRequest = rdi.getReimbursementRequest(requestId);
 				
-				
-				rdi.insertReimbursementAward();
+				int awardAmount = calculateAward(requestId);
+
+				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getId(), getEventTypeId(employeeRequest.getEventType()), awardAmount);
 				
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
-				//(requestid, denied = true, awardgiven = false) 
-				success = rdi.updateFinalGrade(requestId, true, false);
+				// (requestId, denied = true, awardgiven = false) 
+				numberOfRows = rdi.updateFinalGrade(requestId, true, false);
+				numberOfRows++;
 				message = "denied";
 			}
 
 			
 			
-			if (success == true) {
+			if (numberOfRows == 2) {
 				return "Reimbursement final grade " + message + " successfully";
 			} else {
 				return "Reimbursement final grade " + message + " unsuccessfully";
@@ -311,7 +312,6 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		//get the cost of the reimbursement by the request id 
 		ReimbursementRequest reimbursementRequest = rdi.getReimbursementRequest(requestId);
 		
-		//will need to cast!
 		// select payback_percentage from reimbursement_type return that value (cast)
 		int paybackPercentage = rdi.getReimbursementPaybackPercentageByReimbursementType(reimbursementRequest.getEventType());
 		
@@ -319,6 +319,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		
 		return awardAmount;
 	}
+	
 
 	
 	
