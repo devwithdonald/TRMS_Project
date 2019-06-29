@@ -35,8 +35,54 @@ function appendToTable(requestArr){
     
 }
 
+
+function finalDecision(event){
+    event.preventDefault();
+
+    let requestId = document.getElementById("request_id").value;
+    let decision = document.getElementsByName("radioDecision");
+    //get checked radio button
+    for (let i = 0; i < decision.length; i++){
+        if(decision[i].checked){
+            decision = decision[i].value;
+            break;
+        }
+    }
+
+    //make new JSON object
+    let finalDecision = new FinalDecision(requestId, decision);
+
+    let xhr = new XMLHttpRequest();
+
+     
+	xhr.onreadystatechange = function() {
+        
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            
+            alert(xhr.responseText);
+            getRequests();
+
+		}
+    }
+    
+    xhr.open("POST", "grade_approval", true);
+
+    console.log(finalDecision);
+
+    xhr.send(JSON.stringify(finalDecision));
+
+
+
+}
+
+let FinalDecision = function (requestId, decision){
+    this.requestId = requestId;
+    this.decision = decision;
+}
+
+
 window.onload = function () {
     getRequests();
 
-    //document.getElementById("approvalForm").addEventListener("submit", requestDecision)
+    document.getElementById("finalDecisionForm").addEventListener("submit", finalDecision)
 }
