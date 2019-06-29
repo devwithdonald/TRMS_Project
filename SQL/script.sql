@@ -65,8 +65,8 @@ insert into request(employee_id, reimbursement_type_id, approval_reference_id, c
 	values (?,?,?,?,?,?,?);
 
 update request
-set employee_id = 5
-where employee_id = 1;
+set employee_id = 7
+where cost = 0;
 
 
 -- insert default items
@@ -106,16 +106,25 @@ insert into reimbursement_type(event_type, payback_percentage)
 
 
 
+--
+insert into approval_reference(description)
+	values ('Needs Supervisor Approval');
 
 insert into approval_reference(description)
-	values ('needs supervisor approval');
-
+	values ('Needs Dept Head Approval');
+--
 
 
 select * from employee;
 
 insert into employee(employee_type_id, username, password, reports_to)
 	values (1, 'test', '123', 3);
+
+insert into employee(employee_type_id, username, password, reports_to)
+	values (1, 'associate', '123', 3);
+	
+	insert into employee(employee_type_id, username, password, reports_to)
+	values (1, 'low-level', '123', 2);
 
 insert into employee(employee_type_id, username, password, reports_to)
 	values (2, 'supervisor', '456', 2);
@@ -169,6 +178,7 @@ on h.employee_id = m.reports_to
 where h.employee_id = 2)) and denied = false and approval_reference_id = 2;
 
 
+
 select * from request where employee_id = 5 and denied = false;
 
 -- requests for employee as supervisor
@@ -181,4 +191,10 @@ where m.employee_id = 3) and denied = false and approval_reference_id = 1;
 select * from employee where employee_id = 4;
 select * from reimbursement_type where reimbursement_type_id = 4;
 
+
+select * from request;
+
+update request
+set approval_reference_id = approval_reference_id + 1
+where request_id = ?;
 
