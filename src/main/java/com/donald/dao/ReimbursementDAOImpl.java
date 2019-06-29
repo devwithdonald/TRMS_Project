@@ -473,7 +473,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	@Override
-	public int insertReimbursementAward(int employeeId, int reimbursementTypeId, int awardAmount) {
+	public int insertReimbursementAward(String employeeUsername, int reimbursementTypeId, int awardAmount) {
 		LoggingUtil.debug("insertReimbursementAward() DAO");
 
 		String sql = "insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)\r\n" + 
@@ -486,7 +486,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		try {
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, employeeId);
+			pstmt.setInt(1, getEmployeeIdByUsername(employeeUsername));
 			pstmt.setInt(2, reimbursementTypeId);
 			pstmt.setInt(3, awardAmount);
 
@@ -500,6 +500,34 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		}
 
 		return numberOfRows;
+	}
+
+	@Override
+	public int getEmployeeIdByUsername(String userName) {
+		// LoggingUtil.debug("getEmployeeUsernameById() DAO");
+
+		int employeeId = 0;
+
+		String sql = "select employee_id from employee\r\n" + 
+				"where username = ?;";
+
+		PreparedStatement pstmt;
+
+		try {
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userName);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				employeeId = rs.getInt("employee_id");
+			}
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return employeeId;
 	}
 
 

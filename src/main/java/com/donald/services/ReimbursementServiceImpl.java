@@ -268,7 +268,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				
 				int awardAmount = calculateAward(requestId);
 
-				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getId(), getEventTypeId(employeeRequest.getEventType()), awardAmount);
+				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getUserName(), getEventTypeId(employeeRequest.getEventType()), awardAmount);
 				
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
