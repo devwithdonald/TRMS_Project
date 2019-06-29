@@ -18,11 +18,13 @@ public interface ReimbursementServiceInt {
 	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee);
 	
 	
-	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo);
+	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo, Employee loggedInEmployee);
 	
 	public boolean acceptRequest(int requestId);
 	
 	public boolean denyRequest(int requestId);
+	
+	public boolean reimbursementIdVerification(Employee loggedInEmployee, int requestId);
 	
 	//need method to request additional info
 }

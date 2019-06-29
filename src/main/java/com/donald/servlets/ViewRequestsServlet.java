@@ -42,8 +42,7 @@ public class ViewRequestsServlet extends HttpServlet{
 			} 
 		}
 		
-		//might be wrong?
-		
+
 		
 		//getting reimbursements
 		//TODO may need to do switch case statements depending on whos asking!
@@ -83,6 +82,8 @@ public class ViewRequestsServlet extends HttpServlet{
 			} 
 		}
 		
+		
+		
 		// pulling information from the accept/deny form
 		String body = req.getReader().readLine();
 		System.out.println("contents from approval form ->" + body);
@@ -100,7 +101,7 @@ public class ViewRequestsServlet extends HttpServlet{
 		
 		//call service to choose which one to call!
 		// this should split off into different decision based off accept,deny or request additional info
-		String message = rsi.reimbursementDecisionMaker(requestId, decision, additionalInfo);
+		String message = rsi.reimbursementDecisionMaker(requestId, decision, additionalInfo, loggedInEmployee);
 		//return success message!
 		resp.getWriter().write(message);
 		

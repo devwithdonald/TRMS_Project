@@ -98,23 +98,34 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 
 	@Override
-	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo) {
+	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo, Employee loggedInEmployee) {
 		Boolean success = false;
 		String message = null;
 		
-		if (decision.equals("Accept")) {
-			success = acceptRequest(requestId);
-			message = "accepted";
-		} else if (decision.equals("Deny")) {
-			success = denyRequest(requestId);
-			message = "denied";
+		boolean verifiedRequestId = reimbursementIdVerification(loggedInEmployee, requestId);
+
+		
+		if (verifiedRequestId == true) {
+			
+			if (decision.equals("Accept")) {
+				success = acceptRequest(requestId);
+				message = "accepted";
+			} else if (decision.equals("Deny")) {
+				success = denyRequest(requestId);
+				message = "denied";
+			}
+			
+			if(success == true) {
+				return "Reimbursement request " +  message +  " successfully";
+			} else {
+				return "Reimbursement request " + message + " unsuccessfully";
+			}
+		} else {
+			return "Invalid Request Id";
 		}
 		
-		if(success == true) {
-			return "Reimbursement request " +  message +  " successfully";
-		} else {
-			return "Reimbursement request " + message + " unsuccessfully";
-		}
+
+
 	
 	}
 
@@ -143,6 +154,22 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean reimbursementIdVerification(Employee loggedInEmployee, int requestId) {
+		
+		//use loggedInEmployee to get their list, check id reference then come back
+		List<ReimbursementRequest> reimbursementRequests = viewPendingReimbursementRequests(loggedInEmployee);
+		
+		for (int i = 0; i < reimbursementRequests.size(); i++) {
+			if (reimbursementRequests.get(i).getId() == requestId) {
+				return true;
+			}
+		}
+		
+		return false;
+
 	}
 
 }
