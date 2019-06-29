@@ -17,6 +17,9 @@ function getRequests(){
 function appendToTable(requestArr){
     const tableBody = document.getElementById('requests-view-table-body');
 
+    //clear contents first!
+    tableBody.innerHTML = "";
+
     for (let i = 0; i < requestArr.length; i++){
         tableBody.innerHTML += `
         <tr>
@@ -60,8 +63,10 @@ function requestDecision(event){
 	xhr.onreadystatechange = function() {
         
         if (xhr.readyState === 4 && xhr.status === 200) {
-            //alert(xhr.responseText);
-            console.log("success");
+            
+            alert(xhr.responseText);
+            getRequests();
+
 		}
     }
     

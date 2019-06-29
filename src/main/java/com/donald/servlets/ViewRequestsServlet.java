@@ -102,6 +102,8 @@ public class ViewRequestsServlet extends HttpServlet{
 		// this should split off into different decision based off accept,deny or request additional info
 		String message = rsi.reimbursementDecisionMaker(requestId, decision, additionalInfo);
 		//return success message!
+		resp.getWriter().write(message);
+		
 		
 		
 		
