@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>TRMS_Project</display-name>
-  
-  <!--  DONT NEED /HTML/LOGIN FOR THE WEB ADDRESSS NAMESS -->
-  
-  <!-- LOGIN SERVLET -->
   <servlet>
-  	<servlet-name>loginServlet</servlet-name>
-  	<servlet-class>com.donald.servlets.LoginServlet</servlet-class>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.donald.servlets.LoginServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>loginServlet</servlet-name>
-  	<url-pattern>/HTML/login</url-pattern>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/HTML/login</url-pattern>
   </servlet-mapping>
-  
-  <!-- REIMBURSEMENT REQUEST FORM SERVLET -->
   <servlet>
-  	<servlet-name>reimbursementRequestFormServlet</servlet-name>
-  	<servlet-class>com.donald.servlets.ReimbursementRequestFormServlet</servlet-class>
+    <servlet-name>reimbursementRequestFormServlet</servlet-name>
+    <servlet-class>com.donald.servlets.ReimbursementRequestFormServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>reimbursementRequestFormServlet</servlet-name>
-  	<url-pattern>/HTML/reimbursement_request_form</url-pattern>
+    <servlet-name>reimbursementRequestFormServlet</servlet-name>
+    <url-pattern>/HTML/reimbursement_request_form</url-pattern>
   </servlet-mapping>
-  
-    <!-- NON-ASSOCIATE REIMBURSEMENT REQUEST FORM SERVLET -->
   <servlet>
-  	<servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
-  	<servlet-class>com.donald.servlets.ReimbursementRequestFromNonAssociateServlet</servlet-class>
+    <servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
+    <servlet-class>com.donald.servlets.ReimbursementRequestFromNonAssociateServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
-  	<url-pattern>/HTML/request_form_non_associate</url-pattern>
+    <servlet-name>reimbursementRequestFormNonAssociateServlet</servlet-name>
+    <url-pattern>/HTML/request_form_non_associate</url-pattern>
   </servlet-mapping>
-  
-    <!-- LOG OUT SERVLET -->
   <servlet>
-  	<servlet-name>logoutServlet</servlet-name>
-  	<servlet-class>com.donald.servlets.LogoutServlet</servlet-class>
+    <servlet-name>logoutServlet</servlet-name>
+    <servlet-class>com.donald.servlets.LogoutServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>logoutServlet</servlet-name>
-  	<url-pattern>/HTML/logout</url-pattern>
+    <servlet-name>logoutServlet</servlet-name>
+    <url-pattern>/HTML/logout</url-pattern>
   </servlet-mapping>
-  
-  <!-- View Requests Servlet -->
-   <servlet>
-  	<servlet-name>viewRequestsServlet</servlet-name>
-  	<servlet-class>com.donald.servlets.ViewRequestsServlet</servlet-class>
+  <servlet>
+    <servlet-name>viewRequestsServlet</servlet-name>
+    <servlet-class>com.donald.servlets.ViewRequestsServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>viewRequestsServlet</servlet-name>
-  	<url-pattern>/HTML/view_requests</url-pattern>
+    <servlet-name>viewRequestsServlet</servlet-name>
+    <url-pattern>/HTML/view_requests</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>UpdateRequestsServlet</display-name>
+    <servlet-name>UpdateRequestsServlet</servlet-name>
+    <servlet-class>com.donald.servlets.UpdateRequestsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateRequestsServlet</servlet-name>
+    <url-pattern>/UpdateRequestsServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

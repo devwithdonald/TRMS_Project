@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>View Requests</title>
+    <title>Update Request</title>
 </head>
 
 <body>
@@ -28,14 +28,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="request_form_non_associate.html">Apply</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="update_request.html">Update</a>
-                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="view_requests.html">Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Grade Approval</a>
+                    <a class="nav-link" href="update_request.html">Update</a>
                 </li>
                 <li class="nav-item">
                     <!-- servlet here? -->
@@ -50,23 +44,20 @@
         <thead>
             <tr>
                 <th scope="col">Request Id</th>
-                <th scope="col">Employee Username</th>
                 <th scope="col">Reimbursement Type</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Location</th>
                 <th scope="col">Date of Event</th>
                 <th scope="col">Description</th>
                 <th scope="col">Grading Format</th>
                 <th scope="col">Passing Grade Needed</th>
             </tr>
         </thead>
-        <tbody id="requests-view-table-body">
+        <tbody id="update-view-table-body">
         </tbody>
     </table>
 
     <!-- accept/deny form -->
-    <form  id="approvalForm">
-        <h2>Accept/Deny Requests</h2>
+    <form id="updateForm">
+        <h2>Update Request Form</h2>
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Request Id</label>
             <div class="col-sm-10">
@@ -76,25 +67,22 @@
 
         <fieldset class="form-group">
             <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0">Decision</legend>
+                <legend class="col-form-label col-sm-2 pt-0">Grading Format</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision1" value="Accept"
-                            checked>
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision1"
+                            value="Grade" checked>
                         <label class="form-check-label" for="gridRadios1">
-                            Accept
+                            Grade
                         </label>
+
                     </div>
+
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision2" value="Deny">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision2"
+                            value="Presentation">
                         <label class="form-check-label" for="gridRadios2">
-                            Deny
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision3" value="Request Additional Information">
-                        <label class="form-check-label" for="gridRadios3">
-                            Request Additional Information
+                            Presentation
                         </label>
                     </div>
                 </div>
@@ -102,18 +90,28 @@
         </fieldset>
 
         <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Additional Information Message</label>
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Grade</label>
             <div class="col-sm-10">
-                <input type="text" name="additionalInfo" class="form-control" id="additionalinfo"
-                    placeholder="Please leave blank if additional information is not required">
+                <input type="text" name="gradeInput" class="form-control" id="gradeInput"
+                    placeholder="Input Grade - Please leave blank if Presentation">
             </div>
         </div>
+
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Presentation Input</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control-file" id="presentationFile">
+            </div> 
+        </div>
+
 
         <div class="form-group row">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
+
+
     </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -126,7 +124,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../JavaScript/ViewRequests.js"></script>
+
+    <!-- CHANGE!!! -->
+    <script type="text/javascript" src="../JavaScript/UpdateRequests.js"></script>
 </body>
 
 </html>
