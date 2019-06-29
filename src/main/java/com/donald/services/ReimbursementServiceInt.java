@@ -33,4 +33,12 @@ public interface ReimbursementServiceInt {
 	public boolean updateGradeIdVerification(Employee loggedInEmployee, int requestId);
 	
 	public List<ReimbursementRequest> viewGradedRequests(Employee loggedInEmployee);
+	
+	public String finalGradeDecision(int requestId, String decision, Employee loggedInEmployee);
+	
+	public boolean finalGradeIdVerification(Employee loggedInEmployee, int requestId);
+	
+	public boolean acceptFinalGrade(int requestId);
+	
+	public boolean denyFinalGrade(int requestId);
 }

@@ -13,6 +13,7 @@ import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -58,8 +59,27 @@ public class gradeRequestsApprovalServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		//need login verification 
+		
+		// pulling information from the update form
+		String body = request.getReader().readLine();
+		LoggingUtil.debug("contents from update form ->" + body);
+		
+		// treating JSON obj as DOM tree
+		JsonNode parent = new ObjectMapper().readTree(body);
+		
+		Integer requestId = parent.get("requestId").asInt();
+		String decision = parent.get("decision").asText();
+		
+		LoggingUtil.debug("requestId: " + requestId);
+		LoggingUtil.debug("decision: " + decision);
+		
+
+		//calling service method 
+		String message = rsi.finalGradeDecsion(requestId, decision, loggedInEmployee);
+		//return success message!
+		response.getWriter().write(message);
 	}
 
 }

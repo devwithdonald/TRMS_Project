@@ -146,7 +146,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public boolean denyRequest(int requestId) {
-		// TODO Auto-generated method stub
+
 		int rowsAffected = rdi.updateDenyRequest(requestId);
 
 		if (rowsAffected == 1) {
@@ -197,8 +197,6 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				LoggingUtil.trace("Presentaion selected, in updateReimbursementGrade - needs implementation");
 			}
 
-
-
 			if (success == 1) {
 				return "Reimbursement request updated successfully";
 			} else {
@@ -211,9 +209,10 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public boolean updateGradeIdVerification(Employee loggedInEmployee, int requestId) {
-		
+
 		// use loggedInEmployee to get their list, check id reference then come back
-		List<ReimbursementRequest> personalPendingReimbursementRequests = viewPersonalPendingReimbursementRequests(loggedInEmployee);
+		List<ReimbursementRequest> personalPendingReimbursementRequests = viewPersonalPendingReimbursementRequests(
+				loggedInEmployee);
 
 		for (int i = 0; i < personalPendingReimbursementRequests.size(); i++) {
 			if (personalPendingReimbursementRequests.get(i).getId() == requestId) {
@@ -228,13 +227,91 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	@Override
 	public List<ReimbursementRequest> viewGradedRequests(Employee loggedInEmployee) {
 		List<ReimbursementRequest> gradedRequestList = null;
-		
-		//if employee is benco then they should see the benco requests, else other peoples for presentation
+
+		// if employee is benco then they should see the benco requests, else other
+		// peoples for presentation
 		if (loggedInEmployee instanceof BenefitsCoordinator) {
 			gradedRequestList = rdi.viewGradedRequests();
 		}
-		
+
 		return gradedRequestList;
 	}
+
+	@Override
+	public String finalGradeDecision(int requestId, String decision, Employee loggedInEmployee) {
+		// verify it's in there
+		// and who's doing the accepting!!!!
+		// NEED EMPLOYEE FOR ID VERIFICATION
+		boolean verifiedRequestId = false;
+		Boolean success = false;
+		String message = null;
+		
+		// employee instance is checked in view method
+		verifiedRequestId = finalGradeIdVerification(loggedInEmployee, requestId);
+
+
+		if (verifiedRequestId == true) {
+
+			if (decision.equals("Accept")) {
+				success = acceptFinalGrade(requestId);
+				message = "accepted";
+			} else if (decision.equals("Deny")) {
+				success = denyFinalGrade(requestId);
+				message = "denied";
+			}
+
+			
+			
+			if (success == true) {
+				return "Reimbursement final grade " + message + " successfully";
+			} else {
+				return "Reimbursement final grade " + message + " unsuccessfully";
+			}
+		} else {
+			return "Invalid Request Id";
+		}
+
+	}
+
+	@Override
+	public boolean finalGradeIdVerification(Employee loggedInEmployee, int requestId) {
+		
+		// use loggedInEmployee to get their list, check id reference then come back
+		List<ReimbursementRequest> gradedRequestList = viewGradedRequests(loggedInEmployee);
+		
+		for (int i = 0; i < gradedRequestList.size(); i++) {
+			if (gradedRequestList.get(i).getId() == requestId) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean acceptFinalGrade(int requestId) {
+		
+		int rowsAffected = rdi.acceptFinalGrade(requestId);
+
+		if (rowsAffected == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean denyFinalGrade(int requestId) {
+		
+		int rowsAffected = rdi.denyFinalGrade(requestId);
+
+		if (rowsAffected == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 
 }

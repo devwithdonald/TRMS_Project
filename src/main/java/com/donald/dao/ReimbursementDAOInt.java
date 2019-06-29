@@ -30,5 +30,6 @@ public interface ReimbursementDAOInt {
 	
 	public List<ReimbursementRequest> viewGradedRequests();
 	
+	public int finalGradeDecision(int requestId, String decision);
 	
 }
