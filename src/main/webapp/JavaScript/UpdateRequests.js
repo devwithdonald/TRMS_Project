@@ -34,23 +34,25 @@ function appendToTable(requestArr){
     
 }
 
-function requestDecision(event){
+function updateRequest(event){
     event.preventDefault();
 
     let requestId = document.getElementById("request_id").value;
-    let decision = document.getElementsByName("radioDecision");
+    let gradingFormat = document.getElementsByName("radioDecision");
     //get checked radio button
-    for (let i = 0; i < decision.length; i++){
-        if(decision[i].checked){
-            decision = decision[i].value;
+    for (let i = 0; i < gradingFormat.length; i++){
+        if(gradingFormat[i].checked){
+            gradingFormat = gradingFormat[i].value;
             break;
         }
     }
 
-    let additionalInfo = document.getElementById("additionalinfo").value;
+    let grade = document.getElementById("gradeInput").value;
+
+    //need presentation implementation
 
     //make new JSON object
-    let requestDecision = new RequestDecision(requestId, decision, additionalInfo);
+    let updateRequest = new UpdateRequest(requestId, gradingFormat, grade);
 
     let xhr = new XMLHttpRequest();
 
@@ -65,20 +67,20 @@ function requestDecision(event){
 		}
     }
     
-    xhr.open("POST", "view_requests", true);
+    xhr.open("POST", "update_request", true);
+    
+    console.log(updateRequest);
 
-    console.log(requestDecision);
-
-    xhr.send(JSON.stringify(requestDecision));
+    xhr.send(JSON.stringify(updateRequest));
 
 
 
 }
 
-let RequestDecision = function (requestId, decision, additionalInfo){
+let UpdateRequest = function (requestId, gradingFormat, grade){
     this.requestId = requestId;
-    this.decision = decision;
-    this.additionalInfo = additionalInfo;
+    this.gradingFormat = gradingFormat;
+    this.grade = grade;
 }
 
 window.onload = function () {

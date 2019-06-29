@@ -326,7 +326,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		int numberOfRows = 0;
 
 		String sql = "update request\r\n" + 
-				"set grade_received = ? and approval_reference_id = 5;\r\n" + 
+				"set grade_received = ?, approval_reference_id = 5\r\n" + 
 				"where request_id = ?;";
 
 		PreparedStatement pstmt;
