@@ -187,7 +187,26 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public int updateDenyRequest(int request_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		int numberOfRows = 0;
+		
+		String sql = "update request\r\n" + 
+				"set denied = true\r\n" + 
+				"where request_id = ?;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, request_id);
+			numberOfRows = pstmt.executeUpdate();
+			
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateDenyRequest");
+			
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		
+		return numberOfRows;
+
 	}
 }
