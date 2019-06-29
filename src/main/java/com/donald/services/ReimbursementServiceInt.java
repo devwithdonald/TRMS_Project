@@ -15,4 +15,12 @@ public interface ReimbursementServiceInt {
 	public String sendCorrectRedirectLink(Employee loggedInEmployee);
 	
 	public List<ReimbursementRequest> viewPendingReimbursementRequests(Employee loggedInEmployee);
+	
+	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo);
+	
+	public boolean acceptRequest(int requestId);
+	
+	public boolean denyRequest(int requestId);
+	
+	//need method to request additional info
 }

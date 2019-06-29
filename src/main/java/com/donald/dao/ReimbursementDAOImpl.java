@@ -160,4 +160,16 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		return reimbursementType;
 	}
+
+	@Override
+	public int updateAcceptRequest(int request_id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateDenyRequest(int request_id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

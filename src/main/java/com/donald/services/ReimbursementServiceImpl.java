@@ -89,4 +89,52 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		return reimbursementRequestList;
 	}
 
+	@Override
+	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo) {
+		Boolean success = false;
+		String message = null;
+		
+		if (decision.equals("Accept")) {
+			success = acceptRequest(requestId);
+			message = "accepted";
+		} else if (decision.equals("Deny")) {
+			success = denyRequest(requestId);
+			message = "denied";
+		}
+		
+		if(success == true) {
+			return "Reimbursement request " +  message +  " successfully";
+		} else {
+			return "Reimbursement request " + message + " unsuccessfully";
+		}
+	
+	}
+
+	@Override
+	public boolean acceptRequest(int requestId) {
+
+		//call the acceptDAO
+		//return true or false determine if it was succesfull
+		int rowsAffected = rdi.updateAcceptRequest(requestId);
+		
+		if (rowsAffected == 1) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean denyRequest(int requestId) {
+		// TODO Auto-generated method stub
+		int rowsAffected = rdi.updateDenyRequest(requestId);
+		
+		if (rowsAffected == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

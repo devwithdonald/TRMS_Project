@@ -99,6 +99,9 @@ public class ViewRequestsServlet extends HttpServlet{
 		System.out.println("additionalInfo" + additionalInfo);
 		
 		//call service to choose which one to call!
+		// this should split off into different decision based off accept,deny or request additional info
+		String message = rsi.reimbursementDecisionMaker(requestId, decision, additionalInfo);
+		//return success message!
 		
 		
 		

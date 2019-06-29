@@ -14,4 +14,8 @@ public interface ReimbursementDAOInt {
 	public String getEmployeeUsernameById(int employee_id);
 	
 	public String getReimbursementTypeById(int reimbursement_type_id);
+	
+	public int updateAcceptRequest(int request_id);
+	
+	public int updateDenyRequest(int request_id);
 }
