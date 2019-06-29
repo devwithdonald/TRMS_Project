@@ -112,6 +112,9 @@ insert into approval_reference(description)
 
 insert into approval_reference(description)
 	values ('Needs Dept Head Approval');
+
+insert into approval_reference(description)
+	values ('Needs BenCo Approval');
 --
 
 
@@ -195,6 +198,13 @@ select * from reimbursement_type where reimbursement_type_id = 4;
 select * from request;
 
 update request
-set approval_reference_id = approval_reference_id + 1
+set denied = true
 where request_id = ?;
 
+--benco approval! 6 might need to change!
+select * from request
+where approval_reference_id = 3 and denied = false;
+
+--getting requests that need grade approval
+select * from request
+where employee_id = ? and approval_reference_id = 4;
