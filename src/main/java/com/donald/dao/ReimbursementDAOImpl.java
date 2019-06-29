@@ -186,7 +186,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return reimbursementRequestList;
 	}
 
-	public String getEmployeeUsernameById(int employee_id) {
+	public String getEmployeeUsernameById(int employeeId) {
 		// LoggingUtil.debug("getEmployeeUsernameById() DAO");
 
 		String employeeUsername = null;
@@ -198,7 +198,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		try {
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, employee_id);
+			pstmt.setInt(1, employeeId);
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -213,7 +213,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	@Override
-	public String getReimbursementTypeById(int reimbursement_type_id) {
+	public String getReimbursementTypeById(int reimbursementTypeId) {
 		// LoggingUtil.debug("getReimbursementTypeById() DAO");
 
 		String reimbursementType = null;
@@ -224,7 +224,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		try {
 
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, reimbursement_type_id);
+			pstmt.setInt(1, reimbursementTypeId);
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -239,7 +239,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	@Override
-	public int updateAcceptRequest(int request_id) {
+	public int updateAcceptRequest(int requestId) {
 		int numberOfRows = 0;
 
 		String sql = "update request\r\n" + "set approval_reference_id = approval_reference_id + 1\r\n"
@@ -249,7 +249,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, request_id);
+			pstmt.setInt(1, requestId);
 			numberOfRows = pstmt.executeUpdate();
 
 			LoggingUtil.debug(numberOfRows + " number of rows affected - updateAcceptRequest");
@@ -262,7 +262,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	@Override
-	public int updateDenyRequest(int request_id) {
+	public int updateDenyRequest(int requestId) {
 		int numberOfRows = 0;
 
 		String sql = "update request\r\n" + "set denied = true\r\n" + "where request_id = ?;";
@@ -271,7 +271,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, request_id);
+			pstmt.setInt(1, requestId);
 			numberOfRows = pstmt.executeUpdate();
 
 			LoggingUtil.debug(numberOfRows + " number of rows affected - updateDenyRequest");
@@ -319,5 +319,33 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return reimbursementRequestList;
 	
 	}
+
+	@Override
+	public int updateGradeRequest(int requestId, String grade) {
+		
+		int numberOfRows = 0;
+
+		String sql = "update request\r\n" + 
+				"set grade_received = ? and approval_reference_id = 5;\r\n" + 
+				"where request_id = ?;";
+
+		PreparedStatement pstmt;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, grade);
+			pstmt.setInt(2, requestId);
+			numberOfRows = pstmt.executeUpdate();
+
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateGradeRequest");
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return numberOfRows;
+	}
+
+
 
 }

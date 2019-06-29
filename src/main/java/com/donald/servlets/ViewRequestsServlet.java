@@ -86,7 +86,7 @@ public class ViewRequestsServlet extends HttpServlet{
 		
 		// pulling information from the accept/deny form
 		String body = req.getReader().readLine();
-		System.out.println("contents from approval form ->" + body);
+		LoggingUtil.debug("contents from approval form ->" + body);
 		
 		// treating JSON obj as DOM tree
 		JsonNode parent = new ObjectMapper().readTree(body);
@@ -95,9 +95,9 @@ public class ViewRequestsServlet extends HttpServlet{
 		String decision = parent.get("decision").asText();
 		String additionalInfo = parent.get("additionalInfo").asText();
 		
-		System.out.println("id" + requestId);
-		System.out.println("decision" + decision);
-		System.out.println("additionalInfo" + additionalInfo);
+		LoggingUtil.debug("requestId: " + requestId);
+		LoggingUtil.debug("decision: " + decision);
+		LoggingUtil.debug("additionalInfo: " + additionalInfo);
 		
 		//call service to choose which one to call!
 		// this should split off into different decision based off accept,deny or request additional info

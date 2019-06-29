@@ -28,5 +28,7 @@ public interface ReimbursementServiceInt {
 	
 	public List<ReimbursementRequest> viewPersonalPendingReimbursementRequests(Employee loggedInEmployee);
 	
-	//need method to request additional info
+	public String updateReimbursementGrade(int requestId, String gradingFormat, String grade, Employee loggedInEmployee);
+	
+	public boolean updateGradeIdVerification(Employee loggedInEmployee, int requestId);
 }
