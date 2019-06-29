@@ -151,6 +151,45 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		return reimbursementRequestList;
 	}
+	
+	@Override
+	public List<ReimbursementRequest> viewReimbursementRequestsBenCo() {
+		LoggingUtil.debug("viewReimbursementRequestsDeptHead() DAO");
+
+		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
+
+		String sql = "select * from request\r\n" + 
+				"where approval_reference_id = 3 and denied = false;";
+
+		PreparedStatement pstmt;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReimbursementRequest reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setUserName(getEmployeeUsernameById(rs.getInt("employee_id")));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setCost(rs.getInt("cost"));
+				reimbursementRequest.setLocationOfEvent(rs.getString("location"));
+				reimbursementRequest.setDateOfEvent(rs.getString("date_of_event"));
+				reimbursementRequest.setTimeOfEvent(rs.getString("time_of_event"));
+				reimbursementRequest.setDescription(rs.getString("description"));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
+
+				reimbursementRequestList.add(reimbursementRequest);
+
+			}
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return reimbursementRequestList;
+	}
 
 	public String getEmployeeUsernameById(int employee_id) {
 		// LoggingUtil.debug("getEmployeeUsernameById() DAO");
@@ -249,5 +288,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return numberOfRows;
 
 	}
+
+	
 
 }

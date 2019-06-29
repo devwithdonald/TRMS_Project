@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Associate;
+import com.donald.pojos.BenefitsCoordinator;
 import com.donald.pojos.DepartmentHead;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
@@ -91,6 +92,8 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 			reimbursementRequestList = rdi.viewReimbursementRequestsDeptHead(loggedInEmployee);
 		} else if (loggedInEmployee instanceof Supervisor) {
 			reimbursementRequestList = rdi.viewReimbursementRequestForEmployee(loggedInEmployee);
+		} else if (loggedInEmployee instanceof BenefitsCoordinator) {
+			reimbursementRequestList = rdi.viewReimbursementRequestsBenCo();
 		}
 		
 		
