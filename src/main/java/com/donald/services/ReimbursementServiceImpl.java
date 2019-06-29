@@ -243,6 +243,8 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		// and who's doing the accepting!!!!
 		// NEED EMPLOYEE FOR ID VERIFICATION
 		boolean verifiedRequestId = false;
+		
+		int numberOfRows = 0;
 		Boolean success = false;
 		String message = null;
 		
@@ -253,10 +255,25 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		if (verifiedRequestId == true) {
 
 			if (decision.equals("Accept")) {
-				success = acceptFinalGrade(requestId);
+				// might need to do other stuff here?
+				// success boolean will need to change!!!!!
+				//(requestid, denied = false, awardgiven = true) 
+				
+				//need to calculate award give
+				int awardAmount = calculateAward(requestId);
+				
+				// if two rows affected???? good?
+				numberOfRows = rdi.updateFinalGrade(requestId, false, true);
+				//TODO call the awarded reimbursements service method to call the DAO, need to do calculations!!!! table
+				
+				
+				
+				rdi.insertReimbursementAward();
+				
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
-				success = denyFinalGrade(requestId);
+				//(requestid, denied = true, awardgiven = false) 
+				success = rdi.updateFinalGrade(requestId, true, false);
 				message = "denied";
 			}
 
@@ -289,28 +306,20 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 
 	@Override
-	public boolean acceptFinalGrade(int requestId) {
+	public int calculateAward(int requestId) {
 		
-		int rowsAffected = rdi.acceptFinalGrade(requestId);
-
-		if (rowsAffected == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		//get the cost of the reimbursement by the request id 
+		ReimbursementRequest reimbursementRequest = rdi.getReimbursementRequest(requestId);
+		
+		//will need to cast!
+		// select payback_percentage from reimbursement_type return that value (cast)
+		int paybackPercentage = rdi.getReimbursementPaybackPercentageByReimbursementType(reimbursementRequest.getEventType());
+		
+		int awardAmount = (reimbursementRequest.getCost() * paybackPercentage) / 100;
+		
+		return awardAmount;
 	}
 
-	@Override
-	public boolean denyFinalGrade(int requestId) {
-		
-		int rowsAffected = rdi.denyFinalGrade(requestId);
-
-		if (rowsAffected == 1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	
 

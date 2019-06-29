@@ -29,7 +29,13 @@ public interface ReimbursementDAOInt {
 	public int updateGradeRequest(int requestId, String grade);
 	
 	public List<ReimbursementRequest> viewGradedRequests();
+
+	public int updateFinalGrade(int requestId, boolean denied, boolean award_given);
 	
-	public int finalGradeDecision(int requestId, String decision);
+	public String getEmployeeIdByRequestId(int requestId);
+	
+	public ReimbursementRequest getReimbursementRequest(int requestId);
+	
+	public int getReimbursementPaybackPercentageByReimbursementType(String ReimbursementRequestType);
 	
 }

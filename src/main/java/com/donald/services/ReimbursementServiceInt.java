@@ -38,7 +38,5 @@ public interface ReimbursementServiceInt {
 	
 	public boolean finalGradeIdVerification(Employee loggedInEmployee, int requestId);
 	
-	public boolean acceptFinalGrade(int requestId);
-	
-	public boolean denyFinalGrade(int requestId);
+	public int calculateAward(int requestId);
 }

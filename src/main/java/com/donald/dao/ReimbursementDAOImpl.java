@@ -353,7 +353,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		List<ReimbursementRequest> gradedRequestList = new ArrayList<>();
 
 		String sql = "select * from request\r\n" + 
-				"where approval_reference_id = 5 and denied = false;";
+				"where approval_reference_id = 5 and denied = false and award_given = false;";
 		
 		PreparedStatement pstmt;
 		
@@ -379,6 +379,97 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		}
 
 		return gradedRequestList;
+	}
+
+
+	@Override
+	public int updateFinalGrade(int requestId, boolean denied, boolean award_given) {
+		int numberOfRows = 0;
+
+		String sql = "update request\r\n" + 
+				"set denied = ?, award_given = ?\r\n" + 
+				"where request_id = ?;";
+		
+		PreparedStatement pstmt;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setBoolean(1, denied);
+			pstmt.setBoolean(2, award_given);
+			pstmt.setInt(3, requestId);
+			numberOfRows = pstmt.executeUpdate();
+
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateAcceptRequest");
+
+		} catch (SQLException e) {
+			
+		}
+
+		return numberOfRows;
+	}
+
+	@Override
+	public String getEmployeeIdByRequestId(int requestId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ReimbursementRequest getReimbursementRequest(int requestId) {
+		ReimbursementRequest reimbursementRequest = null;
+
+		String sql = "select * from request\r\n" + 
+				"where request_id = ?;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, requestId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setUserName(getEmployeeUsernameById(rs.getInt("employee_id")));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setCost(rs.getInt("cost"));
+				reimbursementRequest.setLocationOfEvent(rs.getString("location"));
+				reimbursementRequest.setDateOfEvent(rs.getString("date_of_event"));
+				reimbursementRequest.setTimeOfEvent(rs.getString("time_of_event"));
+				reimbursementRequest.setDescription(rs.getString("description"));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
+				
+			}
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		return reimbursementRequest;
+	}
+
+	@Override
+	public int getReimbursementPaybackPercentageByReimbursementType(String ReimbursementRequestType) {
+		
+		int paybackPercentage = 0;
+		
+		String sql = "select payback_percentage from reimbursement_type\r\n" + 
+				"where event_type = ?;";
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ReimbursementRequestType);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				paybackPercentage = rs.getInt("payback_percentage");
+			}
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		
+		return paybackPercentage;
 	}
 
 
