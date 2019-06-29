@@ -4,8 +4,6 @@ function getRequests(){
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4 & xhr.status === 200){
             let requestArr = JSON.parse(xhr.responseText);
-            console.log(requestArr);
-            console.log('hello');
             appendToTable(requestArr);     
         }
     }
@@ -15,7 +13,7 @@ function getRequests(){
     xhr.send();
 }
 
-// TODO fix
+
 function appendToTable(requestArr){
     const tableBody = document.getElementById('requests-view-table-body');
 
@@ -38,8 +36,54 @@ function appendToTable(requestArr){
 }
 
 
+function requestDecision(event){
+    event.preventDefault();
+
+    let requestId = document.getElementById("request_id").value;
+    let decision = document.getElementsByName("radioDecision");
+    //get checked radio button
+    for (let i = 0; i < decision.length; i++){
+        if(decision[i].checked){
+            decision = decision[i].value;
+            break;
+        }
+    }
+
+    let additionalInfo = document.getElementById("additionalinfo").value;
+
+    //make new JSON object
+    let requestDecision = new RequestDecision(requestId, decision, additionalInfo);
+
+    let xhr = new XMLHttpRequest();
+
+     
+	xhr.onreadystatechange = function() {
+        
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //alert(xhr.responseText);
+            console.log("success");
+		}
+    }
+    
+    xhr.open("POST", "view_requests", true);
+
+    console.log(requestDecision);
+
+    xhr.send(JSON.stringify(requestDecision));
+
+
+
+}
+
+let RequestDecision = function (requestId, decision, additionalInfo){
+    this.requestId = requestId;
+    this.decision = decision;
+    this.additionalInfo = additionalInfo;
+}
 
 
 window.onload = function () {
     getRequests();
+
+  document.getElementById("approvalForm").addEventListener("submit", requestDecision)
 }

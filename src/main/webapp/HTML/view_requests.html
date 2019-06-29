@@ -66,34 +66,34 @@
     </table>
 
     <!-- accept/deny form -->
-    <form>
+    <form  id="approvalForm">
         <h2>Accept/Deny Requests</h2>
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Request Id</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="inputid" placeholder="Request Id">
+                <input type="number" name="request_id" class="form-control" id="request_id" placeholder="Request Id">
             </div>
         </div>
-        
+
         <fieldset class="form-group">
             <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Decision</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision1" value="Accept"
                             checked>
                         <label class="form-check-label" for="gridRadios1">
                             Accept
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision2" value="Deny">
                         <label class="form-check-label" for="gridRadios2">
                             Deny
                         </label>
                     </div>
                     <div class="form-check disabled">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision3" value="Request Additional Information">
                         <label class="form-check-label" for="gridRadios3">
                             Request Additional Information
                         </label>
@@ -105,7 +105,8 @@
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Additional Information Message</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="additionalinfo" placeholder="Please leave blank if additional information is not required">
+                <input type="text" name="additionalInfo" class="form-control" id="additionalinfo"
+                    placeholder="Please leave blank if additional information is not required">
             </div>
         </div>
 
@@ -126,7 +127,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script type="text/javascript"  src="../JavaScript/ViewRequests.js"></script>
+    <script type="text/javascript" src="../JavaScript/ViewRequests.js"></script>
 </body>
 
 </html>

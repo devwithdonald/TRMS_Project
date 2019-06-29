@@ -108,7 +108,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	public String getEmployeeUsernameById(int employee_id) {
-		LoggingUtil.debug("getEmployeeUsernameById() DAO");
+		//LoggingUtil.debug("getEmployeeUsernameById() DAO");
 		
 		String employeeUsername = null; 
 
@@ -136,7 +136,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public String getReimbursementTypeById(int reimbursement_type_id) {
-		LoggingUtil.debug("getReimbursementTypeById() DAO");
+		//LoggingUtil.debug("getReimbursementTypeById() DAO");
 		
 		String reimbursementType = null; 
 		String sql = "select * from reimbursement_type where reimbursement_type_id = ?;";
