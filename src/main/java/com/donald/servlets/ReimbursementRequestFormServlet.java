@@ -63,6 +63,10 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
 		
+		
+		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
+			
+		
 		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, rr.getDateOfEvent(), rr.getTimeOfEvent(),
 				rr.getLocationOfEvent(), rr.getDescription(), rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
 		
@@ -79,6 +83,10 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		} else {
 			resp.getWriter().write("Reimbursement request successful!");
 			LoggingUtil.debug("Reimbursement request successful");
+		}
+		} else {
+			resp.getWriter().write("Date Invalid - Must be 7 days after current date.");
+			LoggingUtil.debug("Date Invalid");
 		}
 	}
 }

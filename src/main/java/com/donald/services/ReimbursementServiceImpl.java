@@ -29,24 +29,19 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 		ReimbursementRequest reimbursementRequest = null;
 
+		// make new Reimbursement
+		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
+				gradingFormat, passingGrade);
 
-		if (dateCheck(date) == true) {
-			// make new Reimbursement
-			reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
-					gradingFormat, passingGrade);
+		// call the DAO!
+		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
 
-			// call the DAO!
-			int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
-
-			// if DAO returns 0 then make reimbursement null, else return the request
-			// else the id
-			if (successCode == 0) {
-				return null;
-			} else {
-				return reimbursementRequest;
-			}
-		} else {
+		// if DAO returns 0 then make reimbursement null, else return the request
+		// else the id
+		if (successCode == 0) {
 			return null;
+		} else {
+			return reimbursementRequest;
 		}
 
 	}
@@ -332,26 +327,26 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	@Override
 	public boolean dateCheck(String date) {
 
-		//DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		LocalDate currentDate = LocalDate.now();
 
 		LocalDate checkDate = LocalDate.parse(date);
 		Duration diff = Duration.between(currentDate.atStartOfDay(), checkDate.atStartOfDay());
-		
+
 		long diffDays = diff.toDays();
-		
+
 		LoggingUtil.debug("diff days" + diffDays);
-		
-		//should check diff days is also positive
+
+		// should check diff days is also positive
 		if (diffDays > 7) {
-			
+
 			LoggingUtil.debug("date verified");
 			return true;
 		} else {
 			LoggingUtil.debug("date un-verified");
 		}
-			return false;
+		return false;
 
 	}
 
