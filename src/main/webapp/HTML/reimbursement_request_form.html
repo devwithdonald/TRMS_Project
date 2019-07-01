@@ -39,9 +39,17 @@
         </li>
     </div>
   </nav>
+ 
+  <!-- show balance -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4"></h1>
+      <p class="lead">This is your current balance.</p>
+    </div>
+  </div>
 
   <!-- reimbursement form -->
-<!--   <form action="reimbursement_request_form" method="post"> -->
+  <!--   <form action="reimbursement_request_form" method="post"> -->
   <form id="reimbursementForm">
     <h1>Reimbursement Form</h1>
     <div class="form-group">
@@ -66,7 +74,8 @@
 
     <div class="form-group">
       <label for="exampleFormControlInput5">Cost of event</label>
-      <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost" required="required">
+      <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost"
+        required="required">
     </div>
 
     <div class="form-group">
@@ -90,13 +99,14 @@
         <option>Presentation</option>
       </select>
     </div>
- 
+
     <div class="form-group">
       <label for="passingGradeInput">Passing Grade</label>
-      <input type="text" name="passingGrade" class="form-control" id="passingGradeInput" placeholder="Passing Grade - If Presentation Leave Blank">
+      <input type="text" name="passingGrade" class="form-control" id="passingGradeInput"
+        placeholder="Passing Grade - If Presentation Leave Blank">
     </div>
 
-  
+
     <button type="submit" class="btn btn-primary">Submit</button>
 
   </form>
@@ -112,7 +122,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-    <script src="../JavaScript/reimbursementForm.js"></script>
+  <script src="../JavaScript/reimbursementForm.js"></script>
 </body>
 
 </html>
