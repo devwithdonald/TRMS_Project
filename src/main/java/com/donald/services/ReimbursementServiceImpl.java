@@ -1,5 +1,11 @@
 package com.donald.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import com.donald.dao.ReimbursementDAOImpl;
@@ -23,19 +29,24 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 		ReimbursementRequest reimbursementRequest = null;
 
-		// make new Reimbursement
-		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
-				gradingFormat, passingGrade);
 
-		// call the DAO!
-		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
+		if (dateCheck(date) == true) {
+			// make new Reimbursement
+			reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
+					gradingFormat, passingGrade);
 
-		// if DAO returns 0 then make reimbursement null, else return the request
-		// else the id
-		if (successCode == 0) {
-			return null;
+			// call the DAO!
+			int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
+
+			// if DAO returns 0 then make reimbursement null, else return the request
+			// else the id
+			if (successCode == 0) {
+				return null;
+			} else {
+				return reimbursementRequest;
+			}
 		} else {
-			return reimbursementRequest;
+			return null;
 		}
 
 	}
@@ -243,43 +254,40 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		// and who's doing the accepting!!!!
 		// NEED EMPLOYEE FOR ID VERIFICATION
 		boolean verifiedRequestId = false;
-		
+
 		int numberOfRows = 0;
-		//Boolean success = false;
+		// Boolean success = false;
 		String message = null;
-		
+
 		// employee instance is checked in view method
 		verifiedRequestId = finalGradeIdVerification(loggedInEmployee, requestId);
-
 
 		if (verifiedRequestId == true) {
 
 			if (decision.equals("Accept")) {
 				// might need to do other stuff here?
 				// success boolean will need to change!!!!!
-				//(requestId, denied = false, awardgiven = true) 
-				
-							
+				// (requestId, denied = false, awardgiven = true)
+
 				// if two rows affected???? good?
 				numberOfRows = rdi.updateFinalGrade(requestId, false, true);
-				
-				//getting employee who is getting award
+
+				// getting employee who is getting award
 				ReimbursementRequest employeeRequest = rdi.getReimbursementRequest(requestId);
-				
+
 				int awardAmount = calculateAward(requestId);
 
-				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getUserName(), getEventTypeId(employeeRequest.getEventType()), awardAmount);
-				
+				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getUserName(),
+						getEventTypeId(employeeRequest.getEventType()), awardAmount);
+
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
-				// (requestId, denied = true, awardgiven = false) 
+				// (requestId, denied = true, awardgiven = false)
 				numberOfRows = rdi.updateFinalGrade(requestId, true, false);
 				numberOfRows++;
 				message = "denied";
 			}
 
-			
-			
 			if (numberOfRows == 2) {
 				return "Reimbursement final grade " + message + " successfully";
 			} else {
@@ -293,10 +301,10 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public boolean finalGradeIdVerification(Employee loggedInEmployee, int requestId) {
-		
+
 		// use loggedInEmployee to get their list, check id reference then come back
 		List<ReimbursementRequest> gradedRequestList = viewGradedRequests(loggedInEmployee);
-		
+
 		for (int i = 0; i < gradedRequestList.size(); i++) {
 			if (gradedRequestList.get(i).getId() == requestId) {
 				return true;
@@ -308,20 +316,43 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	@Override
 	public int calculateAward(int requestId) {
-		
-		//get the cost of the reimbursement by the request id 
+
+		// get the cost of the reimbursement by the request id
 		ReimbursementRequest reimbursementRequest = rdi.getReimbursementRequest(requestId);
-		
+
 		// select payback_percentage from reimbursement_type return that value (cast)
-		int paybackPercentage = rdi.getReimbursementPaybackPercentageByReimbursementType(reimbursementRequest.getEventType());
-		
+		int paybackPercentage = rdi
+				.getReimbursementPaybackPercentageByReimbursementType(reimbursementRequest.getEventType());
+
 		int awardAmount = (reimbursementRequest.getCost() * paybackPercentage) / 100;
-		
+
 		return awardAmount;
 	}
-	
 
-	
-	
+	@Override
+	public boolean dateCheck(String date) {
+
+		//DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		LocalDate currentDate = LocalDate.now();
+
+		LocalDate checkDate = LocalDate.parse(date);
+		Duration diff = Duration.between(currentDate.atStartOfDay(), checkDate.atStartOfDay());
+		
+		long diffDays = diff.toDays();
+		
+		LoggingUtil.debug("diff days" + diffDays);
+		
+		//should check diff days is also positive
+		if (diffDays > 7) {
+			
+			LoggingUtil.debug("date verified");
+			return true;
+		} else {
+			LoggingUtil.debug("date un-verified");
+		}
+			return false;
+
+	}
 
 }

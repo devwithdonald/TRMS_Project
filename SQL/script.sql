@@ -4,6 +4,7 @@ drop table employee cascade;
 drop table reimbursement_type cascade;
 drop table approval_reference cascade;
 drop table request cascade;
+drop table reimbursement_award cascade;
 
 
 --select * helpers
@@ -12,6 +13,8 @@ select * from employee;
 select * from reimbursement_type;
 select * from approval_reference;
 select * from request;
+select * from reimbursement_award;
+
 
 select emp.*, emp_type.employee_type 
 from employee emp
@@ -55,7 +58,18 @@ create table request (
 	description text not null, 
 	denied boolean default false,
 	grading_format text not null,
-	passing_grade text not null
+	passing_grade text not null,
+	grade_received text,
+	award_given boolean default false
+);
+
+
+create table reimbursement_award(
+	reimbursement_award_id serial primary key,
+	employee_id integer references employee (employee_id) not null,
+	reimbursement_type_id integer references reimbursement_type (reimbursement_type_id) not null,
+	date_gifted timestamp default current_timestamp,
+	amount_gifted integer not null
 );
 
 insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)
@@ -65,8 +79,8 @@ insert into request(employee_id, reimbursement_type_id, approval_reference_id, c
 	values (?,?,?,?,?,?,?);
 
 update request
-set employee_id = 7
-where cost = 0;
+set award_given = false
+where request_id = 1;
 
 
 -- insert default items
@@ -115,6 +129,14 @@ insert into approval_reference(description)
 
 insert into approval_reference(description)
 	values ('Needs BenCo Approval');
+
+insert into approval_reference(description)
+	values ('Presentation - Needs Supervisor Approval');
+
+insert into approval_reference(description)
+	values ('Grade - Needs BenCo Approval');
+
+
 --
 
 
@@ -198,13 +220,33 @@ select * from reimbursement_type where reimbursement_type_id = 4;
 select * from request;
 
 update request
-set denied = true
-where request_id = ?;
+set approval_reference_id = 4
+where request_id = 28;
 
 --benco approval! 6 might need to change!
 select * from request
+where approval_reference_id = 5 and denied = false;
+
 where approval_reference_id = 3 and denied = false;
 
 --getting requests that need grade approval
 select * from request
 where employee_id = ? and approval_reference_id = 4;
+
+--since its a grade approval_refernce_id = 5 (for benco)
+update request
+set denied = ?, award_given = ?
+where request_id = ?;
+
+select * from request
+where request_id = ?;
+
+select payback_percentage from reimbursement_type
+where event_type = 'University Course';
+
+insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)
+	values(?,?,?);
+
+
+select employee_id from employee
+where username = ?;

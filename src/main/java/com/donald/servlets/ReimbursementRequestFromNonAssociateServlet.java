@@ -70,7 +70,7 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet{
 		//if null is sent back send back error
 		if (reimbursementRequest == null) {
 			//send response if failed login
-			resp.setStatus(500);
+			//resp.setStatus(500);
 			resp.getWriter().write("Failed to insert reimbursement request");
 			LoggingUtil.debug("Failed to insert reimbursement request");
 		} else {
