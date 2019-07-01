@@ -1,3 +1,25 @@
+function getBalance(){
+	let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 & xhr.status === 200){
+            let availBalance = xhr.responseText;
+            appendToJumbotron(availBalance);     
+        }
+    }
+
+    xhr.open("GET", "reimbursement_request_form", true);
+
+    xhr.send();
+}
+
+function appendToJumbotron(availBalance){
+    const balance = document.getElementById('balance');
+
+	balance.innerText = availBalance;
+    
+}
+
 function returnMessage(event){
 	
 	event.preventDefault();
@@ -43,5 +65,7 @@ let ReimbursementRequest = function (dateOfEvent, timeOfEvent, locationOfEvent, 
 
 
 window.onload = function() {
+	getBalance();
+
     document.getElementById("reimbursementForm").addEventListener("submit", returnMessage);
 }
