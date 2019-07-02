@@ -34,12 +34,10 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 			// send to appropriate site
 			sess = req.getSession();
 			loggedInEmployee = (Employee) sess.getAttribute("employee");
-			//resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+			// resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
 		}
-		
-		
-		
-		//faking
+
+		// returning balance
 		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance()));
 
 	}

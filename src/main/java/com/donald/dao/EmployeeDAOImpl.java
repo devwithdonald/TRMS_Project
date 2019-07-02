@@ -44,13 +44,13 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 				
 				//should be switch() case
 				if (rs.getInt("employee_type_id") == 1) {
-					employee = new Associate(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+					employee = new Associate(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"), rs.getInt("available_balance"));
 				} else if (rs.getInt("employee_type_id") == 2) {
-					employee = new Supervisor(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+					employee = new Supervisor(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"), rs.getInt("available_balance"));
 				} else if (rs.getInt("employee_type_id") == 3) {
-					employee = new DepartmentHead(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+					employee = new DepartmentHead(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"), rs.getInt("available_balance"));
 				} else if (rs.getInt("employee_type_id") == 4) {
-					employee = new BenefitsCoordinator(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"));
+					employee = new BenefitsCoordinator(rs.getInt("employee_id"), rs.getString("username"), rs.getString("password"), rs.getString("employee_type"), rs.getInt("available_balance"));
 				}
 				
 				employeeList.add(employee);

@@ -8,12 +8,13 @@ public abstract class Employee {
 	private String employeeType;
 	private int availableBalance;
 	
-	public Employee(Integer employeeId, String username, String password, String employeeType) {
+	public Employee(Integer employeeId, String username, String password, String employeeType, int availableBalance) {
 		super();
 		this.employeeId = employeeId;
 		this.username = username;
 		this.password = password;
 		this.employeeType = employeeType;
+		this.availableBalance = availableBalance;
 	}
 	
 	public int getAvailableBalance() {

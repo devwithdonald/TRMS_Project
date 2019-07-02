@@ -17,7 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
-
+	Employee loggedInEmployee;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -31,9 +32,12 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 		} else {
 			// send to appropriate site
 			sess = req.getSession();
-			Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
-			//resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+			loggedInEmployee = (Employee) sess.getAttribute("employee");
+			// resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
 		}
+
+		// returning balance
+		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance()));
 
 	}
 
@@ -54,7 +58,7 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 		}
 
 		// get employee
-		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
+		loggedInEmployee = (Employee) sess.getAttribute("employee");
 
 		String body = req.getReader().readLine();
 		LoggingUtil.debug("sent contents -> " + body);
@@ -63,7 +67,7 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 
 		// Date check here?
 		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
-			
+
 			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
 					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
 					rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
@@ -80,7 +84,7 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 			}
 
 		} else {
-			
+
 			resp.getWriter().write("Date Invalid - Must be 7 days after current date.");
 			LoggingUtil.debug("Date Invalid");
 
