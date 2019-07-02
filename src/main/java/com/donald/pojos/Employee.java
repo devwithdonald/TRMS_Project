@@ -6,6 +6,7 @@ public abstract class Employee {
 	private String username;
 	private String password;
 	private String employeeType;
+	private int availableBalance;
 	
 	public Employee(Integer employeeId, String username, String password, String employeeType) {
 		super();
@@ -15,6 +16,14 @@ public abstract class Employee {
 		this.employeeType = employeeType;
 	}
 	
+	public int getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(int availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+
 	public Integer getEmployeeId() {
 		return employeeId;
 	}

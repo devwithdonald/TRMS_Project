@@ -18,6 +18,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 
 	// need Reimbursement service right here
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
+	Employee loggedInEmployee;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,64 +27,64 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		if (sess == null || sess.getAttribute("employee") == null) {
 			req.getRequestDispatcher("login").forward(req, resp);
 			// need to return so the rest of the method doesn't run
-			LoggingUtil.warn("Reimbursement Request Form -> Tried to reach access by non logged in user. Successfully redirected.");
+			LoggingUtil.warn(
+					"Reimbursement Request Form -> Tried to reach access by non logged in user. Successfully redirected.");
 			return;
 		} else {
-			//send to appropriate site
+			// send to appropriate site
 			sess = req.getSession();
-			Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
-			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+			loggedInEmployee = (Employee) sess.getAttribute("employee");
+			//resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
 		}
+		
+		
+		
+		//faking
+		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance()));
+
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		LoggingUtil.trace("in doPost(); for ReimbursementRequestFormServlet");
 
-		
-		
-		//login verification
+		// login verification
 		HttpSession sess = req.getSession(false);
 		if (sess == null || sess.getAttribute("employee") == null) {
-			//changing!!!
-			//req.getRequestDispatcher("login").forward(req, resp);
+			// changing!!!
+			// req.getRequestDispatcher("login").forward(req, resp);
 			resp.sendRedirect("login");
 			// need to return so the rest of the method doesn't run
-			LoggingUtil.warn("Reimbursement Request Form -> Tried to reach access by non logged in user. Successfully redirected.");
+			LoggingUtil.warn(
+					"Reimbursement Request Form -> Tried to reach access by non logged in user. Successfully redirected.");
 			return;
-		} 
-		
-		//get employee
-		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
-		
-		
-		
+		}
+
+		// get employee
+		loggedInEmployee = (Employee) sess.getAttribute("employee");
+
 		String body = req.getReader().readLine();
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
-		
-		
-		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
-			
-		
-		ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee, rr.getDateOfEvent(), rr.getTimeOfEvent(),
-				rr.getLocationOfEvent(), rr.getDescription(), rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
-		
-		
-		
-		
-		// if null is sent back send back error
-		if (reimbursementRequest == null) {
-			// send response if failed login
-			//resp.setStatus(500);
-			resp.getWriter().write("Failed to insert reimbursement request");
 
-			LoggingUtil.debug("Failed to insert reimbursement request");
-		} else {
-			resp.getWriter().write("Reimbursement request successful!");
-			LoggingUtil.debug("Reimbursement request successful");
-		}
+		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
+
+			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
+					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
+					rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
+
+			// if null is sent back send back error
+			if (reimbursementRequest == null) {
+				// send response if failed login
+				// resp.setStatus(500);
+				resp.getWriter().write("Failed to insert reimbursement request");
+
+				LoggingUtil.debug("Failed to insert reimbursement request");
+			} else {
+				resp.getWriter().write("Reimbursement request successful!");
+				LoggingUtil.debug("Reimbursement request successful");
+			}
 		} else {
 			resp.getWriter().write("Date Invalid - Must be 7 days after current date.");
 			LoggingUtil.debug("Date Invalid");

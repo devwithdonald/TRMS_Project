@@ -81,9 +81,9 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		String link;
 
 		if (loggedInEmployee instanceof Associate) {
-			link = "reimbursement_request_form";
+			link = "reimbursement_request_form.html";
 		} else {
-			link = "request_form_non_associate";
+			link = "request_form_non_associate.html";
 		}
 
 		return link;

@@ -32,7 +32,7 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 			// send to appropriate site
 			sess = req.getSession();
 			Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
-			resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+			//resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
 		}
 
 	}
