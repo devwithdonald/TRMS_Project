@@ -62,4 +62,35 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 		return employeeList;
 }
 
+	@Override
+	public int updateEmployeePendingBalance(Employee loggedInEmployee, int cost) {
+		LoggingUtil.debug("In updateEmployeePendingBalance() method");
+		
+		
+		int numberOfRows = 0;
+		
+		String sql = "update employee\r\n" + 
+				"set pending_balance = ?\r\n" + 
+				"where employee_id = ?;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cost);
+			pstmt.setInt(2, loggedInEmployee.getEmployeeId());
+			pstmt.executeQuery();
+			
+			numberOfRows = pstmt.executeUpdate();
+
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateEmployeePendingBalance");
+			
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		
+		
+		return numberOfRows;
+	}
+
 }

@@ -1,13 +1,10 @@
 package com.donald.services;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
+import com.donald.dao.EmployeeDAOImpl;
 import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Associate;
 import com.donald.pojos.BenefitsCoordinator;
@@ -20,6 +17,7 @@ import com.donald.util.LoggingUtil;
 public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	ReimbursementDAOImpl rdi = new ReimbursementDAOImpl();
+	EmployeeDAOImpl edi = new EmployeeDAOImpl();
 
 	@Override
 	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
@@ -39,10 +37,9 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
 		
 		//update the employee in db for pending amount
-		//should do check here?
-		if(loggedInEmployee.getAvailableBalance() - calculateAward(cost) < 0) {
-			
-		}
+		//update employee!! if they got here they can be pending amount
+		edi.updateEmployeePendingBalance(loggedInEmployee, calculateAwardByReimbursementType(eventType, cost));
+		//loggedInEmployee.setPendingBalance(pendingBalance);
 
 		// if DAO returns 0 then make reimbursement null, else return the request
 		// else the id

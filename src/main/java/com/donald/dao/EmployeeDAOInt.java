@@ -8,6 +8,8 @@ public interface EmployeeDAOInt {
 	
 	public List<Employee> getAllEmployees();
 	
+	public int updateEmployeePendingBalance(Employee loggedInEmployee, int cost);
+	
 	
 
 	

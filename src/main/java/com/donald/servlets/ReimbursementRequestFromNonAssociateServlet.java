@@ -64,6 +64,13 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
+		
+		
+		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
+			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
+			LoggingUtil.debug("Cost Invalid");
+			return;
+		}
 
 		// Date check here?
 		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {

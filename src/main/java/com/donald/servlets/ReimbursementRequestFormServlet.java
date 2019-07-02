@@ -67,7 +67,8 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
 		
 		
-		//TODO ADD TO NON ASSOCIATE
+		//TODO ADD TO NON ASSOCIATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		//if cost will take employee below
 		//should be in another ????
 		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
@@ -76,11 +77,13 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 			return;
 		}
 
+		
 		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
 
 			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
 					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
 					rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
+	
 
 			// if null is sent back send back error
 			if (reimbursementRequest == null) {
