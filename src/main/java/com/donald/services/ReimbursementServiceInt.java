@@ -41,4 +41,7 @@ public interface ReimbursementServiceInt {
 	public int calculateAward(int requestId);
 	
 	public boolean dateCheck(String date);
+	
+	public int calculateAwardByReimbursementType(String reimbursementType, int cost);
+	
 }

@@ -32,9 +32,17 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		// make new Reimbursement
 		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
 				gradingFormat, passingGrade);
+		
+	
 
 		// call the DAO!
 		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
+		
+		//update the employee in db for pending amount
+		//should do check here?
+		if(loggedInEmployee.getAvailableBalance() - calculateAward(cost) < 0) {
+			
+		}
 
 		// if DAO returns 0 then make reimbursement null, else return the request
 		// else the id
@@ -323,6 +331,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 		return awardAmount;
 	}
+	
 
 	@Override
 	public boolean dateCheck(String date) {
@@ -348,6 +357,17 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		}
 		return false;
 
+	}
+
+	@Override
+	public int calculateAwardByReimbursementType(String reimbursementType, int cost) {
+		// select payback_percentage from reimbursement_type return that value (cast)
+		int paybackPercentage = rdi
+				.getReimbursementPaybackPercentageByReimbursementType(reimbursementType);
+
+		int awardAmount = (cost * paybackPercentage) / 100;
+
+		return awardAmount;
 	}
 
 }

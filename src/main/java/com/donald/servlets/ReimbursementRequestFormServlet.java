@@ -38,7 +38,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		}
 
 		// returning balance
-		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance()));
+		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance()));
 
 	}
 
@@ -65,6 +65,16 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
+		
+		
+		//TODO ADD TO NON ASSOCIATE
+		//if cost will take employee below
+		//should be in another ????
+		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
+			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
+			LoggingUtil.debug("Cost Invalid");
+			return;
+		}
 
 		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
 

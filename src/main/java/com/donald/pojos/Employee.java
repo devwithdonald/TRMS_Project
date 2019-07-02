@@ -7,6 +7,7 @@ public abstract class Employee {
 	private String password;
 	private String employeeType;
 	private int availableBalance;
+	private int pendingBalance = 0;
 	
 	public Employee(Integer employeeId, String username, String password, String employeeType, int availableBalance) {
 		super();
@@ -17,6 +18,14 @@ public abstract class Employee {
 		this.availableBalance = availableBalance;
 	}
 	
+	public int getPendingBalance() {
+		return pendingBalance;
+	}
+
+	public void setPendingBalance(int pendingBalance) {
+		this.pendingBalance = pendingBalance;
+	}
+
 	public int getAvailableBalance() {
 		return availableBalance;
 	}
