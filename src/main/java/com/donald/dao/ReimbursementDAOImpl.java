@@ -46,7 +46,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 			pstmt.setInt(4, reimbursementRequest.getCost());
 			pstmt.setString(5, reimbursementRequest.getLocationOfEvent());
-			pstmt.setString(6, reimbursementRequest.getDateOfEvent()); // dunno if will work!
+			pstmt.setString(6, reimbursementRequest.getDateOfEvent()); 
 			pstmt.setString(7, reimbursementRequest.getTimeOfEvent());
 			pstmt.setString(8, reimbursementRequest.getDescription());
 			pstmt.setString(9, reimbursementRequest.getGradingFormat());

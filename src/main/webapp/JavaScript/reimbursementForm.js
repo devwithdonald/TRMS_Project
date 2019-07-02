@@ -42,6 +42,7 @@ function returnMessage(event){
 
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			alert(xhr.responseText);
+			getBalance();
 		}
 	}
 

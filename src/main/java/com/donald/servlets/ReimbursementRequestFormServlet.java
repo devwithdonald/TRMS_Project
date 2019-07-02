@@ -93,6 +93,11 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 
 				LoggingUtil.debug("Failed to insert reimbursement request");
 			} else {
+				
+				//updating employee?
+				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()));
+				sess.setAttribute("employee", loggedInEmployee);
+			
 				resp.getWriter().write("Reimbursement request successful!");
 				LoggingUtil.debug("Reimbursement request successful");
 			}
