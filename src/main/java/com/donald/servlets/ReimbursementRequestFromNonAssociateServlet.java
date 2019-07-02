@@ -66,6 +66,9 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
 		
 		
+		
+		//if cost will take employee below
+		//should be in another ????
 		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
 			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
 			LoggingUtil.debug("Cost Invalid");
@@ -86,6 +89,11 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 				resp.getWriter().write("Failed to insert reimbursement request");
 				LoggingUtil.debug("Failed to insert reimbursement request");
 			} else {
+				
+				//updating employee?
+				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()));
+				sess.setAttribute("employee", loggedInEmployee);
+				
 				resp.getWriter().write("Reimbursement request successful!");
 				LoggingUtil.debug("Reimbursement request successful");
 			}

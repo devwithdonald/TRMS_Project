@@ -67,7 +67,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
 		
 		
-		//TODO ADD TO NON ASSOCIATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 		
 		//if cost will take employee below
 		//should be in another ????
