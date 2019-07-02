@@ -32,7 +32,9 @@ create table employee (
 	employee_type_id integer references employee_type (employee_type_id) not null,
 	username text unique not null,
 	password text not null,
-	reports_to integer references employee (employee_id)
+	reports_to integer references employee (employee_id),
+	available_balance integer default 1000,
+	pending_balance integer default 0
 );
 
 create table reimbursement_type(
@@ -148,7 +150,7 @@ insert into employee(employee_type_id, username, password, reports_to)
 insert into employee(employee_type_id, username, password, reports_to)
 	values (1, 'associate', '123', 3);
 	
-	insert into employee(employee_type_id, username, password, reports_to)
+insert into employee(employee_type_id, username, password, reports_to)
 	values (1, 'low-level', '123', 2);
 
 insert into employee(employee_type_id, username, password, reports_to)
@@ -250,3 +252,7 @@ insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifte
 
 select employee_id from employee
 where username = ?;
+
+update employee
+set pending_balance = ?
+where employee_id = 0;
