@@ -32,7 +32,7 @@ public interface ReimbursementDAOInt {
 
 	public int updateFinalGrade(int requestId, boolean denied, boolean award_given);
 	
-	public String getEmployeeIdByRequestId(int requestId);
+	public int getEmployeeIdByRequestId(int requestId);
 	
 	public ReimbursementRequest getReimbursementRequest(int requestId);
 	

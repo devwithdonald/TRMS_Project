@@ -409,9 +409,32 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	@Override
-	public String getEmployeeIdByRequestId(int requestId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int getEmployeeIdByRequestId(int requestId) {
+		LoggingUtil.debug("in getEmployeeIdByRequestId method()");
+		
+		int employeeId = 0;
+		
+		String sql = "select employee_id from request\r\n" + 
+				"where request_id = ?;";
+		
+		PreparedStatement pstmt; 
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, requestId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				employeeId = rs.getInt("employee_id");
+			}
+					
+			
+			
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		return employeeId;
 	}
 
 	@Override

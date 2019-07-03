@@ -18,6 +18,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 	ReimbursementDAOImpl rdi = new ReimbursementDAOImpl();
 	EmployeeDAOImpl edi = new EmployeeDAOImpl();
+	EmployeeServiceImpl esi = new EmployeeServiceImpl();
 
 	@Override
 	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
@@ -269,7 +270,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				// success boolean will need to change!!!!!
 				// (requestId, denied = false, awardgiven = true)
 
-				// if two rows affected???? good?
+
 				numberOfRows = rdi.updateFinalGrade(requestId, false, true);
 
 				// getting employee who is getting award
@@ -279,16 +280,23 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getUserName(),
 						getEventTypeId(employeeRequest.getEventType()), awardAmount);
-
+				
+				//call Employee service?
+				esi.awardPendingReward(requestId, awardAmount);
+				
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
 				// (requestId, denied = true, awardgiven = false)
 				numberOfRows = rdi.updateFinalGrade(requestId, true, false);
+				//give money back!
+				numberOfRows++;
+				//delete
 				numberOfRows++;
 				message = "denied";
 			}
 
-			if (numberOfRows == 2) {
+			//changed
+			if (numberOfRows == 3) {
 				return "Reimbursement final grade " + message + " successfully";
 			} else {
 				return "Reimbursement final grade " + message + " unsuccessfully";

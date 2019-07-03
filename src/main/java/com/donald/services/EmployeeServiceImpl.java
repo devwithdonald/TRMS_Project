@@ -1,12 +1,15 @@
 package com.donald.services;
 
 import com.donald.dao.EmployeeDAOImpl;
+import com.donald.dao.ReimbursementDAOImpl;
 import com.donald.pojos.Employee;
+import com.donald.util.LoggingUtil;
 
 public class EmployeeServiceImpl implements EmployeeServiceInt {
 	
 
 	private static EmployeeDAOImpl edi = new EmployeeDAOImpl();
+	private static ReimbursementDAOImpl rdi = new ReimbursementDAOImpl();
 
 
 	public Employee loginEmployee(String username, String password) {
@@ -23,6 +26,34 @@ public class EmployeeServiceImpl implements EmployeeServiceInt {
 		//need to populate employee with balances?
 		
 		return employee;
+	}
+
+
+	@Override
+	public void awardPendingReward(int requestId, int awardAmount) {
+		// call dao
+		// need to make balance reflect new amount now!
+		
+		//turn awardAmount negative.
+		//need to set pending balance minus the awardAmount
+
+		int employeeId = rdi.getEmployeeIdByRequestId(requestId);
+		
+		LoggingUtil.debug("employee Id ------> " + employeeId);
+		Employee employee = edi.getEmployeeById(employeeId);
+		
+		//turn awardAmount negative
+		//awardAmount *= -1;
+		
+		//cancel out the award for pending balance
+		//edi.updateEmployeePendingBalance(employee, -awardAmount);
+		//edi.updateBalance(employeeId, -awardAmount);
+		
+		edi.updateEmployeePendingBalance(employee, -awardAmount);
+		edi.updateAvailableBalance(employee, -awardAmount);
+		
+		
+	
 	}
 	
 

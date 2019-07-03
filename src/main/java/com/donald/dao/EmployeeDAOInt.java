@@ -8,9 +8,13 @@ public interface EmployeeDAOInt {
 	
 	public List<Employee> getAllEmployees();
 	
-	public int updateEmployeePendingBalance(Employee loggedInEmployee, int cost);
+	public Employee getEmployeeById(int employeeId);
 	
+	public int updateEmployeePendingBalance(Employee employee, int amount);
 	
+	public int updateAvailableBalance(Employee employee, int amount);
+	
+		
 
 	
 }
