@@ -219,7 +219,8 @@ select * from employee where employee_id = 4;
 select * from reimbursement_type where reimbursement_type_id = 4;
 
 
-select * from request;
+select employee_id from request
+where request_id = ?;
 
 update request
 set approval_reference_id = 4
@@ -253,6 +254,27 @@ insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifte
 select employee_id from employee
 where username = ?;
 
+select * from employee
+where employee_id = 5;
+
+
 update employee
-set pending_balance = ?
-where employee_id = 0;
+set pending_balance = 0
+where employee_id = 6;
+
+update employee
+set available_balance = 1000
+where employee_id = 6;
+
+update employee
+set reports_to = 1
+where employee_id = 2;
+
+select * from request;
+select * from employee;
+select * from reimbursement_award;
+
+
+update request
+set denied = false, award_given = true
+where request_id = 18;
