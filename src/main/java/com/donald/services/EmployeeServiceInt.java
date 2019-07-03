@@ -8,6 +8,8 @@ public interface EmployeeServiceInt {
 	
 	public void awardPendingReward(int requestId, int awardAmount);
 	
+	public void denyPendingReward(int requestId);
+	
 
 
 }

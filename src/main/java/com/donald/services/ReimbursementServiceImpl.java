@@ -127,6 +127,18 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
 				success = denyRequest(requestId);
+				
+				esi.denyPendingReward(requestId);
+//				//TODO NEED NEW METHOD
+//				int amount = calculateAward(requestId);
+//				int employeeId = rdi.getEmployeeIdByRequestId(requestId);
+//				LoggingUtil.debug("employee Id ------> " + employeeId);
+//				Employee employee = edi.getEmployeeById(employeeId);
+//				//cancel out amount so negative
+//				edi.updateEmployeePendingBalance(employee, -amount);
+//				//set to plus award amount
+//				//edi.updateAvailableBalance(employee, amount);
+				
 				message = "denied";
 			}
 
@@ -162,6 +174,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		int rowsAffected = rdi.updateDenyRequest(requestId);
 
 		if (rowsAffected == 1) {
+			
 			return true;
 		} else {
 			return false;
@@ -288,15 +301,15 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 			} else if (decision.equals("Deny")) {
 				// (requestId, denied = true, awardgiven = false)
 				numberOfRows = rdi.updateFinalGrade(requestId, true, false);
+				esi.denyPendingReward(requestId);
 				//give money back!
 				numberOfRows++;
-				//delete
-				numberOfRows++;
+
 				message = "denied";
 			}
 
 			//changed
-			if (numberOfRows == 3) {
+			if (numberOfRows == 2) {
 				return "Reimbursement final grade " + message + " successfully";
 			} else {
 				return "Reimbursement final grade " + message + " unsuccessfully";
