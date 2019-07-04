@@ -11,12 +11,14 @@ import javax.servlet.http.HttpSession;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
+import com.donald.services.ValidationServiceImpl;
 import com.donald.util.LoggingUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 
-	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
+	private static ValidationServiceImpl vsi = new ValidationServiceImpl();
+	private static ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	Employee loggedInEmployee;
 	
 	@Override
@@ -63,46 +65,43 @@ public class ReimbursementRequestFromNonAssociateServlet extends HttpServlet {
 		String body = req.getReader().readLine();
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
-		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
+		ReimbursementRequest reimbursementRequest = om.readValue(body, ReimbursementRequest.class);
 		
 		
 		
 		//if cost will take employee below
 		//should be in another ????
-		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
+		if (!vsi.balanceVerification(loggedInEmployee, reimbursementRequest)) {
 			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
 			LoggingUtil.debug("Cost Invalid");
 			return;
 		}
+		
 
-		// Date check here?
-		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
+		if (vsi.dateCheck(reimbursementRequest.getDateOfEvent()) == true) {
 
-			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
-					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
-					rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
+			ReimbursementRequest reimbursementRequestCheck = rsi.insertReimbursementRequest(loggedInEmployee, reimbursementRequest);
+	
 
 			// if null is sent back send back error
-			if (reimbursementRequest == null) {
+			if (reimbursementRequestCheck == null) {
 				// send response if failed login
 				// resp.setStatus(500);
 				resp.getWriter().write("Failed to insert reimbursement request");
+
 				LoggingUtil.debug("Failed to insert reimbursement request");
 			} else {
 				
 				//updating employee?
-				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()));
+				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
 				sess.setAttribute("employee", loggedInEmployee);
-				
+			
 				resp.getWriter().write("Reimbursement request successful!");
 				LoggingUtil.debug("Reimbursement request successful");
 			}
-
 		} else {
-
 			resp.getWriter().write("Date Invalid - Must be 7 days after current date.");
 			LoggingUtil.debug("Date Invalid");
-
 		}
 	}
 }

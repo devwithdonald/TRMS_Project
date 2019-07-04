@@ -8,7 +8,7 @@ import com.donald.pojos.ReimbursementRequest;
 
 public interface ReimbursementServiceInt {
 
-	public Reimbursement insertReimbursementRequest(Employee loggedInEmployee, String date, String time, String location, String description, int cost, String event, String gradingFormat, String passingGrade);
+	public Reimbursement insertReimbursementRequest(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest);
 
 	public int getEventTypeId(String eventType); 
 	

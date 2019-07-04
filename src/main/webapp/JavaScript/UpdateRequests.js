@@ -83,8 +83,23 @@ let UpdateRequest = function (requestId, gradingFormat, grade){
     this.grade = grade;
 }
 
+
+function gradeCheck(){
+    if (document.getElementById('gradeCheck').checked){
+        document.getElementById('gradeRow').style.visibility = 'visible';
+        //document.getElementById('gradeRow').style.display = 'inherit';
+        document.getElementById('presentationRow').style.visibility = 'hidden';
+    } else {
+        document.getElementById('gradeRow').style.visibility = 'hidden';
+        document.getElementById('presentationRow').style.visibility = 'visible';
+    }
+}
+
 window.onload = function () {
     getRequests();
+    gradeCheck();
 
   document.getElementById("updateForm").addEventListener("submit", updateRequest)
+  document.getElementById("gradeCheck").addEventListener("click", gradeCheck);
+  document.getElementById("presentationCheck").addEventListener("click", gradeCheck);
 }

@@ -66,11 +66,11 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		String body = req.getReader().readLine();
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
-		ReimbursementRequest rr = om.readValue(body, ReimbursementRequest.class);
+		ReimbursementRequest reimbursementRequest = om.readValue(body, ReimbursementRequest.class);
 		
 		
 
-		if (!vsi.balanceVerification(loggedInEmployee, rr)) {
+		if (!vsi.balanceVerification(loggedInEmployee, reimbursementRequest)) {
 			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
 			LoggingUtil.debug("Cost Invalid");
 			return;
@@ -86,15 +86,13 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 
 		
 		
-		if (vsi.dateCheck(rr.getDateOfEvent()) == true) {
+		if (vsi.dateCheck(reimbursementRequest.getDateOfEvent()) == true) {
 
-			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
-					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
-					rr.getCost(), rr.getEventType(), rr.getGradingFormat(), rr.getPassingGrade());
+			ReimbursementRequest reimbursementRequestCheck = rsi.insertReimbursementRequest(loggedInEmployee, reimbursementRequest);
 	
 
 			// if null is sent back send back error
-			if (reimbursementRequest == null) {
+			if (reimbursementRequestCheck == null) {
 				// send response if failed login
 				// resp.setStatus(500);
 				resp.getWriter().write("Failed to insert reimbursement request");
@@ -103,7 +101,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 			} else {
 				
 				//updating employee?
-				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()));
+				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
 				sess.setAttribute("employee", loggedInEmployee);
 			
 				resp.getWriter().write("Reimbursement request successful!");

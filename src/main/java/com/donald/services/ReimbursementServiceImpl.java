@@ -21,17 +21,15 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	EmployeeServiceImpl esi = new EmployeeServiceImpl();
 
 	@Override
-	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, String date, String time,
-			String location, String description, int cost, String eventType, String gradingFormat,
-			String passingGrade) {
+	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest) {
 		LoggingUtil.trace("insertReimbursementRequest()");
 
-		ReimbursementRequest reimbursementRequest = null;
+		//ReimbursementRequest reimbursementRequest = null;
 
 		// make new Reimbursement
-		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
-				gradingFormat, passingGrade);
-		
+//		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
+//				gradingFormat, passingGrade);
+//		
 	
 
 		// call the DAO!
@@ -39,7 +37,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		
 		//update the employee in db for pending amount
 		//update employee!! if they got here they can be pending amount
-		edi.updateEmployeePendingBalance(loggedInEmployee, calculateAwardByReimbursementType(eventType, cost));
+		edi.updateEmployeePendingBalance(loggedInEmployee, calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
 		//loggedInEmployee.setPendingBalance(pendingBalance);
 
 		// if DAO returns 0 then make reimbursement null, else return the request
