@@ -75,50 +75,47 @@
 
         <fieldset class="form-group">
             <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0">Grading Format</legend>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision1"
-                            value="Grade" checked>
-                        <label class="form-check-label" for="gridRadios1">
-                            Grade
-                        </label>
-
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision2"
-                            value="Presentation">
-                        <label class="form-check-label" for="gridRadios2">
-                            Presentation
-                        </label>
-                    </div>
+              <legend class="col-form-label col-sm-2 pt-0">Grading Format</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="radioDecision" id="gradeCheck" value="Grade" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                    Grade
+                  </label>
+      
                 </div>
+      
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="radioDecision" id="presentationCheck" value="Presentation">
+                  <label class="form-check-label" for="gridRadios2">
+                    Presentation
+                  </label>
+                </div>
+              </div>
             </div>
-        </fieldset>
-
-        <div class="form-group row">
+          </fieldset>
+        <div class="form-group row" id="gradeRow">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Grade</label>
+            
             <div class="col-sm-10">
-                <input type="text" name="gradeInput" class="form-control" id="gradeInput"
-                    placeholder="Input Grade - Please leave blank if Presentation">
+              <input type="text" name="gradeInput" class="form-control" id="gradeInput"
+                placeholder="Input Grade" required>
             </div>
-        </div>
-
-        <div class="form-group row">
+          
+          </div>
+      
+          <div class="form-group row" id="presentationRow">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Presentation Input</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control-file" id="presentationFile">
-            </div> 
-        </div>
-
-
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
+              <input type="file" class="form-control-file" id="presentationFile">
             </div>
-        </div>
-
+          </div>
+      
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
 
     </form>
 

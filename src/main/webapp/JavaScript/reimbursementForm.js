@@ -63,10 +63,40 @@ let ReimbursementRequest = function (dateOfEvent, timeOfEvent, locationOfEvent, 
 }
 
 
+function getProjectedReimbursement(){
 
+	let cost = document.getElementById("costOfEvent").value;
+	let eventType = document.getElementById("inputEvent").value;
+
+	let projectedReimbursement = new ProjectedReimbursement(cost, eventType);
+
+
+	let xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			let projectedReimbursementAmount = xhr.responseText;
+			//populate the small tag
+			document.getElementById("projectedReimbursement").innerHTML = `<i> Projected Reimbursement Amount: $${projectedReimbursementAmount}</i>`;
+		}
+	}
+
+	xhr.open("POST", "./AmountServlet", true);
+
+	xhr.send(JSON.stringify(projectedReimbursement));
+
+}
+
+let ProjectedReimbursement = function (cost, eventType){
+	this.cost = cost;
+	this.eventType = eventType;
+}
 
 window.onload = function() {
 	getBalance();
 
-    document.getElementById("reimbursementForm").addEventListener("submit", returnMessage);
+	document.getElementById("reimbursementForm").addEventListener("submit", returnMessage);
+	
+	document.getElementById("costOfEvent").addEventListener("input", getProjectedReimbursement);
+	document.getElementById("inputEvent").addEventListener("change", getProjectedReimbursement);
 }
