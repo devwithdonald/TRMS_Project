@@ -39,8 +39,8 @@ public interface ReimbursementServiceInt {
 	public boolean finalGradeIdVerification(Employee loggedInEmployee, int requestId);
 	
 	public int calculateAward(int requestId);
-	
-	public boolean dateCheck(String date);
+//	
+//	public boolean dateCheck(String date);
 	
 	public int calculateAwardByReimbursementType(String reimbursementType, int cost);
 	

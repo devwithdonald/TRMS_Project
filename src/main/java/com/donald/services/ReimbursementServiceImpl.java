@@ -351,31 +351,31 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 	
 
-	@Override
-	public boolean dateCheck(String date) {
-
-		// DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-		LocalDate currentDate = LocalDate.now();
-
-		LocalDate checkDate = LocalDate.parse(date);
-		Duration diff = Duration.between(currentDate.atStartOfDay(), checkDate.atStartOfDay());
-
-		long diffDays = diff.toDays();
-
-		LoggingUtil.debug("diff days" + diffDays);
-
-		// should check diff days is also positive
-		if (diffDays > 7) {
-
-			LoggingUtil.debug("date verified");
-			return true;
-		} else {
-			LoggingUtil.debug("date un-verified");
-		}
-		return false;
-
-	}
+//	@Override
+//	public boolean dateCheck(String date) {
+//
+//		// DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//		LocalDate currentDate = LocalDate.now();
+//
+//		LocalDate checkDate = LocalDate.parse(date);
+//		Duration diff = Duration.between(currentDate.atStartOfDay(), checkDate.atStartOfDay());
+//
+//		long diffDays = diff.toDays();
+//
+//		LoggingUtil.debug("diff days" + diffDays);
+//
+//		// should check diff days is also positive
+//		if (diffDays > 7) {
+//
+//			LoggingUtil.debug("date verified");
+//			return true;
+//		} else {
+//			LoggingUtil.debug("date un-verified");
+//		}
+//		return false;
+//
+//	}
 
 	@Override
 	public int calculateAwardByReimbursementType(String reimbursementType, int cost) {

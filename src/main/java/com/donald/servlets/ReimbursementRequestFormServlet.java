@@ -11,12 +11,14 @@ import javax.servlet.http.HttpSession;
 import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
+import com.donald.services.ValidationServiceImpl;
 import com.donald.util.LoggingUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReimbursementRequestFormServlet extends HttpServlet {
 
 	// need Reimbursement service right here
+	ValidationServiceImpl vsi = new ValidationServiceImpl();
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	Employee loggedInEmployee;
 
@@ -68,17 +70,23 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		
 		
 
-		
-		//if cost will take employee below
-		//should be in another ????
-		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
+		if (!vsi.balanceVerification(loggedInEmployee, rr)) {
 			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
 			LoggingUtil.debug("Cost Invalid");
 			return;
 		}
+		
+		//if cost will take employee below
+		//should be in another ????
+//		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
+//			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
+//			LoggingUtil.debug("Cost Invalid");
+//			return;
+//		}
 
 		
-		if (rsi.dateCheck(rr.getDateOfEvent()) == true) {
+		
+		if (vsi.dateCheck(rr.getDateOfEvent()) == true) {
 
 			ReimbursementRequest reimbursementRequest = rsi.insertReimbursementRequest(loggedInEmployee,
 					rr.getDateOfEvent(), rr.getTimeOfEvent(), rr.getLocationOfEvent(), rr.getDescription(),
