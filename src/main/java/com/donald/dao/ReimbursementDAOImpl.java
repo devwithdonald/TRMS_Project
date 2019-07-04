@@ -553,6 +553,12 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return employeeId;
 	}
 
+	@Override
+	public int updateRequestAdditionalInfo(int requestId, String additionalInfo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 

@@ -20,6 +20,8 @@ public interface ReimbursementServiceInt {
 	
 	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo, Employee loggedInEmployee);
 	
+	public boolean requestAdditionalInfo(int requestId, String additonalInfo);
+	
 	public boolean acceptRequest(int requestId);
 	
 	public boolean denyRequest(int requestId);
@@ -44,4 +46,5 @@ public interface ReimbursementServiceInt {
 	
 	public int calculateAwardByReimbursementType(String reimbursementType, int cost);
 	
+
 }

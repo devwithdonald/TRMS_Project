@@ -20,6 +20,8 @@ public interface ReimbursementDAOInt {
 	
 	public String getReimbursementTypeById(int reimbursementTypeId);
 	
+	public int updateRequestAdditionalInfo(int requestId, String additionalInfo);
+	
 	public int updateAcceptRequest(int requestId);
 	
 	public int updateDenyRequest(int requestId);

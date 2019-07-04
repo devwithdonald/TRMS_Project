@@ -111,7 +111,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	}
 
 	@Override
-	public String reimbursementDecisionMaker(int requestId, String decision, String additonalInfo,
+	public String reimbursementDecisionMaker(int requestId, String decision, String additionalInfo,
 			Employee loggedInEmployee) {
 		Boolean success = false;
 		String message = null;
@@ -138,6 +138,9 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 //				//edi.updateAvailableBalance(employee, amount);
 				
 				message = "denied";
+			} else if (decision.equals("Request Additional Information")) {
+				success = requestAdditionalInfo(requestId, additionalInfo);
+				
 			}
 
 			if (success == true) {
@@ -147,6 +150,20 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 			}
 		} else {
 			return "Invalid Request Id";
+		}
+
+	}
+	
+	
+	@Override
+	public boolean requestAdditionalInfo(int requestId, String additionalInfo) {
+		
+		int rowsAffected = rdi.updateRequestAdditionalInfo(requestId, additionalInfo);
+		
+		if (rowsAffected == 1) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
