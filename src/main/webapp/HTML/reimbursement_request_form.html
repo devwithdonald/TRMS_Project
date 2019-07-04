@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="../CSS/login.css">
+  <link rel="stylesheet" href="../CSS/form.css">
 
   <title>Reimbursement</title>
 </head>
@@ -19,11 +19,6 @@
 
   <!-- nav bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- <a class="navbar-brand" href="#">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -34,12 +29,11 @@
           <a class="nav-link" href="update_request.html">Update</a>
         </li>
         <li class="nav-item">
-          <!-- servlet here? -->
           <a class="nav-link" href="logout">Log Out<span class="sr-only">(current)</span></a>
         </li>
     </div>
   </nav>
- 
+
   <!-- show balance Jumbotro -->
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -49,55 +43,62 @@
   </div>
 
   <!-- reimbursement form -->
-  <!--   <form action="reimbursement_request_form" method="post"> -->
   <form id="reimbursementForm">
-    <h1>Reimbursement Form</h1>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Date of event</label>
-      <input type="date" name="date" class="form-control" id="date" max="9999-12-31" required="required">
+    <h2>Reimbursement Form</h2>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputEventDate">Date of event</label>
+        <input type="date" name="date" class="form-control" id="date" max="9999-12-31" required="required">
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputEventTime">Time of event</label>
+        <input type="time" name="time" class="form-control" id="time" required="required">
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputEventLocation">Location of event</label>
+        <input type="text" name="location" class="form-control" id="location" placeholder="Location"
+          required="required">
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="exampleFormControlInput2">Time of event</label>
-      <input type="time" name="time" class="form-control" id="time" required="required">
-    </div>
-
-    <div class="form-group">
-      <label for="exampleFormControlInput3">Location of event</label>
-      <input type="text" name="location" class="form-control" id="location" placeholder="Location" required="required">
-    </div>
-
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Description</label>
+      <label for="inputDescription">Description</label>
       <textarea name="description" class="form-control" id="description" rows="2" required="required"></textarea>
     </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="inputCost">Cost of event</label>
+        <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost"
+          required="required">
+      </div>
 
-    <div class="form-group">
-      <label for="exampleFormControlInput5">Cost of event</label>
-      <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost"
-        required="required">
-    </div>
+      <div class="form-group col-md-6">
+        <label for="inputEventType">Event Type</label>
+        <select id="inputEvent" name="eventType" class="form-control">
+          <option selected>University Course</option>
+          <option>Seminar</option>
+          <option>Certification Preparation Classes</option>
+          <option>Certification</option>
+          <option>Technical Training</option>
+          <option>Other</option>
+        </select>
 
-    <div class="form-group">
-      <label for="inputEvent">Event Type</label>
-      <select id="inputEvent" name="eventType" class="form-control">
-        <option selected>University Course</option>
-        <option>Seminar</option>
-        <option>Certification Preparation Classes</option>
-        <option>Certification</option>
-        <option>Technical Training</option>
-        <option>Other</option>
-      </select>
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label for="inputGradingFormat">Grading Format</label>
-      <select id="inputGradingFormat" name="gradingFormat" class="form-control">
-        <option selected>0-100</option>
-        <option>A-F</option>
-        <option>Pass/Fail</option>
-        <option>Presentation</option>
-      </select>
+      <div class="form-group col-md-3">
+        <label for="inputGradingFormat">Grading Format</label>
+        <select id="inputGradingFormat" name="gradingFormat" class="form-control">
+          <option selected>0-100</option>
+          <option>A-F</option>
+          <option>Pass/Fail</option>
+          <option>Presentation</option>
+        </select>
+      </div>
+
     </div>
 
     <div class="form-group">
@@ -106,11 +107,14 @@
         placeholder="Passing Grade - If Presentation Leave Blank">
     </div>
 
-
     <button type="submit" class="btn btn-primary">Submit</button>
 
   </form>
 
+
+  <footer>
+    <p>© 2019 TRMS <br> github.com/devwithdonald</p>
+  </footer>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
