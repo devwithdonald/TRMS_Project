@@ -21,24 +21,25 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	EmployeeServiceImpl esi = new EmployeeServiceImpl();
 
 	@Override
-	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest) {
+	public ReimbursementRequest insertReimbursementRequest(Employee loggedInEmployee,
+			ReimbursementRequest reimbursementRequest) {
 		LoggingUtil.trace("insertReimbursementRequest()");
 
-		//ReimbursementRequest reimbursementRequest = null;
+		// ReimbursementRequest reimbursementRequest = null;
 
 		// make new Reimbursement
 //		reimbursementRequest = new ReimbursementRequest(eventType, date, location, time, description, cost, 0,
 //				gradingFormat, passingGrade);
 //		
-	
 
 		// call the DAO!
 		int successCode = rdi.insertReimbursement(loggedInEmployee, reimbursementRequest);
-		
-		//update the employee in db for pending amount
-		//update employee!! if they got here they can be pending amount
-		edi.updateEmployeePendingBalance(loggedInEmployee, calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
-		//loggedInEmployee.setPendingBalance(pendingBalance);
+
+		// update the employee in db for pending amount
+		// update employee!! if they got here they can be pending amount
+		edi.updateEmployeePendingBalance(loggedInEmployee,
+				calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
+		// loggedInEmployee.setPendingBalance(pendingBalance);
 
 		// if DAO returns 0 then make reimbursement null, else return the request
 		// else the id
@@ -125,7 +126,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
 				success = denyRequest(requestId);
-				
+
 				esi.denyPendingReward(requestId);
 //				//TODO NEED NEW METHOD
 //				int amount = calculateAward(requestId);
@@ -136,11 +137,11 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 //				edi.updateEmployeePendingBalance(employee, -amount);
 //				//set to plus award amount
 //				//edi.updateAvailableBalance(employee, amount);
-				
+
 				message = "denied";
 			} else if (decision.equals("Request Additional Information")) {
 				success = requestAdditionalInfo(requestId, additionalInfo);
-				
+
 			}
 
 			if (success == true) {
@@ -153,13 +154,12 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		}
 
 	}
-	
-	
+
 	@Override
 	public boolean requestAdditionalInfo(int requestId, String additionalInfo) {
-		
+
 		int rowsAffected = rdi.updateRequestAdditionalInfo(requestId, additionalInfo);
-		
+
 		if (rowsAffected == 1) {
 			return true;
 		} else {
@@ -189,7 +189,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		int rowsAffected = rdi.updateDenyRequest(requestId);
 
 		if (rowsAffected == 1) {
-			
+
 			return true;
 		} else {
 			return false;
@@ -298,7 +298,6 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				// success boolean will need to change!!!!!
 				// (requestId, denied = false, awardgiven = true)
 
-
 				numberOfRows = rdi.updateFinalGrade(requestId, false, true);
 
 				// getting employee who is getting award
@@ -308,22 +307,22 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 				numberOfRows += rdi.insertReimbursementAward(employeeRequest.getUserName(),
 						getEventTypeId(employeeRequest.getEventType()), awardAmount);
-				
-				//call Employee service?
+
+				// call Employee service?
 				esi.awardPendingReward(requestId, awardAmount);
-				
+
 				message = "accepted";
 			} else if (decision.equals("Deny")) {
 				// (requestId, denied = true, awardgiven = false)
 				numberOfRows = rdi.updateFinalGrade(requestId, true, false);
 				esi.denyPendingReward(requestId);
-				//give money back!
+				// give money back!
 				numberOfRows++;
 
 				message = "denied";
 			}
 
-			//changed
+			// changed
 			if (numberOfRows == 2) {
 				return "Reimbursement final grade " + message + " successfully";
 			} else {
@@ -364,7 +363,6 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 
 		return awardAmount;
 	}
-	
 
 //	@Override
 //	public boolean dateCheck(String date) {
@@ -395,12 +393,18 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 	@Override
 	public int calculateAwardByReimbursementType(String reimbursementType, int cost) {
 		// select payback_percentage from reimbursement_type return that value (cast)
-		int paybackPercentage = rdi
-				.getReimbursementPaybackPercentageByReimbursementType(reimbursementType);
+		int paybackPercentage = rdi.getReimbursementPaybackPercentageByReimbursementType(reimbursementType);
 
 		int awardAmount = (cost * paybackPercentage) / 100;
 
 		return awardAmount;
+	}
+
+	@Override
+	public List<ReimbursementRequest> viewAdditionalInformationRequests(Employee loggedInEmployee) {
+		List<ReimbursementRequest> additionalInfoRequestList = rdi.getAdditionalInformationRequests(loggedInEmployee);
+
+		return additionalInfoRequestList;
 	}
 
 }

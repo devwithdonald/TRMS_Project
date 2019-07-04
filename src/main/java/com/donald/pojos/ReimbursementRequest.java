@@ -6,6 +6,7 @@ public class ReimbursementRequest extends Reimbursement{
 	private String gradingFormat;
 	private String passingGrade;
 	private String gradeReceived;
+	private String requestedAdditionalInfo;
 	
 	
 	
@@ -26,6 +27,16 @@ public class ReimbursementRequest extends Reimbursement{
 		this.passingGrade = passingGrade;
 	}
 
+
+
+	public String getRequestedAdditionalInfo() {
+		return requestedAdditionalInfo;
+	}
+
+
+	public void setRequestedAdditionalInfo(String requestedAdditionalInfo) {
+		this.requestedAdditionalInfo = requestedAdditionalInfo;
+	}
 
 
 	public String getGradingFormat() {

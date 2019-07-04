@@ -46,5 +46,7 @@ public interface ReimbursementServiceInt {
 	
 	public int calculateAwardByReimbursementType(String reimbursementType, int cost);
 	
+	public List<ReimbursementRequest> viewAdditionalInformationRequests (Employee loggedInEmployee);
+	
 
 }

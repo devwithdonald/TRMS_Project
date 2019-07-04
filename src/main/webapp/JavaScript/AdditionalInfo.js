@@ -23,7 +23,7 @@ function appendToTable(requestArr){
         tableBody.innerHTML += `
         <tr>
             <td>${requestArr[i].id}</td>
-            <td>${requestArr[i].additionalInfo}</td>
+            <td>${requestArr[i].requestedAdditionalInfo}</td>
             <td>${requestArr[i].eventType}</td>
             <td>${requestArr[i].description}</td>
             <td>${requestArr[i].gradingFormat}</td>        

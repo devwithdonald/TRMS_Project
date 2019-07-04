@@ -579,6 +579,41 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return numberOfRows;
 	}
 
+	@Override
+	public List<ReimbursementRequest> getAdditionalInformationRequests(Employee loggedInEmployee) {
+		LoggingUtil.debug("getAdditionalInformationRequests() DAO");
+
+		List<ReimbursementRequest> additionalInfoRequestList = new ArrayList<>();
+
+		String sql = "select * from request \r\n" + 
+				"where need_additional_info = true and employee_id = ?;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReimbursementRequest reimbursementRequest = new ReimbursementRequest();
+				reimbursementRequest.setId(rs.getInt("request_id"));
+				reimbursementRequest.setRequestedAdditionalInfo(rs.getString("requested_additional_info"));
+				reimbursementRequest.setEventType(getReimbursementTypeById(rs.getInt("reimbursement_type_id")));
+				reimbursementRequest.setDescription(rs.getString("description"));
+				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
+
+				additionalInfoRequestList.add(reimbursementRequest);
+
+			}
+
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+
+		return additionalInfoRequestList;
+	}
+
 
 
 

@@ -71,4 +71,14 @@
     <servlet-name>AmountServlet</servlet-name>
     <url-pattern>/HTML/AmountServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdditionalInfoServlet</display-name>
+    <servlet-name>AdditionalInfoServlet</servlet-name>
+    <servlet-class>com.donald.servlets.AdditionalInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdditionalInfoServlet</servlet-name>
+    <url-pattern>/HTML/AdditionalInfoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -44,4 +44,6 @@ public interface ReimbursementDAOInt {
 	
 	public int getEmployeeIdByUsername(String userName);
 	
+	public List<ReimbursementRequest> getAdditionalInformationRequests(Employee loggedInEmployee);
+	
 }
