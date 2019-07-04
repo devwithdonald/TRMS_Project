@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="../CSS/request.css">
     <title>View Requests</title>
 </head>
 
@@ -39,10 +39,16 @@
                 </li>
         </div>
     </nav>
+      <!-- show Jumbotro -->
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <p class="lead">These graded requests are awaiting your final approval.</p>
+        </div>
+      </div>
 
     <!-- view request table-->
-    <table class="table table-striped">
-        <h2>Requests for Final Approval</h2>
+    <table class="table table-striped table-sm table-light table-curved">
+        <caption>Final approval table</caption>
         <thead>
             <tr>
                 <th scope="col">Request Id</th>
@@ -95,6 +101,11 @@
             </div>
         </div>
     </form>
+
+    <footer>
+        <p>© 2019 TRMS <br> github.com/devwithdonald</p>
+      </footer>
+      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
