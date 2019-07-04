@@ -72,7 +72,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		String sql = "select * from request where employee_id in (select e.employee_id\r\n" + "from employee e\r\n"
 				+ "inner join employee m \r\n" + "on m.employee_id = e.reports_to\r\n"
-				+ "where m.employee_id = ?) and denied = false and approval_reference_id = 1;";
+				+ "where m.employee_id = ?) and denied = false and approval_reference_id = 1 and need_additional_info = false;";
 
 		PreparedStatement pstmt;
 
@@ -115,7 +115,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 				+ "inner join employee m \r\n" + "on m.employee_id = e.reports_to\r\n"
 				+ "where m.employee_id in (select m.employee_id\r\n" + "from employee m\r\n"
 				+ "inner join employee h\r\n" + "on h.employee_id = m.reports_to\r\n"
-				+ "where h.employee_id = ?)) and denied = false and approval_reference_id = 2;";
+				+ "where h.employee_id = ?)) and denied = false and approval_reference_id = 2 and need_additional_info = false;";
 
 		PreparedStatement pstmt;
 
@@ -154,7 +154,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 
-		String sql = "select * from request\r\n" + "where approval_reference_id = 3 and denied = false;";
+		String sql = "select * from request\r\n" + "where approval_reference_id = 3 and denied = false and need_additional_info = false;;";
 
 		PreparedStatement pstmt;
 
