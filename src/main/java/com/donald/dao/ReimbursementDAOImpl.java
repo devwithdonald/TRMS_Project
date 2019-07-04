@@ -555,8 +555,28 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public int updateRequestAdditionalInfo(int requestId, String additionalInfo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int numberOfRows = 0;
+		
+		String sql = "update request \r\n" + 
+				"set need_additional_info = true, requested_additional_info = ?\r\n" + 
+				"where request_id = ?;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, additionalInfo);
+			pstmt.setInt(2, requestId);
+			numberOfRows = pstmt.executeUpdate();
+			
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateRequestAdditionalInfo");
+			
+			
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		
+		return numberOfRows;
 	}
 
 
