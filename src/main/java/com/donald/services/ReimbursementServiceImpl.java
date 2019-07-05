@@ -141,6 +141,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 				message = "denied";
 			} else if (decision.equals("Request Additional Information")) {
 				success = requestAdditionalInfo(requestId, additionalInfo);
+				message = "response went through";
 
 			}
 
@@ -405,6 +406,18 @@ public class ReimbursementServiceImpl implements ReimbursementServiceInt {
 		List<ReimbursementRequest> additionalInfoRequestList = rdi.getAdditionalInformationRequests(loggedInEmployee);
 
 		return additionalInfoRequestList;
+	}
+
+	@Override
+	public String additionalInformationResponse(int requestId, String responseMessage, Employee loggedInEmployee) {
+		int rowsAffected = rdi.updateAdditionalInformationResponse(requestId, responseMessage, loggedInEmployee);
+
+		if (rowsAffected == 1) {
+
+			return "Response was successful";
+		} else {
+			return "Response was unsuccessful";
+		}
 	}
 
 }

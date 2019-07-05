@@ -41,7 +41,7 @@ function response() {
 
 
     //make new JSON object
-    let response = new Response(requestId, responseMessage);
+    let response = new ResponseDecision(requestId, responseMessage);
 
     let xhr = new XMLHttpRequest();
 
@@ -64,13 +64,16 @@ function response() {
 
 }
 
-let ReponseDecision = function (requestId, responseMessage){
+let ResponseDecision = function (requestId, responseMessage){
     this.requestId = requestId;
     this.responseMessage = responseMessage;
 }
 
 window.onload = function () {
-    getRequests()
+    getRequests();
+    
 
-    document.getElementById("responseForm").addEventListener("submit", response)
+    
+    document.getElementById("responseForm").addEventListener("submit", response);
+    
 }

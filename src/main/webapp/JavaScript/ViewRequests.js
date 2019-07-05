@@ -86,9 +86,20 @@ let RequestDecision = function (requestId, decision, additionalInfo){
     this.additionalInfo = additionalInfo;
 }
 
+function radioCheck(){
+    if (document.getElementById('radioDecision3').checked){
+        document.getElementById('additional-info-row').style.visibility = 'visible';
+    } else {
+        document.getElementById('additional-info-row').style.visibility = 'hidden';
+    }
+}
 
 window.onload = function () {
     getRequests();
+    radioCheck();
 
-  document.getElementById("approvalForm").addEventListener("submit", requestDecision)
+  document.getElementById("approvalForm").addEventListener("submit", requestDecision);
+  document.getElementById('radioDecision1').addEventListener("click", radioCheck);
+  document.getElementById('radioDecision2').addEventListener("click", radioCheck);
+  document.getElementById('radioDecision3').addEventListener("click", radioCheck);
 }

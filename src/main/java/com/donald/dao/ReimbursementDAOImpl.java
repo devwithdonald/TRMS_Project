@@ -614,6 +614,31 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return additionalInfoRequestList;
 	}
 
+	@Override
+	public int updateAdditionalInformationResponse(int requestId, String responseMessage, Employee loggedInEmployee) {
+		int numberOfRows = 0;
+		
+		String sql = "update request\r\n" + 
+				"set need_additional_info = false, description = description || '--req info-- ' || ?\r\n" + 
+				"where request_id = ? and employee_id = ? and need_additional_info = true;";
+		
+		PreparedStatement pstmt;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, responseMessage);
+			pstmt.setInt(2, requestId);
+			pstmt.setInt(3, loggedInEmployee.getEmployeeId());
+			numberOfRows = pstmt.executeUpdate();
+			
+			LoggingUtil.debug(numberOfRows + " number of rows affected - updateAdditionalInformationResponse");
+			
+		} catch (SQLException e) {
+			LoggingUtil.error(e.getMessage());
+		}
+		return numberOfRows;
+	}
+
 
 
 

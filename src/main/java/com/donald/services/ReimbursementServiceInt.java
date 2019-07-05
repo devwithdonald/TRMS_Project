@@ -48,5 +48,7 @@ public interface ReimbursementServiceInt {
 	
 	public List<ReimbursementRequest> viewAdditionalInformationRequests (Employee loggedInEmployee);
 	
+	public String additionalInformationResponse(int requestId, String responseMessage, Employee loggedInEmployee);
+	
 
 }

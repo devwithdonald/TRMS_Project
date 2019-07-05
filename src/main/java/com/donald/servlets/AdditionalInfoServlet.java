@@ -13,6 +13,7 @@ import com.donald.pojos.Employee;
 import com.donald.pojos.ReimbursementRequest;
 import com.donald.services.ReimbursementServiceImpl;
 import com.donald.util.LoggingUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -53,8 +54,27 @@ public class AdditionalInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession sess = request.getSession(false);
+		loggedInEmployee = (Employee) sess.getAttribute("employee");
+		
+		// pulling information from the accept/deny form
+		String body = request.getReader().readLine();
+		LoggingUtil.debug("contents from response form ->" + body);
+		
+		// treating JSON obj as DOM tree
+		JsonNode parent = new ObjectMapper().readTree(body);
+		
+		Integer requestId = parent.get("requestId").asInt();
+		String responseMessage = parent.get("responseMessage").asText();
+		
+		LoggingUtil.debug("requestId: " + requestId);
+		LoggingUtil.debug("responseMessage: " + responseMessage);
+		
+		//call service to choose which one to call!
+		// this should split off into different decision based off accept,deny or request additional info
+		String message = rsi.additionalInformationResponse(requestId, responseMessage, loggedInEmployee);
+		//return success message!
+		response.getWriter().write(message);
 	}
 
 }

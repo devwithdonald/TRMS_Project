@@ -46,4 +46,6 @@ public interface ReimbursementDAOInt {
 	
 	public List<ReimbursementRequest> getAdditionalInformationRequests(Employee loggedInEmployee);
 	
+	public int updateAdditionalInformationResponse(int requestId, String responseMessage, Employee loggedInEmployee);
+	
 }
