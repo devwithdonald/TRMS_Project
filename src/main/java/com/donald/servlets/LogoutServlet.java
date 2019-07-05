@@ -11,33 +11,17 @@ import javax.servlet.http.HttpSession;
 import com.donald.pojos.Employee;
 import com.donald.util.LoggingUtil;
 
-public class LogoutServlet extends HttpServlet{
-	
+public class LogoutServlet extends HttpServlet {
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		HttpSession sess = req.getSession();
 		Employee loggedInEmployee = (Employee) sess.getAttribute("employee");
 		LoggingUtil.debug(loggedInEmployee.getUsername() + " is logging out");
 		req.getSession().invalidate();
-		
 
-
-		resp.sendRedirect(req.getContextPath()+"/HTML/login");
+		resp.sendRedirect(req.getContextPath() + "/HTML/login");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-//
-//
-//		resp.sendRedirect("/login");
-//	}
 
 }

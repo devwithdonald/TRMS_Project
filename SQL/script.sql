@@ -1,24 +1,26 @@
 --drop table helper
 drop table employee_type cascade;
-drop table employee cascade;
 drop table reimbursement_type cascade;
 drop table approval_reference cascade;
+
+drop table employee cascade;
 drop table request cascade;
 drop table reimbursement_award cascade;
 
 
 --select * helpers
 select * from employee_type;
-select * from employee;
 select * from reimbursement_type;
 select * from approval_reference;
+
+select * from employee;
 select * from request;
 select * from reimbursement_award;
 
 
-select emp.*, emp_type.employee_type 
-from employee emp
-inner join employee_type emp_type on emp.employee_type_id = emp_type.employee_type_id; 
+--select emp.*, emp_type.employee_type 
+--from employee emp
+--inner join employee_type emp_type on emp.employee_type_id = emp_type.employee_type_id; 
 
 
 -- create tables
@@ -27,15 +29,6 @@ create table employee_type(
 	employee_type text not null
 );
 
-create table employee (
-	employee_id serial primary key,
-	employee_type_id integer references employee_type (employee_type_id) not null,
-	username text unique not null,
-	password text not null,
-	reports_to integer references employee (employee_id),
-	available_balance integer default 1000,
-	pending_balance integer default 0
-);
 
 create table reimbursement_type(
 	reimbursement_type_id serial primary key,
@@ -47,6 +40,16 @@ create table approval_reference (
 	approval_reference_id serial primary key,
 	description text
 )
+
+create table employee (
+	employee_id serial primary key,
+	employee_type_id integer references employee_type (employee_type_id) not null,
+	username text unique not null,
+	password text not null,
+	reports_to integer references employee (employee_id),
+	available_balance integer default 1000,
+	pending_balance integer default 0
+);
 
 create table request (
 	request_id serial primary key,
@@ -62,7 +65,9 @@ create table request (
 	grading_format text not null,
 	passing_grade text not null,
 	grade_received text,
-	award_given boolean default false
+	award_given boolean default false,
+	need_additional_info boolean default false,
+	requested_additional_info text
 );
 
 
@@ -74,19 +79,9 @@ create table reimbursement_award(
 	amount_gifted integer not null
 );
 
-insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description)
-	values (1,1,1,100,'heart', '12/12/2011', '8:30','cool event');
-
-insert into request(employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, description)
-	values (?,?,?,?,?,?,?);
-
-update request
-set award_given = false
-where request_id = 1;
 
 
--- insert default items
-!-- employee types
+-- insert default employee types
 insert into employee_type(employee_type)
 	values ('associate');
 
@@ -98,9 +93,9 @@ insert into employee_type(employee_type)
 
 insert into employee_type(employee_type)
 	values ('benefits coordinator');
---!
 
-!--need these
+
+-- insert default reimbursement types
 insert into reimbursement_type(event_type, payback_percentage)
 	values ('University Course', 80);
 
@@ -118,11 +113,10 @@ insert into reimbursement_type(event_type, payback_percentage)
 
 insert into reimbursement_type(event_type, payback_percentage)
 	values ('Other', 30);
---!
 
 
 
---
+--insert default approval references
 insert into approval_reference(description)
 	values ('Needs Supervisor Approval');
 
@@ -139,142 +133,42 @@ insert into approval_reference(description)
 	values ('Grade - Needs BenCo Approval');
 
 
---
-
-
-select * from employee;
-
-insert into employee(employee_type_id, username, password, reports_to)
-	values (1, 'test', '123', 3);
+--dummy date for employees (two depts)
+insert into employee(employee_type_id, username, password)
+	values (3, 'depthead_1', 'd1');
 
 insert into employee(employee_type_id, username, password, reports_to)
-	values (1, 'associate', '123', 3);
-	
-insert into employee(employee_type_id, username, password, reports_to)
-	values (1, 'low-level', '123', 2);
+	values (2, 'supervisor_1', 's1', 1);
 
 insert into employee(employee_type_id, username, password, reports_to)
-	values (2, 'supervisor', '456', 2);
+	values (1, 'associate_1', 'a1', 2);
+
+insert into employee(employee_type_id, username, password, reports_to)
+	values (4, 'benco', 'b', 2);
 
 insert into employee(employee_type_id, username, password)
-	values (3, 'department head', '789');
+	values (3, 'depthead_2', 'd2');
 
 insert into employee(employee_type_id, username, password, reports_to)
-	values (4, 'benco', '321', 3);
+	values (2, 'supervisor_2', 's2', 5);
 
-select * from employee;
-select * from request where employee_id = 5;
+insert into employee(employee_type_id, username, password, reports_to)
+	values (1, 'associate_2', 'a2', 6);
 
--- head to supervisor
-select m.employee_id
-from employee m
-inner join employee h
-on h.employee_id = m.reports_to
-where h.employee_id = 2;
-
--- supervisor to associate
-select e.employee_id, m.employee_id
-from employee e
-inner join employee m 
-on m.employee_id = e.reports_to
-where m.employee_id = 3;
-
---head to employee
-select e.employee_id
-from employee e
-inner join employee m 
-on m.employee_id = e.reports_to
-where m.employee_id = (select m.employee_id
-from employee m
-inner join employee h
-on h.employee_id = m.reports_to
-where h.employee_id = 2)
+insert into employee(employee_type_id, username, password, reports_to)
+	values (1, 'associate_2_1', 'a21', 6);
 
 
 
 
---request for employee for head!
-select * from request where employee_id in (select e.employee_id
-from employee e
-inner join employee m 
-on m.employee_id = e.reports_to
-where m.employee_id in (select m.employee_id
-from employee m
-inner join employee h
-on h.employee_id = m.reports_to
-where h.employee_id = 2)) and denied = false and approval_reference_id = 2;
 
 
-
-select * from request where employee_id = 5 and denied = false;
-
--- requests for employee as supervisor
-select * from request where employee_id in (select e.employee_id
-from employee e
-inner join employee m 
-on m.employee_id = e.reports_to
-where m.employee_id = 3) and denied = false and approval_reference_id = 1;
-
-select * from employee where employee_id = 4;
-select * from reimbursement_type where reimbursement_type_id = 4;
-
-
-select employee_id from request
-where request_id = ?;
-
-update request
-set approval_reference_id = 4
-where request_id = 28;
-
---benco approval! 6 might need to change!
-select * from request
-where approval_reference_id = 5 and denied = false;
-
-where approval_reference_id = 3 and denied = false;
-
---getting requests that need grade approval
-select * from request
-where employee_id = ? and approval_reference_id = 4;
-
---since its a grade approval_refernce_id = 5 (for benco)
-update request
-set denied = ?, award_given = ?
-where request_id = ?;
-
-select * from request
-where request_id = ?;
-
-select payback_percentage from reimbursement_type
-where event_type = 'University Course';
-
-insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)
-	values(?,?,?);
-
-
-select employee_id from employee
-where username = ?;
-
-select * from employee
-where employee_id = 5;
-
-
-update employee
-set pending_balance = 0
-where employee_id = 6;
-
-update employee
-set available_balance = 1000
-where employee_id = 6;
-
-update employee
-set reports_to = 1
-where employee_id = 2;
-
-select * from request;
-select * from employee;
+--run first (demo)
 select * from reimbursement_award;
 
-
-update request
-set denied = false, award_given = true
-where request_id = 18;
+--run second (demo)
+insert into request (employee_id, reimbursement_type_id, approval_reference_id, cost, location, date_of_event, time_of_event, description, grading_format, passing_grade)
+	values(7,2,1,500,'Los Angeles', '2019-08-15', '09:30:00', 'Leadership Seminar', '0-100',70),
+			(7,4,1,100,'New York', '2019-09-24', '10:25:00', 'OCA', 'Pass/Fail', 'Pass'), 
+				(8,1,1,600,'Oregon', '2020-03-06', '09:25:00', 'Java Classes', 'A-F', 'B'),
+					(3,3,1,100,'Arizona', '2019-08-23', '07:30:00', 'OCA Prep', '0-100', 85);

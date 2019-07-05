@@ -17,48 +17,49 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AmountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AmountServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		
+	public AmountServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//get projected amount
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// get projected amount
+
 		String body = request.getReader().readLine();
 		LoggingUtil.debug("cost and event update items ->" + body);
-		
+
 		// treating JSON obj as DOM tree
 		JsonNode parent = new ObjectMapper().readTree(body);
-		
+
 		Integer cost = parent.get("cost").asInt();
 		String eventType = parent.get("eventType").asText();
-		
+
 		LoggingUtil.debug("requestId: " + cost);
 		LoggingUtil.debug("decision: " + eventType);
-		
 
-		//calling service method 
+		// calling service method
 		int projectedAmount = rsi.calculateAwardByReimbursementType(eventType, cost);
-		
+
 		String projectedAmountString = Integer.toString(projectedAmount);
-		//return success message!
+		// return success message!
 		response.getWriter().write(projectedAmountString);
 	}
 

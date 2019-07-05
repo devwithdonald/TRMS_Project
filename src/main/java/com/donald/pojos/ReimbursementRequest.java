@@ -1,23 +1,17 @@
 package com.donald.pojos;
 
-public class ReimbursementRequest extends Reimbursement{
+public class ReimbursementRequest extends Reimbursement {
 
 	private int status; // level of approval
 	private String gradingFormat;
 	private String passingGrade;
 	private String gradeReceived;
 	private String requestedAdditionalInfo;
-	
-	
-	
-
-
 
 	public ReimbursementRequest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public ReimbursementRequest(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
 			String description, int cost, int status, String gradingFormat, String passingGrade) {
@@ -27,17 +21,13 @@ public class ReimbursementRequest extends Reimbursement{
 		this.passingGrade = passingGrade;
 	}
 
-
-
 	public String getRequestedAdditionalInfo() {
 		return requestedAdditionalInfo;
 	}
 
-
 	public void setRequestedAdditionalInfo(String requestedAdditionalInfo) {
 		this.requestedAdditionalInfo = requestedAdditionalInfo;
 	}
-
 
 	public String getGradingFormat() {
 		return gradingFormat;
@@ -62,11 +52,10 @@ public class ReimbursementRequest extends Reimbursement{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
 	public String getGradeReceived() {
 		return gradeReceived;
 	}
-
 
 	public void setGradeReceived(String gradeReceived) {
 		this.gradeReceived = gradeReceived;
@@ -76,10 +65,5 @@ public class ReimbursementRequest extends Reimbursement{
 	public String toString() {
 		return "ReimbursementRequest [status=" + status + "]";
 	}
-	
-	
-	
-	
 
-	
 }

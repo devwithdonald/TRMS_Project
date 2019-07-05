@@ -17,7 +17,6 @@ import com.donald.util.LoggingUtil;
 
 public class EmployeeDAOImpl implements EmployeeDAOInt {
 
-	// connection
 	private static Connection conn = ConnectionFactory.getConnection();
 
 	@Override
@@ -38,9 +37,6 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// if the employee in the row is an associate
-				// 1 -> associate ID in database
-
 
 				if (rs.getInt("employee_type_id") == 1) {
 					employee = new Associate(rs.getInt("employee_id"), rs.getString("username"),
@@ -83,7 +79,6 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, amount);
 			pstmt.setInt(2, employee.getEmployeeId());
-			//pstmt.executeQuery();
 
 			numberOfRows = pstmt.executeUpdate();
 
@@ -100,19 +95,18 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 	public Employee getEmployeeById(int employeeId) {
 		LoggingUtil.debug("In getEmployeeById() method");
 		Employee employee = null;
-		
-		String sql = "select * from employee\r\n" + 
-				"where employee_id = ?;";
-		
+
+		String sql = "select * from employee\r\n" + "where employee_id = ?;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, employeeId);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
-				
+
 				if (rs.getInt("employee_type_id") == 1) {
 					employee = new Associate(rs.getInt("employee_id"), rs.getString("username"),
 							rs.getString("password"), "associate", rs.getInt("available_balance"));
@@ -132,13 +126,11 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 				}
 
 			}
-			
-			
+
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
 		}
-				
-				
+
 		return employee;
 	}
 
@@ -148,9 +140,8 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 
 		int numberOfRows = 0;
 
-		String sql = "update employee\r\n" + 
-				"set available_balance = available_balance + ?\r\n" + 
-				"where employee_id = ?;";
+		String sql = "update employee\r\n" + "set available_balance = available_balance + ?\r\n"
+				+ "where employee_id = ?;";
 
 		PreparedStatement pstmt;
 
@@ -158,7 +149,6 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, amount);
 			pstmt.setInt(2, employee.getEmployeeId());
-			//pstmt.executeQuery();
 
 			numberOfRows = pstmt.executeUpdate();
 

@@ -18,8 +18,9 @@ public class ValidationServiceImpl implements ValidationServiceInt {
 	public boolean balanceVerification(Employee loggedInEmployee, ReimbursementRequest reimbursementRequest) {
 
 		if (loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance()
-				- rsi.calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()) < 0) {
-			//balance is not okay
+				- rsi.calculateAwardByReimbursementType(reimbursementRequest.getEventType(),
+						reimbursementRequest.getCost()) < 0) {
+			// balance is not okay
 			return false;
 		} else {
 			// balance is okay
@@ -27,11 +28,9 @@ public class ValidationServiceImpl implements ValidationServiceInt {
 		}
 
 	}
-	
+
 	@Override
 	public boolean dateCheck(String date) {
-
-		// DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		LocalDate currentDate = LocalDate.now();
 
@@ -42,7 +41,6 @@ public class ValidationServiceImpl implements ValidationServiceInt {
 
 		LoggingUtil.debug("diff days" + diffDays);
 
-		// should check diff days is also positive
 		if (diffDays > 7) {
 
 			LoggingUtil.debug("date verified");
@@ -53,6 +51,5 @@ public class ValidationServiceImpl implements ValidationServiceInt {
 		return false;
 
 	}
-
 
 }

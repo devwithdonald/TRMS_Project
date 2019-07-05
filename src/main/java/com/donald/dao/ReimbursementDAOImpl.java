@@ -30,23 +30,13 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		try {
 
-			// downcast?
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
-			// need logic for reimbursementTypeId
-
-			// TODO NEEDS TO BE OUTSIDE METHOD WITH ?SWITCH CASE? STATEMENT
-			// would be in EmployeeService i think?
-
 			pstmt.setInt(2, rsi.getEventTypeId(reimbursementRequest.getEventType()));
-
-			pstmt.setInt(3, 1); // always starts UNLESS direct supervisor approval then can go to benco.. will
-								// need to figure this logic later? // with new called insert statement()
-
+			pstmt.setInt(3, 1);
 			pstmt.setInt(4, reimbursementRequest.getCost());
 			pstmt.setString(5, reimbursementRequest.getLocationOfEvent());
-			pstmt.setString(6, reimbursementRequest.getDateOfEvent()); 
+			pstmt.setString(6, reimbursementRequest.getDateOfEvent());
 			pstmt.setString(7, reimbursementRequest.getTimeOfEvent());
 			pstmt.setString(8, reimbursementRequest.getDescription());
 			pstmt.setString(9, reimbursementRequest.getGradingFormat());
@@ -154,7 +144,8 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 
-		String sql = "select * from request\r\n" + "where approval_reference_id = 3 and denied = false and need_additional_info = false;;";
+		String sql = "select * from request\r\n"
+				+ "where approval_reference_id = 3 and denied = false and need_additional_info = false;;";
 
 		PreparedStatement pstmt;
 
@@ -187,7 +178,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	}
 
 	public String getEmployeeUsernameById(int employeeId) {
-		// LoggingUtil.debug("getEmployeeUsernameById() DAO");
 
 		String employeeUsername = null;
 
@@ -214,7 +204,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public String getReimbursementTypeById(int reimbursementTypeId) {
-		// LoggingUtil.debug("getReimbursementTypeById() DAO");
 
 		String reimbursementType = null;
 		String sql = "select * from reimbursement_type where reimbursement_type_id = ?;";
@@ -291,9 +280,9 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		List<ReimbursementRequest> reimbursementRequestList = new ArrayList<>();
 
 		String sql = "select * from request\r\n" + "where employee_id = ? and approval_reference_id = 4;";
-		
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
@@ -317,17 +306,16 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		}
 
 		return reimbursementRequestList;
-	
+
 	}
 
 	@Override
 	public int updateGradeRequest(int requestId, String grade) {
-		
+
 		int numberOfRows = 0;
 
-		String sql = "update request\r\n" + 
-				"set grade_received = ?, approval_reference_id = 5\r\n" + 
-				"where request_id = ?;";
+		String sql = "update request\r\n" + "set grade_received = ?, approval_reference_id = 5\r\n"
+				+ "where request_id = ?;";
 
 		PreparedStatement pstmt;
 
@@ -352,11 +340,11 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		List<ReimbursementRequest> gradedRequestList = new ArrayList<>();
 
-		String sql = "select * from request\r\n" + 
-				"where approval_reference_id = 5 and denied = false and award_given = false;";
-		
+		String sql = "select * from request\r\n"
+				+ "where approval_reference_id = 5 and denied = false and award_given = false;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
@@ -381,15 +369,12 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 		return gradedRequestList;
 	}
 
-
 	@Override
 	public int updateFinalGrade(int requestId, boolean denied, boolean award_given) {
 		int numberOfRows = 0;
 
-		String sql = "update request\r\n" + 
-				"set denied = ?, award_given = ?\r\n" + 
-				"where request_id = ?;";
-		
+		String sql = "update request\r\n" + "set denied = ?, award_given = ?\r\n" + "where request_id = ?;";
+
 		PreparedStatement pstmt;
 
 		try {
@@ -402,7 +387,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 			LoggingUtil.debug(numberOfRows + " number of rows affected - updateAcceptRequest");
 
 		} catch (SQLException e) {
-			
+
 		}
 
 		return numberOfRows;
@@ -411,26 +396,22 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	@Override
 	public int getEmployeeIdByRequestId(int requestId) {
 		LoggingUtil.debug("in getEmployeeIdByRequestId method()");
-		
+
 		int employeeId = 0;
-		
-		String sql = "select employee_id from request\r\n" + 
-				"where request_id = ?;";
-		
-		PreparedStatement pstmt; 
-		
-		
+
+		String sql = "select employee_id from request\r\n" + "where request_id = ?;";
+
+		PreparedStatement pstmt;
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, requestId);
 			ResultSet rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				employeeId = rs.getInt("employee_id");
 			}
-					
-			
-			
+
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
 		}
@@ -441,16 +422,15 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	public ReimbursementRequest getReimbursementRequest(int requestId) {
 		ReimbursementRequest reimbursementRequest = null;
 
-		String sql = "select * from request\r\n" + 
-				"where request_id = ?;";
-		
+		String sql = "select * from request\r\n" + "where request_id = ?;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, requestId);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				reimbursementRequest = new ReimbursementRequest();
 				reimbursementRequest.setId(rs.getInt("request_id"));
@@ -463,7 +443,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 				reimbursementRequest.setDescription(rs.getString("description"));
 				reimbursementRequest.setGradingFormat(rs.getString("grading_format"));
 				reimbursementRequest.setPassingGrade(rs.getString("passing_grade"));
-				
+
 			}
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
@@ -473,25 +453,24 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public int getReimbursementPaybackPercentageByReimbursementType(String ReimbursementRequestType) {
-		
+
 		int paybackPercentage = 0;
-		
-		String sql = "select payback_percentage from reimbursement_type\r\n" + 
-				"where event_type = ?;";
+
+		String sql = "select payback_percentage from reimbursement_type\r\n" + "where event_type = ?;";
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, ReimbursementRequestType);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				paybackPercentage = rs.getInt("payback_percentage");
 			}
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
 		}
-		
+
 		return paybackPercentage;
 	}
 
@@ -499,11 +478,11 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	public int insertReimbursementAward(String employeeUsername, int reimbursementTypeId, int awardAmount) {
 		LoggingUtil.debug("insertReimbursementAward() DAO");
 
-		String sql = "insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)\r\n" + 
-				"	values(?,?,?);";
+		String sql = "insert into reimbursement_award(employee_id, reimbursement_type_id, amount_gifted)\r\n"
+				+ "	values(?,?,?);";
 
 		PreparedStatement pstmt;
-		
+
 		int numberOfRows = 0;
 
 		try {
@@ -512,7 +491,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 			pstmt.setInt(1, getEmployeeIdByUsername(employeeUsername));
 			pstmt.setInt(2, reimbursementTypeId);
 			pstmt.setInt(3, awardAmount);
-
 
 			numberOfRows = pstmt.executeUpdate();
 
@@ -527,12 +505,10 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 	@Override
 	public int getEmployeeIdByUsername(String userName) {
-		// LoggingUtil.debug("getEmployeeUsernameById() DAO");
 
 		int employeeId = 0;
 
-		String sql = "select employee_id from employee\r\n" + 
-				"where username = ?;";
+		String sql = "select employee_id from employee\r\n" + "where username = ?;";
 
 		PreparedStatement pstmt;
 
@@ -556,26 +532,24 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	@Override
 	public int updateRequestAdditionalInfo(int requestId, String additionalInfo) {
 		int numberOfRows = 0;
-		
-		String sql = "update request \r\n" + 
-				"set need_additional_info = true, requested_additional_info = ?\r\n" + 
-				"where request_id = ?;";
-		
+
+		String sql = "update request \r\n" + "set need_additional_info = true, requested_additional_info = ?\r\n"
+				+ "where request_id = ?;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, additionalInfo);
 			pstmt.setInt(2, requestId);
 			numberOfRows = pstmt.executeUpdate();
-			
+
 			LoggingUtil.debug(numberOfRows + " number of rows affected - updateRequestAdditionalInfo");
-			
-			
+
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
 		}
-		
+
 		return numberOfRows;
 	}
 
@@ -585,11 +559,10 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 
 		List<ReimbursementRequest> additionalInfoRequestList = new ArrayList<>();
 
-		String sql = "select * from request \r\n" + 
-				"where need_additional_info = true and employee_id = ?;";
-		
+		String sql = "select * from request \r\n" + "where need_additional_info = true and employee_id = ?;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, loggedInEmployee.getEmployeeId());
@@ -617,30 +590,26 @@ public class ReimbursementDAOImpl implements ReimbursementDAOInt {
 	@Override
 	public int updateAdditionalInformationResponse(int requestId, String responseMessage, Employee loggedInEmployee) {
 		int numberOfRows = 0;
-		
-		String sql = "update request\r\n" + 
-				"set need_additional_info = false, description = description || '--req info-- ' || ?\r\n" + 
-				"where request_id = ? and employee_id = ? and need_additional_info = true;";
-		
+
+		String sql = "update request\r\n"
+				+ "set need_additional_info = false, description = description || '--req info-- ' || ?\r\n"
+				+ "where request_id = ? and employee_id = ? and need_additional_info = true;";
+
 		PreparedStatement pstmt;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, responseMessage);
 			pstmt.setInt(2, requestId);
 			pstmt.setInt(3, loggedInEmployee.getEmployeeId());
 			numberOfRows = pstmt.executeUpdate();
-			
+
 			LoggingUtil.debug(numberOfRows + " number of rows affected - updateAdditionalInformationResponse");
-			
+
 		} catch (SQLException e) {
 			LoggingUtil.error(e.getMessage());
 		}
 		return numberOfRows;
 	}
-
-
-
-
 
 }

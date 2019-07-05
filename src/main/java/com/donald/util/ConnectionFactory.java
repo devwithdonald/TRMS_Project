@@ -29,9 +29,9 @@ public class ConnectionFactory {
 	private ConnectionFactory() {
 
 		Properties prop = new Properties();
-		
+
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		
+
 		try (InputStream fis = loader.getResourceAsStream(PROPERTIES_FILE);) {
 
 			prop.load(fis);
@@ -58,7 +58,7 @@ public class ConnectionFactory {
 			LoggingUtil.debug("successfully connected to DB");
 			System.out.println("successfully connected to DB");
 
-		}  catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {

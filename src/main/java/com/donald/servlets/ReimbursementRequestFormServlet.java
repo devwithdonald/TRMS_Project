@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReimbursementRequestFormServlet extends HttpServlet {
 
-	// need Reimbursement service right here
 	ValidationServiceImpl vsi = new ValidationServiceImpl();
 	ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	Employee loggedInEmployee;
@@ -36,11 +35,12 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 			// send to appropriate site
 			sess = req.getSession();
 			loggedInEmployee = (Employee) sess.getAttribute("employee");
-			// resp.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee) + ".html");
+
 		}
 
 		// returning balance
-		resp.getWriter().write(String.valueOf(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance()));
+		resp.getWriter()
+				.write(String.valueOf(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance()));
 
 	}
 
@@ -51,8 +51,7 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		// login verification
 		HttpSession sess = req.getSession(false);
 		if (sess == null || sess.getAttribute("employee") == null) {
-			// changing!!!
-			// req.getRequestDispatcher("login").forward(req, resp);
+
 			resp.sendRedirect("login");
 			// need to return so the rest of the method doesn't run
 			LoggingUtil.warn(
@@ -67,43 +66,31 @@ public class ReimbursementRequestFormServlet extends HttpServlet {
 		LoggingUtil.debug("sent contents -> " + body);
 		ObjectMapper om = new ObjectMapper();
 		ReimbursementRequest reimbursementRequest = om.readValue(body, ReimbursementRequest.class);
-		
-		
 
 		if (!vsi.balanceVerification(loggedInEmployee, reimbursementRequest)) {
 			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
 			LoggingUtil.debug("Cost Invalid");
 			return;
 		}
-		
-		//if cost will take employee below
-		//should be in another ????
-//		if(loggedInEmployee.getAvailableBalance() - loggedInEmployee.getPendingBalance() - rsi.calculateAwardByReimbursementType(rr.getEventType(), rr.getCost()) < 0) {
-//			resp.getWriter().write("Cost Invalid - This will take your balance below 0");
-//			LoggingUtil.debug("Cost Invalid");
-//			return;
-//		}
 
-		
-		
 		if (vsi.dateCheck(reimbursementRequest.getDateOfEvent()) == true) {
 
-			ReimbursementRequest reimbursementRequestCheck = rsi.insertReimbursementRequest(loggedInEmployee, reimbursementRequest);
-	
+			ReimbursementRequest reimbursementRequestCheck = rsi.insertReimbursementRequest(loggedInEmployee,
+					reimbursementRequest);
 
 			// if null is sent back send back error
 			if (reimbursementRequestCheck == null) {
 				// send response if failed login
-				// resp.setStatus(500);
 				resp.getWriter().write("Failed to insert reimbursement request");
 
 				LoggingUtil.debug("Failed to insert reimbursement request");
 			} else {
-				
-				//updating employee?
-				loggedInEmployee.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
+
+				loggedInEmployee
+						.setPendingBalance(loggedInEmployee.getPendingBalance() + rsi.calculateAwardByReimbursementType(
+								reimbursementRequest.getEventType(), reimbursementRequest.getCost()));
 				sess.setAttribute("employee", loggedInEmployee);
-			
+
 				resp.getWriter().write("Reimbursement request successful!");
 				LoggingUtil.debug("Reimbursement request successful");
 			}

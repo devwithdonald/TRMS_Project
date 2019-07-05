@@ -1,10 +1,8 @@
 package com.donald.pojos;
 
-public class ReimbursementAward extends Reimbursement{
-	
+public class ReimbursementAward extends Reimbursement {
+
 	private int awardAmount;
-
-
 
 	public ReimbursementAward(String eventType, String dateOfEvent, String locationOfEvent, String timeOfEvent,
 			String description, int cost, int awardAmount) {
@@ -24,9 +22,5 @@ public class ReimbursementAward extends Reimbursement{
 	public String toString() {
 		return "ReimbursementAward [awardAmount=" + awardAmount + "]";
 	}
-	
-	
-	
-	
-	
+
 }

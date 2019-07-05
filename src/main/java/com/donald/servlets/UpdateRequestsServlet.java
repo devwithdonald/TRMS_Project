@@ -21,38 +21,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class UpdateRequestsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private ReimbursementServiceImpl rsi = new ReimbursementServiceImpl();
 	Employee loggedInEmployee;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UpdateRequestsServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public UpdateRequestsServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		LoggingUtil.debug("in doGet(); for UpdateRequestServlet");
-		//TODO NEED EMPLOYEE VERIFICAITON!!!!!!
-		
+
 		HttpSession sess = request.getSession(false);
-		
-//		if(sess != null && sess.getAttribute("employee") != null) {
-//			//user is logged in send to home page
-			loggedInEmployee = (Employee) sess.getAttribute("employee");
-//			LoggingUtil.warn(loggedInEmployee.getUsername() + " tried to access the login page while logged in. Redirected succesfully.");
-//			response.sendRedirect(rsi.sendCorrectRedirectLink(loggedInEmployee));
-//		} else {
-//			response.sendRedirect("login.html");
-//		}
-		
-		List<ReimbursementRequest> reimbursementRequestList = rsi.viewPersonalPendingReimbursementRequests(loggedInEmployee);
-		
+
+		loggedInEmployee = (Employee) sess.getAttribute("employee");
+
+		List<ReimbursementRequest> reimbursementRequestList = rsi
+				.viewPersonalPendingReimbursementRequests(loggedInEmployee);
+
 		ObjectMapper om = new ObjectMapper();
 		String reimbursementListString = om.writeValueAsString(reimbursementRequestList);
 		LoggingUtil.info("Pulled requests JSON as String-> " + reimbursementListString);
@@ -60,30 +55,30 @@ public class UpdateRequestsServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//need login verification 
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		// pulling information from the update form
 		String body = request.getReader().readLine();
 		LoggingUtil.debug("contents from update form ->" + body);
-		
+
 		// treating JSON obj as DOM tree
 		JsonNode parent = new ObjectMapper().readTree(body);
-		
+
 		Integer requestId = parent.get("requestId").asInt();
 		String gradingFormat = parent.get("gradingFormat").asText();
 		String grade = parent.get("grade").asText();
-		
+
 		LoggingUtil.debug("requestId: " + requestId);
 		LoggingUtil.debug("gradingFormat: " + gradingFormat);
 		LoggingUtil.debug("grade: " + grade);
-		
 
-		//calling service method 
+		// calling service method
 		String message = rsi.updateReimbursementGrade(requestId, gradingFormat, grade, loggedInEmployee);
-		//return success message!
+		// return success message!
 		response.getWriter().write(message);
 	}
 
