@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/request.css">
+    <title>View Requests</title>
+</head>
+
+<body>
+
+  <!-- nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="request_form_non_associate.html">Apply</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="update_request_non_associate.html">Update</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="additional_info_non_associate.html">Additional Info</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="view_requests.html">Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="grade_approval.html">Grade Approval</a>
+          </li>
+        <li class="nav-item">
+          <!-- servlet here? -->
+          <a class="nav-link" href="logout">Log Out<span class="sr-only">(current)</span></a>
+        </li>
+    </div>
+  </nav>
+
+    <!-- show Jumbotro -->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <p class="lead">These requests are awaiting your approval.</p>
+        </div>
+    </div>
+
+    <!-- view request table-->
+    <table class="table table-striped table-sm table-light table-curved">
+        <caption>Requests Table</caption>
+        <thead>
+            <tr>
+                <th scope="col">Request Id</th>
+                <th scope="col">Employee Username</th>
+                <th scope="col">Reimbursement Type</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Location</th>
+                <th scope="col">Date of Event</th>
+                <th scope="col">Description</th>
+                <th scope="col">Grading Format</th>
+                <th scope="col">Passing Grade Needed</th>
+            </tr>
+        </thead>
+
+        <tbody id="requests-view-table-body">
+        </tbody>
+
+    </table>
+
+
+    <!-- accept/deny form -->
+    <form id="approvalForm">
+        <h2>Accept/Deny Requests</h2>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Request Id</label>
+            <div class="col-sm-10">
+                <input type="number" name="request_id" class="form-control" id="request_id" placeholder="Request Id">
+            </div>
+        </div>
+
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Decision</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision1"
+                            value="Accept" checked>
+                        <label class="form-check-label" for="gridRadios1">
+                            Accept
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision2"
+                            value="Deny">
+                        <label class="form-check-label" for="gridRadios2">
+                            Deny
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDecision" id="radioDecision3"
+                            value="Request Additional Information">
+                        <label class="form-check-label" for="gridRadios3">
+                            Request Additional Information
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row" id="additional-info-row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Additional Information</label>
+            <div class="col-sm-10">
+                <input type="text" name="additionalInfo" class="form-control" id="additionalinfo"
+                    placeholder="Additional Information">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <footer>
+        <p>© 2019 TRMS <br> github.com/devwithdonald</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../JavaScript/ViewRequests.js"></script>
+</body>
+
+</html>

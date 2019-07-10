@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../CSS/form.css">
+
+  <title>Reimbursement</title>
+</head>
+
+<body>
+
+  <!-- nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="reimbursement_request_form.html">Apply</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="update_request.html">Update</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="additional_info.html">Additional Info</a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout">Log Out<span class="sr-only">(current)</span></a>
+        </li>
+    </div>
+  </nav>
+
+  <!-- show balance Jumbotro -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4" id="balance"></h1>
+      <p class="lead">This is your available balance.</p>
+    </div>
+  </div>
+
+  <!-- reimbursement form -->
+  <form id="reimbursementForm">
+    <h2>Reimbursement Form</h2>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputEventDate">Date of event</label>
+        <input type="date" name="date" class="form-control" id="date" max="9999-12-31" required="required">
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputEventTime">Time of event</label>
+        <input type="time" name="time" class="form-control" id="time" required="required">
+
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="inputEventLocation">Location of event</label>
+        <input type="text" name="location" class="form-control" id="location" placeholder="Location"
+          required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputDescription">Description</label>
+      <textarea name="description" class="form-control" id="description" rows="2" required="required"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="inputCost">Cost of event</label>
+        <input type="number" name="cost" min="0" class="form-control" id="costOfEvent" placeholder="Cost"
+          required="required">
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="inputEventType">Event Type</label>
+        <select id="inputEvent" name="eventType" class="form-control">
+          <option selected>University Course</option>
+          <option>Seminar</option>
+          <option>Certification Preparation Classes</option>
+          <option>Certification</option>
+          <option>Technical Training</option>
+          <option>Other</option>
+        </select>
+        
+        <small id="projectedReimbursement"></small>
+
+      </div>
+
+      <div class="form-group col-md-3">
+        <label for="inputGradingFormat">Grading Format</label>
+        <select id="inputGradingFormat" name="gradingFormat" class="form-control">
+          <option selected>0-100</option>
+          <option>A-F</option>
+          <option>Pass/Fail</option>
+          <option>Presentation</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="passingGradeInput">Passing Grade</label>
+      <input type="text" name="passingGrade" class="form-control" id="passingGradeInput"
+        placeholder="Passing Grade - If Presentation Leave Blank">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+
+  <footer>
+    <p>© 2019 TRMS <br> github.com/devwithdonald</p>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="../JavaScript/reimbursementForm.js"></script>
+</body>
+
+</html>
