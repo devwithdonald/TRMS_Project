@@ -26,7 +26,7 @@ public class EmployeeDAOImpl implements EmployeeDAOInt {
 		List<Employee> employeeList = new ArrayList<>();
 		Employee employee = null;
 
-		// join to get employee type!
+		//join to get employee type!
 		String sql = "select emp.*, emp_type.employee_type " + "from employee emp "
 				+ "inner join employee_type emp_type on emp.employee_type_id = emp_type.employee_type_id;";
 
